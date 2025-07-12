@@ -2,7 +2,10 @@
     ...
 
 ### SOON ###
-    add JClassWriter test
+    add bracket token writers
+    add JExpressionWriter + test
+    add JAnnotationWriter + test
+    add JClassWriter + test
 
 ### LATER ###
     add JWriter test
