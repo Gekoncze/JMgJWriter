@@ -6,3 +6,9 @@
 
 ### LATER ###
     add JWriter test
+    token writers
+        think more on how new lines should be handled in token writers
+            possibly we could have both single line writers and multi-line writers
+        consider supporting both single line and multi line comments
+            need to make sure that single line comment will end with new line
+            while still not breaking other tokens
