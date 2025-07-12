@@ -5,6 +5,7 @@ import cz.mg.java.writer.components.BlockBuilderTest;
 import cz.mg.java.writer.services.JImportWriterTest;
 import cz.mg.java.writer.services.JPackageLineWriterTest;
 import cz.mg.java.writer.services.token.NumberTokenWriterTest;
+import cz.mg.java.writer.services.token.SymbolTokenWriterTest;
 import cz.mg.java.writer.services.token.WordTokenWriterTest;
 
 public @Test class AllTests {
@@ -14,6 +15,7 @@ public @Test class AllTests {
 
         // cz.mg.java.writer.services.token
         NumberTokenWriterTest.main(args);
+        SymbolTokenWriterTest.main(args);
         WordTokenWriterTest.main(args);
 
         // cz.mg.java.writer.services

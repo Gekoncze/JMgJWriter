@@ -1,0 +1,27 @@
+package cz.mg.java.writer.services.token;
+
+import cz.mg.annotations.classes.Service;
+import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.token.tokens.SymbolToken;
+
+public @Service class SymbolTokenWriter {
+    private static volatile @Service SymbolTokenWriter instance;
+
+    public static @Service SymbolTokenWriter getInstance() {
+        if (instance == null) {
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new SymbolTokenWriter();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private SymbolTokenWriter() {
+    }
+
+    public @Mandatory String write(@Mandatory SymbolToken token) {
+        return token.getText();
+    }
+}
