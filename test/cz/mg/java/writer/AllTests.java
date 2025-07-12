@@ -13,7 +13,9 @@ public @Test class AllTests {
 
         // cz.mg.java.writer.services.token
         CommentTokenWriterTest.main(args);
+        DoubleQuoteTokenWriterTest.main(args);
         NumberTokenWriterTest.main(args);
+        SingleQuoteTokenWriterTest.main(args);
         SymbolTokenWriterTest.main(args);
         WhitespaceTokenWriterTest.main(args);
         WordTokenWriterTest.main(args);
