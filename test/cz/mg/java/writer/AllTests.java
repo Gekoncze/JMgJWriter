@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.components.BlockBuilderTest;
 import cz.mg.java.writer.services.JImportWriterTest;
 import cz.mg.java.writer.services.JPackageLineWriterTest;
+import cz.mg.java.writer.services.token.NumberTokenWriterTest;
 import cz.mg.java.writer.services.token.WordTokenWriterTest;
 
 public @Test class AllTests {
@@ -12,6 +13,7 @@ public @Test class AllTests {
         BlockBuilderTest.main(args);
 
         // cz.mg.java.writer.services.token
+        NumberTokenWriterTest.main(args);
         WordTokenWriterTest.main(args);
 
         // cz.mg.java.writer.services
