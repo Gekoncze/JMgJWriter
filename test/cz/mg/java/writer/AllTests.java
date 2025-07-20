@@ -9,6 +9,7 @@ import cz.mg.java.writer.services.token.brackets.BracketsWritersTest;
 import cz.mg.java.writer.services.token.brackets.CurlyBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.RoundBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.SquareBracketsWriterTest;
+import cz.mg.java.writer.services.validators.CommentValidatorTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -26,11 +27,14 @@ public @Test class AllTests {
         WhitespaceTokenWriterTest.main(args);
         WordTokenWriterTest.main(args);
 
-        // cz.mg.java.writer.services.token
+        // cz.mg.java.writer.services.token.brackets
         BracketsWritersTest.main(args);
         CurlyBracketsWriterTest.main(args);
         RoundBracketsWriterTest.main(args);
         SquareBracketsWriterTest.main(args);
+
+        // cz.mg.java.writer.services.validators
+        CommentValidatorTest.main(args);
 
         // cz.mg.java.writer.services
         JImportWriterTest.main(args);
