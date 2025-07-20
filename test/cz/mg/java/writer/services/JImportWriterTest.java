@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JImport;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 
 public @Test class JImportWriterTest {
@@ -15,7 +16,8 @@ public @Test class JImportWriterTest {
         test.testOnePathElement();
         test.testTwoPathElements();
         test.testThreePathElements();
-        test.testComment();
+        test.testSingleLineComment();
+        test.testMultiLineComment();
 
         System.out.println("OK");
     }
@@ -42,8 +44,14 @@ public @Test class JImportWriterTest {
         Assert.assertEquals("import foo.bar.foobar;", result);
     }
 
-    private void testComment() {
+    private void testSingleLineComment() {
         String result = writer.write(new JImport(new List<>("foo", "bar", "foobar"), "move later"));
         Assert.assertEquals("import foo.bar.foobar; // move later", result);
+    }
+
+    private void testMultiLineComment() {
+        Assert.assertThatCode(() -> writer.write(new JImport(new List<>("foo"), "leave\nlater")))
+            .withMessage("Multi-line comments are not supported for imports.")
+            .throwsException(WriterException.class);
     }
 }
