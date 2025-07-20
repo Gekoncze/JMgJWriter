@@ -13,6 +13,7 @@ public @Test class SquareBracketsWriterTest {
         SquareBracketsWriterTest test = new SquareBracketsWriterTest();
         test.testWriteEmpty();
         test.testWrite();
+        test.testWriteNested();
 
         System.out.println("OK");
     }
@@ -27,5 +28,16 @@ public @Test class SquareBracketsWriterTest {
 
     private void testWrite() {
         Assert.assertEquals("[i]", writer.write(b.squareBrackets(t.word("i"))));
+    }
+
+    private void testWriteNested() {
+        Assert.assertEquals("[[1]b]", writer.write(
+            b.squareBrackets(
+                b.squareBrackets(
+                    t.number("1")
+                ),
+                t.word("b")
+            )
+        ));
     }
 }

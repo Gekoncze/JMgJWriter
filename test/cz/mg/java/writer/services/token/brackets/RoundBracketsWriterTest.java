@@ -13,6 +13,7 @@ public @Test class RoundBracketsWriterTest {
         RoundBracketsWriterTest test = new RoundBracketsWriterTest();
         test.testWriteEmpty();
         test.testWrite();
+        test.testWriteNested();
 
         System.out.println("OK");
     }
@@ -33,5 +34,19 @@ public @Test class RoundBracketsWriterTest {
             t.symbol("*"),
             t.number("3.14")
         )));
+    }
+
+    private void testWriteNested() {
+        Assert.assertEquals("(1*(2+3))", writer.write(
+            b.roundBrackets(
+                t.number("1"),
+                t.symbol("*"),
+                b.roundBrackets(
+                    t.number("2"),
+                    t.symbol("+"),
+                    t.number("3")
+                )
+            )
+        ));
     }
 }

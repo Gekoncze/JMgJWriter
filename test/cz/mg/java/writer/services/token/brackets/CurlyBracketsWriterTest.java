@@ -13,6 +13,7 @@ public @Test class CurlyBracketsWriterTest {
         CurlyBracketsWriterTest test = new CurlyBracketsWriterTest();
         test.testWriteEmpty();
         test.testWrite();
+        test.testWriteNested();
 
         System.out.println("OK");
     }
@@ -34,5 +35,16 @@ public @Test class CurlyBracketsWriterTest {
             t.symbol(";"),
             t.whitespace(" ")
         )));
+    }
+
+    private void testWriteNested() {
+        Assert.assertEquals("{class Bar{}}", writer.write(
+            b.curlyBrackets(
+                t.word("class"),
+                t.whitespace(" "),
+                t.word("Bar"),
+                b.curlyBrackets()
+            )
+        ));
     }
 }
