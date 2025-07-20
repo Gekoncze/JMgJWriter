@@ -4,6 +4,7 @@
 ### SOON ###
     add JAnnotationWriter + test
     add JClassWriter + test
+    add comment / doc for all? java entities
 
 ### LATER ###
     add JWriter test
