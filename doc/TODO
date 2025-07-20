@@ -2,8 +2,6 @@
     ...
 
 ### SOON ###
-    add bracket token writers
-    add JExpressionWriter + test
     add JAnnotationWriter + test
     add JClassWriter + test
 
