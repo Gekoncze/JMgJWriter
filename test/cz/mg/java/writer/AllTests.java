@@ -7,6 +7,7 @@ import cz.mg.java.writer.services.JPackageLineWriterTest;
 import cz.mg.java.writer.services.token.*;
 import cz.mg.java.writer.services.token.brackets.CurlyBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.RoundBracketsWriterTest;
+import cz.mg.java.writer.services.token.brackets.SquareBracketsWriterTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -27,6 +28,7 @@ public @Test class AllTests {
         // cz.mg.java.writer.services.token
         CurlyBracketsWriterTest.main(args);
         RoundBracketsWriterTest.main(args);
+        SquareBracketsWriterTest.main(args);
 
         // cz.mg.java.writer.services
         JImportWriterTest.main(args);
