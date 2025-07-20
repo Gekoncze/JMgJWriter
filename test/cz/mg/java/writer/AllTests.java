@@ -5,6 +5,7 @@ import cz.mg.java.writer.components.BlockBuilderTest;
 import cz.mg.java.writer.services.JImportWriterTest;
 import cz.mg.java.writer.services.JPackageLineWriterTest;
 import cz.mg.java.writer.services.token.*;
+import cz.mg.java.writer.services.token.brackets.CurlyBracketsWriterTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -21,6 +22,9 @@ public @Test class AllTests {
         TokenWritersTest.main(args);
         WhitespaceTokenWriterTest.main(args);
         WordTokenWriterTest.main(args);
+
+        // cz.mg.java.writer.services.token
+        CurlyBracketsWriterTest.main(args);
 
         // cz.mg.java.writer.services
         JImportWriterTest.main(args);
