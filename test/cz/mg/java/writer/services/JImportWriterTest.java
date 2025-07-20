@@ -15,6 +15,7 @@ public @Test class JImportWriterTest {
         test.testOnePathElement();
         test.testTwoPathElements();
         test.testThreePathElements();
+        test.testComment();
 
         System.out.println("OK");
     }
@@ -27,17 +28,22 @@ public @Test class JImportWriterTest {
     }
 
     private void testOnePathElement() {
-        String result = writer.write(new JImport(new List<>("foo")));
+        String result = writer.write(new JImport(new List<>("foo"), null));
         Assert.assertEquals("import foo;", result);
     }
 
     private void testTwoPathElements() {
-        String result = writer.write(new JImport(new List<>("foo", "bar")));
+        String result = writer.write(new JImport(new List<>("foo", "bar"), null));
         Assert.assertEquals("import foo.bar;", result);
     }
 
     private void testThreePathElements() {
-        String result = writer.write(new JImport(new List<>("foo", "bar", "foobar")));
+        String result = writer.write(new JImport(new List<>("foo", "bar", "foobar"), null));
         Assert.assertEquals("import foo.bar.foobar;", result);
+    }
+
+    private void testComment() {
+        String result = writer.write(new JImport(new List<>("foo", "bar", "foobar"), "move later"));
+        Assert.assertEquals("import foo.bar.foobar; // move later", result);
     }
 }

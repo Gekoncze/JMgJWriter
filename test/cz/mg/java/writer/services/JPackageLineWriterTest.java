@@ -15,6 +15,7 @@ public @Test class JPackageLineWriterTest {
         test.testOnePathElement();
         test.testTwoPathElements();
         test.testThreePathElements();
+        test.testComment();
 
         System.out.println("OK");
     }
@@ -27,17 +28,22 @@ public @Test class JPackageLineWriterTest {
     }
 
     private void testOnePathElement() {
-        String result = writer.write(new JPackageLine(new List<>("foo")));
+        String result = writer.write(new JPackageLine(new List<>("foo"), null));
         Assert.assertEquals("package foo;", result);
     }
 
     private void testTwoPathElements() {
-        String result = writer.write(new JPackageLine(new List<>("foo", "bar")));
+        String result = writer.write(new JPackageLine(new List<>("foo", "bar"), null));
         Assert.assertEquals("package foo.bar;", result);
     }
 
     private void testThreePathElements() {
-        String result = writer.write(new JPackageLine(new List<>("foo", "bar", "foobar")));
+        String result = writer.write(new JPackageLine(new List<>("foo", "bar", "foobar"), null));
         Assert.assertEquals("package foo.bar.foobar;", result);
+    }
+
+    private void testComment() {
+        String result = writer.write(new JPackageLine(new List<>("foo", "bar", "foobar"), "temporary"));
+        Assert.assertEquals("package foo.bar.foobar; // temporary", result);
     }
 }

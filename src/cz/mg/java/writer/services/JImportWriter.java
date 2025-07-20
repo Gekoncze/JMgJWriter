@@ -27,6 +27,8 @@ public @Service class JImportWriter {
             .withDelimiter(".")
             .join();
 
-        return "import " + path + ";";
+        String comment = jImport.getComment() == null ? "" : " // " + jImport.getComment();
+
+        return "import " + path + ";" + comment;
     }
 }

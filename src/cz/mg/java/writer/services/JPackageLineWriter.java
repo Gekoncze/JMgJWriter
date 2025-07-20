@@ -27,6 +27,8 @@ public @Service class JPackageLineWriter {
             .withDelimiter(".")
             .join();
 
-        return "package " + path + ";";
+        String comment = packageLine.getComment() == null ? "" : " // " + packageLine.getComment();
+
+        return "package " + path + ";" + comment;
     }
 }
