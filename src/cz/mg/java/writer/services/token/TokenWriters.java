@@ -3,8 +3,10 @@ package cz.mg.java.writer.services.token;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.java.writer.exceptions.WriterException;
+import cz.mg.java.writer.services.token.brackets.BracketsWriters;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.*;
+import cz.mg.token.tokens.brackets.Brackets;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 import cz.mg.token.tokens.quote.SingleQuoteToken;
 
@@ -23,6 +25,7 @@ public @Service class TokenWriters {
                     instance.doubleQuoteTokenWriter = DoubleQuoteTokenWriter.getInstance();
                     instance.singleQuoteTokenWriter = SingleQuoteTokenWriter.getInstance();
                     instance.commentTokenWriter = CommentTokenWriter.getInstance();
+                    instance.bracketsWriters = BracketsWriters.getInstance();
                 }
             }
         }
@@ -36,6 +39,7 @@ public @Service class TokenWriters {
     private @Service DoubleQuoteTokenWriter doubleQuoteTokenWriter;
     private @Service SingleQuoteTokenWriter singleQuoteTokenWriter;
     private @Service CommentTokenWriter commentTokenWriter;
+    private @Service BracketsWriters bracketsWriters;
 
     private TokenWriters() {
     }
@@ -67,6 +71,10 @@ public @Service class TokenWriters {
 
         if (token instanceof CommentToken commentToken) {
             return commentTokenWriter.write(commentToken);
+        }
+
+        if (token instanceof Brackets brackets) {
+            return bracketsWriters.write(brackets);
         }
 
         throw new WriterException(

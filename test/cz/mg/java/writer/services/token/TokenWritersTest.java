@@ -5,6 +5,8 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
+import cz.mg.token.test.BracketFactory;
+import cz.mg.token.test.TokenFactory;
 import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 import cz.mg.token.tokens.quote.SingleQuoteToken;
@@ -22,11 +24,14 @@ public @Test class TokenWritersTest {
         test.testWriteDoubleQuote();
         test.testWriteSingleQuote();
         test.testWriteComment();
+        test.testWriteBrackets();
 
         System.out.println("OK");
     }
 
     private final @Service TokenWriters writers = TokenWriters.getInstance();
+    private final @Service TokenFactory t = TokenFactory.getInstance();
+    private final @Service BracketFactory b = BracketFactory.getInstance();
 
     private void testWriteUnsupported() {
         Assert.assertThatCode(() -> writers.write(new Token("Hewwo", 0)))
@@ -60,5 +65,17 @@ public @Test class TokenWritersTest {
 
     private void testWriteComment() {
         Assert.assertEquals("/*todo*/", writers.write(new CommentToken("todo", 0)));
+    }
+
+    private void testWriteBrackets() {
+        Assert.assertEquals("{([hewwo])}", writers.write(
+            b.curlyBrackets(
+                b.roundBrackets(
+                    b.squareBrackets(
+                        t.word("hewwo")
+                    )
+                )
+            )
+        ));
     }
 }
