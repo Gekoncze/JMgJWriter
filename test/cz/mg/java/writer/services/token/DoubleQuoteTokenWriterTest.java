@@ -2,11 +2,9 @@ package cz.mg.java.writer.services.token;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 
 import static cz.mg.test.Assert.assertEquals;
-import static cz.mg.test.Assert.assertThatCode;
 
 public @Test class DoubleQuoteTokenWriterTest {
     public static void main(String[] args) {
@@ -15,8 +13,7 @@ public @Test class DoubleQuoteTokenWriterTest {
         DoubleQuoteTokenWriterTest test = new DoubleQuoteTokenWriterTest();
         test.testWriteEmpty();
         test.testWriteSimple();
-        test.testWriteMultiLine();
-        test.testWriteTerminatingSequence();
+        test.testWriteSpecialCharacters();
 
         System.out.println("OK");
     }
@@ -33,14 +30,8 @@ public @Test class DoubleQuoteTokenWriterTest {
         assertEquals("\"foo\"", result);
     }
 
-    private void testWriteMultiLine() {
-        String result = writer.write(new DoubleQuoteToken("foo\nbar\rfoobar\n\rbarfoo\r\n", -1));
-        assertEquals("\"foo bar foobar barfoo \"", result);
-    }
-
-    private void testWriteTerminatingSequence() {
-        assertThatCode(() -> writer.write(new DoubleQuoteToken("\"", -1)))
-            .withMessage("Terminating character should not be written.")
-            .throwsException(WriterException.class);
+    private void testWriteSpecialCharacters() {
+        String result = writer.write(new DoubleQuoteToken("\\foo\nbar\rfoo\"bar\n\rbarfoo\r\n-\b-\t", -1));
+        assertEquals("\"\\\\foo\\nbar\\rfoo\\\"bar\\n\\rbarfoo\\r\\n-\\b-\\t\"", result);
     }
 }

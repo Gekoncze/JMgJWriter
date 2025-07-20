@@ -2,7 +2,6 @@ package cz.mg.java.writer.services.token;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 
 public @Service class DoubleQuoteTokenWriter {
@@ -23,24 +22,15 @@ public @Service class DoubleQuoteTokenWriter {
     }
 
     public @Mandatory String write(@Mandatory DoubleQuoteToken token) {
-        validate(token);
-        return '"' + removeNewLines(token.getText()) + '"';
+        return '"' + escapeSpecialCharacters(token.getText()) + '"';
     }
 
-    private void validate(@Mandatory DoubleQuoteToken token) {
-        if (token.getText().contains('"' + "")) {
-            throw new WriterException(
-                "Could not write quote token because it contains terminating character:\n"
-                + token.getText()
-            );
-        }
-    }
-
-    private @Mandatory String removeNewLines(@Mandatory String text) {
-        return text
-            .replace("\r\n", " ")
-            .replace("\n\r", " ")
-            .replace("\n", " ")
-            .replace("\r", " ");
+    private @Mandatory String escapeSpecialCharacters(@Mandatory String text) {
+        return text.replace("\\", "\\\\")
+            .replace("\t", "\\t")
+            .replace("\b", "\\b")
+            .replace("\n", "\\n")
+            .replace("\r", "\\r")
+            .replace("\"", "\\\"");
     }
 }
