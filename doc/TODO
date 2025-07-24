@@ -2,7 +2,6 @@
     ...
 
 ### SOON ###
-    add JAnnotationWriter + test
     add JClassWriter + test
 
 ### LATER ###
@@ -14,3 +13,4 @@
             need to make sure that single line comment will end with new line
             while still not breaking other tokens
             think of how to handle new lines and escape sequences
+    add option for multi-line complex annotations
