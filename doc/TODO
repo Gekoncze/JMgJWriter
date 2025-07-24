@@ -3,6 +3,14 @@
 
 ### SOON ###
     add JClassWriter + test
+        add JType writer + test
+            add JBaseType writer + test
+            add JGenericType writer + test
+            add JTypeParameter writer + test
+        add JVariable writer + test
+        add JMethod writer + test
+    add JInterface writer + test
+    add JEnum writer + test
 
 ### LATER ###
     add JWriter test
