@@ -2,6 +2,7 @@ package cz.mg.java.writer;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.components.BlockBuilderTest;
+import cz.mg.java.writer.services.JAnnotationWriterTest;
 import cz.mg.java.writer.services.JImportWriterTest;
 import cz.mg.java.writer.services.JPackageLineWriterTest;
 import cz.mg.java.writer.services.token.*;
@@ -37,6 +38,7 @@ public @Test class AllTests {
         CommentValidatorTest.main(args);
 
         // cz.mg.java.writer.services
+        JAnnotationWriterTest.main(args);
         JImportWriterTest.main(args);
         JPackageLineWriterTest.main(args);
     }
