@@ -10,6 +10,7 @@ import cz.mg.java.writer.services.token.brackets.BracketsWritersTest;
 import cz.mg.java.writer.services.token.brackets.CurlyBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.RoundBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.SquareBracketsWriterTest;
+import cz.mg.java.writer.services.type.JBaseTypeWriterTest;
 import cz.mg.java.writer.services.validators.CommentValidatorTest;
 
 public @Test class AllTests {
@@ -33,6 +34,9 @@ public @Test class AllTests {
         CurlyBracketsWriterTest.main(args);
         RoundBracketsWriterTest.main(args);
         SquareBracketsWriterTest.main(args);
+
+        // cz.mg.java.writer.services.type
+        JBaseTypeWriterTest.main(args);
 
         // cz.mg.java.writer.services.validators
         CommentValidatorTest.main(args);
