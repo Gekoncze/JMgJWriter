@@ -2,9 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.components.StringJoiner;
+import cz.mg.collections.list.List;
 import cz.mg.java.entities.JImport;
-import cz.mg.java.writer.services.validators.CommentValidator;
 
 public @Service class JImportWriter {
     private static volatile @Service JImportWriter instance;
@@ -14,27 +15,31 @@ public @Service class JImportWriter {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new JImportWriter();
-                    instance.commentValidator = CommentValidator.getInstance();
+                    instance.commentWriter = JCommentWriter.getInstance();
                 }
             }
         }
         return instance;
     }
 
-    private @Service CommentValidator commentValidator;
+    private @Service JCommentWriter commentWriter;
 
     private JImportWriter() {
     }
 
     public @Mandatory String write(@Mandatory JImport jImport) {
-        commentValidator.validateSingleLine(jImport);
+        String path = writePath(jImport.getPath());
+        String comment = writeComment(jImport.getComment());
+        return "import " + path + ";" + comment;
+    }
 
-        String path = new StringJoiner<>(jImport.getPath())
+    private @Mandatory String writePath(@Mandatory List<String> path) {
+        return new StringJoiner<>(path)
             .withDelimiter(".")
             .join();
+    }
 
-        String comment = jImport.getComment() == null ? "" : " // " + jImport.getComment();
-
-        return "import " + path + ";" + comment;
+    private @Mandatory String writeComment(@Optional String comment) {
+        return comment == null ? "" : " " + commentWriter.writeSingleLineComment(comment);
     }
 }

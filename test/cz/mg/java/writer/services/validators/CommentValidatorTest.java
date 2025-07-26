@@ -2,9 +2,6 @@ package cz.mg.java.writer.services.validators;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Optional;
-import cz.mg.annotations.storage.Value;
-import cz.mg.java.entities.interfaces.JCommentable;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 
@@ -15,6 +12,8 @@ public @Test class CommentValidatorTest {
         CommentValidatorTest test = new CommentValidatorTest();
         test.testValidateSingleLinePass();
         test.testValidateSingleLineFail();
+        test.testValidateMultiLinePass();
+        test.testValidateMultiLineFail();
 
         System.out.println("OK");
     }
@@ -22,53 +21,82 @@ public @Test class CommentValidatorTest {
     private final @Service CommentValidator validator = CommentValidator.getInstance();
 
     private void testValidateSingleLinePass() {
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest(null)))
-            .withMessage("Null comment shall pass.")
-            .doesNotThrowAnyException();
-
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("")))
+        Assert.assertThatCode(() -> validator.validateSingleLine(""))
             .withMessage("Empty comment shall pass.")
             .doesNotThrowAnyException();
 
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("foo bar")))
+        Assert.assertThatCode(() -> validator.validateSingleLine("foo bar"))
             .withMessage("This comment shall pass.")
             .doesNotThrowAnyException();
     }
 
     private void testValidateSingleLineFail() {
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("foo\nbar")))
+        Assert.assertThatCode(() -> validator.validateSingleLine("foo\nbar"))
             .withMessage("This comment shall not pass.")
             .throwsException(WriterException.class);
 
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("\nfoobar")))
+        Assert.assertThatCode(() -> validator.validateSingleLine("\nfoobar"))
             .withMessage("This comment shall not pass.")
             .throwsException(WriterException.class);
 
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("foobar\n")))
+        Assert.assertThatCode(() -> validator.validateSingleLine("foobar\n"))
             .withMessage("This comment shall not pass.")
             .throwsException(WriterException.class);
 
-        Assert.assertThatCode(() -> validator.validateSingleLine(new JTest("foo\rbar")))
+        Assert.assertThatCode(() -> validator.validateSingleLine("foo\rbar"))
             .withMessage("This comment shall not pass.")
             .throwsException(WriterException.class);
     }
 
-    private static class JTest implements JCommentable {
-        private String comment;
+    private void testValidateMultiLinePass() {
+        Assert.assertThatCode(() -> validator.validateMultiLine(""))
+            .withMessage("Empty comment shall pass.")
+            .doesNotThrowAnyException();
 
-        public JTest(String comment) {
-            this.comment = comment;
-        }
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo bar"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
 
-        @Override
-        @Optional @Value
-        public String getComment() {
-            return comment;
-        }
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo\nbar"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
 
-        @Override
-        public void setComment(String comment) {
-            this.comment = comment;
-        }
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo* /bar"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo/*bar"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("* /"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("/*"))
+            .withMessage("This comment shall pass.")
+            .doesNotThrowAnyException();
+    }
+
+    private void testValidateMultiLineFail() {
+        Assert.assertThatCode(() -> validator.validateMultiLine("*/"))
+            .withMessage("This comment shall not pass.")
+            .throwsException(WriterException.class);
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo*/bar"))
+            .withMessage("This comment shall not pass.")
+            .throwsException(WriterException.class);
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo bar*/"))
+            .withMessage("This comment shall not pass.")
+            .throwsException(WriterException.class);
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("*/foo bar"))
+            .withMessage("This comment shall not pass.")
+            .throwsException(WriterException.class);
+
+        Assert.assertThatCode(() -> validator.validateMultiLine("foo\nbar*/"))
+            .withMessage("This comment shall not pass.")
+            .throwsException(WriterException.class);
     }
 }

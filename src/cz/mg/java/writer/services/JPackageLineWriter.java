@@ -2,9 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.components.StringJoiner;
+import cz.mg.collections.list.List;
 import cz.mg.java.entities.JPackageLine;
-import cz.mg.java.writer.services.validators.CommentValidator;
 
 public @Service class JPackageLineWriter {
     private static volatile @Service JPackageLineWriter instance;
@@ -14,27 +15,31 @@ public @Service class JPackageLineWriter {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new JPackageLineWriter();
-                    instance.commentValidator = CommentValidator.getInstance();
+                    instance.commentWriter = JCommentWriter.getInstance();
                 }
             }
         }
         return instance;
     }
 
-    private @Service CommentValidator commentValidator;
+    private @Service JCommentWriter commentWriter;
 
     private JPackageLineWriter() {
     }
 
     public @Mandatory String write(@Mandatory JPackageLine packageLine) {
-        commentValidator.validateSingleLine(packageLine);
+        String path = writePath(packageLine.getPath());
+        String comment = writeComment(packageLine.getComment());
+        return "package " + path + ";" + comment;
+    }
 
-        String path = new StringJoiner<>(packageLine.getPath())
+    private @Mandatory String writePath(@Mandatory List<String> path) {
+        return new StringJoiner<>(path)
             .withDelimiter(".")
             .join();
+    }
 
-        String comment = packageLine.getComment() == null ? "" : " // " + packageLine.getComment();
-
-        return "package " + path + ";" + comment;
+    private @Mandatory String writeComment(@Optional String comment) {
+        return comment == null ? "" : " " + commentWriter.writeSingleLineComment(comment);
     }
 }

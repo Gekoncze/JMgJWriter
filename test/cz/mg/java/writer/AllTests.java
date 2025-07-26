@@ -2,10 +2,7 @@ package cz.mg.java.writer;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.components.BlockBuilderTest;
-import cz.mg.java.writer.services.JAnnotationWriterTest;
-import cz.mg.java.writer.services.JImportWriterTest;
-import cz.mg.java.writer.services.JPackageLineWriterTest;
-import cz.mg.java.writer.services.JTypeWriterTest;
+import cz.mg.java.writer.services.*;
 import cz.mg.java.writer.services.bounds.*;
 import cz.mg.java.writer.services.token.*;
 import cz.mg.java.writer.services.token.brackets.BracketsWritersTest;
@@ -49,6 +46,7 @@ public @Test class AllTests {
 
         // cz.mg.java.writer.services
         JAnnotationWriterTest.main(args);
+        JCommentWriterTest.main(args);
         JImportWriterTest.main(args);
         JPackageLineWriterTest.main(args);
         JTypeWriterTest.main(args);

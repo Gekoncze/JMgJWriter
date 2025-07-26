@@ -6,7 +6,6 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JAnnotation;
 import cz.mg.java.writer.services.token.ExpressionWriter;
-import cz.mg.java.writer.services.validators.CommentValidator;
 import cz.mg.token.Token;
 
 public @Service class JAnnotationWriter {
@@ -18,7 +17,7 @@ public @Service class JAnnotationWriter {
                 if (instance == null) {
                     instance = new JAnnotationWriter();
                     instance.expressionWriter = ExpressionWriter.getInstance();
-                    instance.commentValidator = CommentValidator.getInstance();
+                    instance.commentWriter = JCommentWriter.getInstance();
                 }
             }
         }
@@ -26,13 +25,12 @@ public @Service class JAnnotationWriter {
     }
 
     private @Service ExpressionWriter expressionWriter;
-    private @Service CommentValidator commentValidator;
+    private @Service JCommentWriter commentWriter;
 
     private JAnnotationWriter() {
     }
 
     public @Mandatory String write(@Mandatory JAnnotation annotation) {
-        commentValidator.validateSingleLine(annotation);
         String header = '@' + annotation.getName();
         String expression = writeExpression(annotation.getExpression());
         String comment = writeComment(annotation.getComment());
@@ -40,10 +38,10 @@ public @Service class JAnnotationWriter {
     }
 
     private @Mandatory String writeExpression(@Optional List<Token> expression) {
-        return expression != null ? "(" + expressionWriter.write(expression) + ")" : "";
+        return expression == null ? "" : "(" + expressionWriter.write(expression) + ")";
     }
 
     private @Mandatory String writeComment(@Optional String comment) {
-        return comment != null ? " // " + comment : "";
+        return comment == null ? "" : " " + commentWriter.writeSingleLineStarComment(comment);
     }
 }

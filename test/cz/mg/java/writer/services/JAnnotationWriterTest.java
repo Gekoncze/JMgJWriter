@@ -49,12 +49,12 @@ public @Test class JAnnotationWriterTest {
 
     private void testHeaderWithComment() {
         String result = writer.write(new JAnnotation("Field", null, "to be updated"));
-        Assert.assertEquals("@Field // to be updated", result);
+        Assert.assertEquals("@Field /* to be updated */", result);
     }
 
     private void testHeaderWithExpressionAndComment() {
         String result = writer.write(new JAnnotation("Field", new List<>(), "add expression"));
-        Assert.assertEquals("@Field() // add expression", result);
+        Assert.assertEquals("@Field() /* add expression */", result);
     }
 
     private void testMultiLineComment() {
