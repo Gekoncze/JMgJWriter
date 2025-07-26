@@ -5,18 +5,27 @@ import cz.mg.java.writer.components.BlockBuilderTest;
 import cz.mg.java.writer.services.JAnnotationWriterTest;
 import cz.mg.java.writer.services.JImportWriterTest;
 import cz.mg.java.writer.services.JPackageLineWriterTest;
+import cz.mg.java.writer.services.JTypeWriterTest;
+import cz.mg.java.writer.services.bounds.*;
 import cz.mg.java.writer.services.token.*;
 import cz.mg.java.writer.services.token.brackets.BracketsWritersTest;
 import cz.mg.java.writer.services.token.brackets.CurlyBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.RoundBracketsWriterTest;
 import cz.mg.java.writer.services.token.brackets.SquareBracketsWriterTest;
-import cz.mg.java.writer.services.type.JBaseTypeWriterTest;
 import cz.mg.java.writer.services.validators.CommentValidatorTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
         // cz.mg.java.writer.components
         BlockBuilderTest.main(args);
+
+        // cz.mg.java.writer.services.bounds
+        JBoundsWriterTest.main(args);
+        JBoundWritersTest.main(args);
+        JLowerBoundWriterTest.main(args);
+        JTypeBoundWriterTest.main(args);
+        JUnBoundWriterTest.main(args);
+        JUpperBoundWriterTest.main(args);
 
         // cz.mg.java.writer.services.token
         CommentTokenWriterTest.main(args);
@@ -35,9 +44,6 @@ public @Test class AllTests {
         RoundBracketsWriterTest.main(args);
         SquareBracketsWriterTest.main(args);
 
-        // cz.mg.java.writer.services.type
-        JBaseTypeWriterTest.main(args);
-
         // cz.mg.java.writer.services.validators
         CommentValidatorTest.main(args);
 
@@ -45,5 +51,6 @@ public @Test class AllTests {
         JAnnotationWriterTest.main(args);
         JImportWriterTest.main(args);
         JPackageLineWriterTest.main(args);
+        JTypeWriterTest.main(args);
     }
 }

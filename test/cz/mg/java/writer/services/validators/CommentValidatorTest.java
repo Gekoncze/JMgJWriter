@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.annotations.storage.Value;
-import cz.mg.java.entities.JCommentable;
+import cz.mg.java.entities.interfaces.JCommentable;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 

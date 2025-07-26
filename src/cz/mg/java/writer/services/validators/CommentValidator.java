@@ -2,7 +2,7 @@ package cz.mg.java.writer.services.validators;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.java.entities.JCommentable;
+import cz.mg.java.entities.interfaces.JCommentable;
 import cz.mg.java.writer.exceptions.WriterException;
 
 public @Service class CommentValidator {
