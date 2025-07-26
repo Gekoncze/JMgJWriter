@@ -1,4 +1,4 @@
-package cz.mg.java.writer.services.token;
+package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;

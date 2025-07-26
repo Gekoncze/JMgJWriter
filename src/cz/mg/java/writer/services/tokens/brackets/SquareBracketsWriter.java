@@ -1,8 +1,8 @@
-package cz.mg.java.writer.services.token.brackets;
+package cz.mg.java.writer.services.tokens.brackets;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.java.writer.services.token.ExpressionWriter;
+import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.tokens.brackets.SquareBrackets;
 
 public @Service class SquareBracketsWriter {

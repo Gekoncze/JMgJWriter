@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JAnnotation;
-import cz.mg.java.writer.services.token.ExpressionWriter;
+import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
 
 public @Service class JAnnotationWriter {

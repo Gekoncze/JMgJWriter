@@ -1,9 +1,9 @@
-package cz.mg.java.writer.services.token;
+package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.java.writer.services.token.brackets.BracketsWriters;
+import cz.mg.java.writer.services.tokens.brackets.BracketsWriters;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.brackets.Brackets;

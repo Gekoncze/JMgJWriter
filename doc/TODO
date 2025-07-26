@@ -10,5 +10,4 @@
     add JWriter + test
 
 ### LATER ###
-    consider renaming token package to tokens
     think about multi-line complex annotations
