@@ -50,5 +50,6 @@ public @Test class AllTests {
         JImportWriterTest.main(args);
         JPackageLineWriterTest.main(args);
         JTypeWriterTest.main(args);
+        JVariableWriterTest.main(args);
     }
 }
