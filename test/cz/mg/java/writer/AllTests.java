@@ -48,6 +48,7 @@ public @Test class AllTests {
         JAnnotationWriterTest.main(args);
         JCommentWriterTest.main(args);
         JImportWriterTest.main(args);
+        JModifierWriterTest.main(args);
         JPackageLineWriterTest.main(args);
         JTypeWriterTest.main(args);
         JVariableWriterTest.main(args);
