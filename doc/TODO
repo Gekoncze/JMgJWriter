@@ -2,12 +2,13 @@
     ...
 
 ### SOON ###
+    add some line indentation helper
     add JClassWriter + test
-        add JVariable writer + test
         add JMethod writer + test
     add JInterface writer + test
     add JEnum writer + test
     add JWriter + test
 
 ### LATER ###
-    think about multi-line complex annotations
+    add support for multi-line token and expression writers
+    add support for multi-line annotations
