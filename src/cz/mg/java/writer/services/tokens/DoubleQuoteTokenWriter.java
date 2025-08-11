@@ -2,7 +2,7 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
 public @Service class DoubleQuoteTokenWriter {
     private static volatile @Service DoubleQuoteTokenWriter instance;

@@ -2,7 +2,7 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.token.tokens.quote.SingleQuoteToken;
+import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
 import static cz.mg.test.Assert.assertEquals;
 

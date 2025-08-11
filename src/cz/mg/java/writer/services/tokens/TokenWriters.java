@@ -7,8 +7,8 @@ import cz.mg.java.writer.services.tokens.brackets.BracketsWriters;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.brackets.Brackets;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
-import cz.mg.token.tokens.quote.SingleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
 public @Service class TokenWriters {
     private static volatile @Service TokenWriters instance;

@@ -8,8 +8,8 @@ import cz.mg.token.Token;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.tokens.*;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
-import cz.mg.token.tokens.quote.SingleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
 public @Test class TokenWritersTest {
     public static void main(String[] args) {
