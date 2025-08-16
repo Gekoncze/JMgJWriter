@@ -7,7 +7,6 @@ import cz.mg.java.entities.JAnnotation;
 import cz.mg.java.entities.JType;
 import cz.mg.java.entities.JVariable;
 import cz.mg.test.Assert;
-import cz.mg.token.Token;
 import cz.mg.token.test.TokenFactory;
 
 public @Test class JVariableWriterTest {
@@ -31,7 +30,7 @@ public @Test class JVariableWriterTest {
     private void testWriteSimple() {
         JType type = new JType("int");
         String name = "foo";
-        JVariable variable = new JVariable(new List<>(), type, name, null, null);
+        JVariable variable = new JVariable(new List<>(), new List<>(), type, name);
 
         String result = writer.write(variable);
 
@@ -39,13 +38,11 @@ public @Test class JVariableWriterTest {
     }
 
     private void testWriteAnnotations() {
-        List<JAnnotation> annotations = new List<>(
-            new JAnnotation("Required", null, null),
-            new JAnnotation("Value", null, null)
-        );
-        JType type = new JType("int");
-        String name = "foo";
-        JVariable variable = new JVariable(annotations, type, name, null, null);
+        JVariable variable = new JVariable();
+        variable.getAnnotations().addLast(new JAnnotation("Required"));
+        variable.getAnnotations().addLast(new JAnnotation("Value"));
+        variable.setType(new JType("int"));
+        variable.setName("foo");
 
         String result = writer.write(variable);
 
@@ -54,16 +51,16 @@ public @Test class JVariableWriterTest {
 
 
     private void testWriteExpression() {
-        JType type = new JType("int");
-        String name = "foo";
-        List<Token> expression = new List<>(
+        JVariable variable = new JVariable();
+        variable.setType(new JType("int"));
+        variable.setName("foo");
+        variable.setExpression(new List<>(
             t.number("5"),
             t.whitespace(" "),
             t.symbol("+"),
             t.whitespace(" "),
             t.number("1")
-        );
-        JVariable variable = new JVariable(new List<>(), type, name, expression, null);
+        ));
 
         String result = writer.write(variable);
 
@@ -71,10 +68,10 @@ public @Test class JVariableWriterTest {
     }
 
     private void testWriteComment() {
-        JType type = new JType("int");
-        String name = "foo";
-        String comment = "some comment";
-        JVariable variable = new JVariable(new List<>(), type, name, null, comment);
+        JVariable variable = new JVariable();
+        variable.setType(new JType("int"));
+        variable.setName("foo");
+        variable.setComment("some comment");
 
         String result = writer.write(variable);
 
@@ -83,21 +80,19 @@ public @Test class JVariableWriterTest {
     }
 
     private void testWriteComplex() {
-        List<JAnnotation> annotations = new List<>(
-            new JAnnotation("Required", null, null),
-            new JAnnotation("Value", null, null)
-        );
-        JType type = new JType("int");
-        String name = "foo";
-        List<Token> expression = new List<>(
+        JVariable variable = new JVariable();
+        variable.getAnnotations().addLast(new JAnnotation("Required"));
+        variable.getAnnotations().addLast(new JAnnotation("Value"));
+        variable.setType(new JType("int"));
+        variable.setName("foo");
+        variable.setExpression(new List<>(
             t.number("5"),
             t.whitespace(" "),
             t.symbol("+"),
             t.whitespace(" "),
             t.number("1")
-        );
-        String comment = "some comment";
-        JVariable variable = new JVariable(annotations, type, name, expression, comment);
+        ));
+        variable.setComment("some comment");
 
         String result = writer.write(variable);
 
