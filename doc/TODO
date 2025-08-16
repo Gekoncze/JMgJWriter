@@ -2,7 +2,6 @@
     ...
 
 ### SOON ###
-    add some line indentation helper
     add JClassWriter + test
         add JMethod writer + test
     add JInterface writer + test

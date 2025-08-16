@@ -5,6 +5,9 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 
 public class Indentation {
+    private static final String INDENTATION = "    ";
+    public static final int LENGTH = 4;
+
     private static volatile @Service Indentation instance;
 
     public static @Service Indentation getInstance() {
@@ -27,7 +30,7 @@ public class Indentation {
             if (line.isBlank()) {
                 result.addLast("");
             } else {
-                result.addLast("    " + line);
+                result.addLast(INDENTATION + line);
             }
         }
         return result;
