@@ -41,16 +41,16 @@ public @Service class JCommentWriter {
         return "/*" + startingSpace + comment + endingSpace + "*/";
     }
 
-    public @Mandatory String writeMultiLineComment(@Mandatory String comment) {
+    public @Mandatory List<String> writeMultiLineComment(@Mandatory String comment) {
         commentValidator.validateMultiLine(comment);
         String startingSpace = getStartingSpace(comment);
         String endingSpace = getEndingSpace(comment);
-        return "/*" + startingSpace + comment + endingSpace + "*/";
+        return split("/*" + startingSpace + comment + endingSpace + "*/");
     }
 
-    public @Mandatory String writeDocumentationComment(@Mandatory String comment) {
+    public @Mandatory List<String> writeDocumentationComment(@Mandatory String comment) {
         commentValidator.validateMultiLine(comment);
-        return "/**\n" + reformatDocumentationContent(comment) + "\n */";
+        return split("/**\n" + reformatDocumentationContent(comment) + "\n */");
     }
 
     private @Mandatory String reformatDocumentationContent(@Mandatory String comment) {

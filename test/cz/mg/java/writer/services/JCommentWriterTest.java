@@ -2,6 +2,7 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 
@@ -45,12 +46,12 @@ public @Test class JCommentWriterTest {
     }
 
     private void testWriteMultiLineComment() {
-        Assert.assertEquals("/**/", writer.writeMultiLineComment(""));
-        Assert.assertEquals("/* */", writer.writeMultiLineComment(" "));
-        Assert.assertEquals("/*\n*/", writer.writeMultiLineComment("\n"));
-        Assert.assertEquals("/* foo bar */", writer.writeMultiLineComment("foo bar"));
-        Assert.assertEquals("/* foo\nbar */", writer.writeMultiLineComment("foo\nbar"));
-        Assert.assertEquals("/*\nfoo\nbar\n*/", writer.writeMultiLineComment("\nfoo\nbar\n"));
+        Assert.assertThatCollections(new List<>("/**/"), writer.writeMultiLineComment("")).areEqual();
+        Assert.assertThatCollections(new List<>("/* */"), writer.writeMultiLineComment(" ")).areEqual();
+        Assert.assertThatCollections(new List<>("/*", "*/"), writer.writeMultiLineComment("\n")).areEqual();
+        Assert.assertThatCollections(new List<>("/* foo bar */"), writer.writeMultiLineComment("foo bar")).areEqual();
+        Assert.assertThatCollections(new List<>("/* foo", "bar */"), writer.writeMultiLineComment("foo\nbar")).areEqual();
+        Assert.assertThatCollections(new List<>("/*", "foo", "bar", "*/"), writer.writeMultiLineComment("\nfoo\nbar\n")).areEqual();
 
         Assert.assertThatCode(() -> writer.writeMultiLineComment("*/"))
             .withMessage("Missing comment validation.")
@@ -58,90 +59,95 @@ public @Test class JCommentWriterTest {
     }
 
     private void testWriteDocumentationComment() {
-        Assert.assertEquals(
-            """
-            /**
-             *
-             */
-            """.trim(),
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *",
+                " */"
+            ),
             writer.writeDocumentationComment("")
-        );
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             *
-             *
-             */
-            """.trim(),
-            writer.writeDocumentationComment("\n"));
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *",
+                " *",
+                " */"
+            ),
+            writer.writeDocumentationComment("\n")
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             *
-             *
-             *
-             */
-            """.trim(),
-            writer.writeDocumentationComment("\n\n"));
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *",
+                " *",
+                " *",
+                " */"
+            ),
+            writer.writeDocumentationComment("\n\n")
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-           /**
-            * \s
-            */
-           """.trim(),
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *  ",
+                " */"
+            ),
             writer.writeDocumentationComment(" ")
-        );
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             * \t
-             */
-            """.trim(),
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " * \t",
+                " */"
+            ),
             writer.writeDocumentationComment("\t")
-        );
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             * foo bar
-             */
-            """.trim(),
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " * foo bar",
+                " */"
+            ),
             writer.writeDocumentationComment("foo bar")
-        );
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             *
-             * foo bar
-             *
-             */
-            """.trim(),
-            writer.writeDocumentationComment("\nfoo bar\n"));
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *",
+                " * foo bar",
+                " *",
+                " */"
+            ),
+            writer.writeDocumentationComment("\nfoo bar\n")
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             * foo
-             * bar
-             */
-            """.trim(),
-            writer.writeDocumentationComment("foo\nbar"));
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " * foo",
+                " * bar",
+                " */"
+            ),
+            writer.writeDocumentationComment("foo\nbar")
+        ).areEqual();
 
-        Assert.assertEquals(
-            """
-            /**
-             *
-             * foo
-             * bar
-             *
-             */
-            """.trim(),
-            writer.writeDocumentationComment("\nfoo\nbar\n"));
+        Assert.assertThatCollections(
+            new List<>(
+                "/**",
+                " *",
+                " * foo",
+                " * bar",
+                " *",
+                " */"
+            ),
+            writer.writeDocumentationComment("\nfoo\nbar\n")
+        ).areEqual();
 
         Assert.assertThatCode(() -> writer.writeDocumentationComment("*/"))
             .withMessage("Missing comment validation.")
