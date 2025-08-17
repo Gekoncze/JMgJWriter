@@ -2,6 +2,7 @@ package cz.mg.java.writer;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.components.BlockBuilderTest;
+import cz.mg.java.writer.components.LineMergerTest;
 import cz.mg.java.writer.services.*;
 import cz.mg.java.writer.services.bounds.*;
 import cz.mg.java.writer.services.formatting.IndentationTest;
@@ -16,6 +17,7 @@ public @Test class AllTests {
     public static void main(String[] args) {
         // cz.mg.java.writer.components
         BlockBuilderTest.main(args);
+        LineMergerTest.main(args);
 
         // cz.mg.java.writer.services.bounds
         JBoundsWriterTest.main(args);
