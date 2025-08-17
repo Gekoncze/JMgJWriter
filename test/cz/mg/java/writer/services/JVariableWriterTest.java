@@ -17,7 +17,6 @@ public @Test class JVariableWriterTest {
         test.testWriteSimple();
         test.testWriteAnnotations();
         test.testWriteExpression();
-        test.testWriteComment();
         test.testWriteComplex();
 
         System.out.println("OK");
@@ -67,18 +66,6 @@ public @Test class JVariableWriterTest {
         Assert.assertEquals("int foo = 5 + 1", result);
     }
 
-    private void testWriteComment() {
-        JVariable variable = new JVariable();
-        variable.setType(new JType("int"));
-        variable.setName("foo");
-        variable.setComment("some comment");
-
-        String result = writer.write(variable);
-
-        // comments should be handled by outer writer to handle delimiters properly
-        Assert.assertEquals("int foo", result);
-    }
-
     private void testWriteComplex() {
         JVariable variable = new JVariable();
         variable.getAnnotations().addLast(new JAnnotation("Required"));
@@ -92,7 +79,6 @@ public @Test class JVariableWriterTest {
             t.whitespace(" "),
             t.number("1")
         ));
-        variable.setComment("some comment");
 
         String result = writer.write(variable);
 
