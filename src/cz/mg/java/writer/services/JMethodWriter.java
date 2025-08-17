@@ -44,7 +44,7 @@ public @Service class JMethodWriter {
     private @Service JVariableWriter variableWriter;
     private @Service ExpressionWriter expressionWriter;
 
-    protected JMethodWriter() {
+    private JMethodWriter() {
     }
 
     public @Mandatory List<String> writeLines(@Mandatory JMethod method) {
@@ -55,7 +55,7 @@ public @Service class JMethodWriter {
         return lines;
     }
 
-    private @Mandatory List<String> writeComment(@Optional String comment) {
+    @Mandatory List<String> writeComment(@Optional String comment) {
         if (comment != null) {
             return commentWriter.writeDocumentationComment(comment);
         } else {
@@ -63,7 +63,7 @@ public @Service class JMethodWriter {
         }
     }
 
-    private @Mandatory List<String> writeAnnotations(@Mandatory List<JAnnotation> annotations) {
+    @Mandatory List<String> writeAnnotations(@Mandatory List<JAnnotation> annotations) {
         List<String> lines = new List<>();
         for (JAnnotation annotation : annotations) {
             lines.addLast(annotationWriter.write(annotation));
@@ -86,7 +86,7 @@ public @Service class JMethodWriter {
             .get();
     }
 
-    private @Mandatory String writeModifiers(@Mandatory List<JModifier> modifiers) {
+    @Mandatory String writeModifiers(@Mandatory List<JModifier> modifiers) {
         return modifierWriter.write(modifiers);
     }
 
@@ -98,14 +98,14 @@ public @Service class JMethodWriter {
         return type == null ? "void" : typeWriter.write(type);
     }
 
-    private @Mandatory String writeHeader(@Mandatory String... parts) {
+    @Mandatory String writeHeader(@Mandatory String... parts) {
         return new StringJoiner<>(parts)
             .withDelimiter(" ")
             .withFilter(s -> !s.isBlank())
             .join();
     }
 
-    private @Mandatory List<String> writeParameters(@Mandatory String header, @Mandatory List<JVariable> input) {
+    @Mandatory List<String> writeParameters(@Mandatory String header, @Mandatory List<JVariable> input) {
         List<String> parameters = writeInput(input);
         if (parameters.isEmpty() || estimateLineLength(header, parameters) < LIMIT) {
             return writeParametersOnSingleLine(parameters);
@@ -152,7 +152,7 @@ public @Service class JMethodWriter {
         return estimatedHeaderLength;
     }
 
-    private @Mandatory List<String> writeImplementation(@Optional List<Token> implementation) {
+    @Mandatory List<String> writeImplementation(@Optional List<Token> implementation) {
         if (implementation != null) {
             return new List<>(
                 " {",

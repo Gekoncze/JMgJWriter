@@ -53,6 +53,7 @@ public @Test class AllTests {
         // cz.mg.java.writer.services
         JAnnotationWriterTest.main(args);
         JCommentWriterTest.main(args);
+        JConstructorWriterTest.main(args);
         JImportWriterTest.main(args);
         JMethodWriterTest.main(args);
         JModifierWriterTest.main(args);
