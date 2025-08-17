@@ -33,15 +33,10 @@ public @Service class JAnnotationWriter {
     public @Mandatory String write(@Mandatory JAnnotation annotation) {
         String header = '@' + annotation.getName();
         String expression = writeExpression(annotation.getExpression());
-        String comment = writeComment(annotation.getComment());
-        return header + expression + comment;
+        return header + expression;
     }
 
     private @Mandatory String writeExpression(@Optional List<Token> expression) {
         return expression == null ? "" : "(" + expressionWriter.write(expression) + ")";
-    }
-
-    private @Mandatory String writeComment(@Optional String comment) {
-        return comment == null ? "" : " " + commentWriter.writeSingleLineStarComment(comment);
     }
 }
