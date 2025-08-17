@@ -3,7 +3,6 @@
 
 ### SOON ###
     add JClassWriter + test
-        add JMethod writer + test
     add JInterface writer + test
     add JEnum writer + test
     add JWriter + test

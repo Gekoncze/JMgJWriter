@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JAnnotation;
+import cz.mg.java.entities.JModifier;
 import cz.mg.java.entities.JType;
 import cz.mg.java.entities.JVariable;
 import cz.mg.test.Assert;
@@ -15,6 +16,7 @@ public @Test class JVariableWriterTest {
 
         JVariableWriterTest test = new JVariableWriterTest();
         test.testWriteSimple();
+        test.testWriteModifiers();
         test.testWriteAnnotations();
         test.testWriteExpression();
         test.testWriteComplex();
@@ -22,18 +24,28 @@ public @Test class JVariableWriterTest {
         System.out.println("OK");
     }
 
-
     private final @Service JVariableWriter writer = JVariableWriter.getInstance();
     private final @Service TokenFactory t = TokenFactory.getInstance();
 
     private void testWriteSimple() {
-        JType type = new JType("int");
-        String name = "foo";
-        JVariable variable = new JVariable(new List<>(), new List<>(), type, name);
+        JVariable variable = new JVariable();
+        variable.setType(new JType("int"));
+        variable.setName("foo");
 
         String result = writer.write(variable);
 
         Assert.assertEquals("int foo", result);
+    }
+
+    private void testWriteModifiers() {
+        JVariable variable = new JVariable();
+        variable.getModifiers().addLast(JModifier.PUBLIC);
+        variable.setType(new JType("int"));
+        variable.setName("foo");
+
+        String result = writer.write(variable);
+
+        Assert.assertEquals("public int foo", result);
     }
 
     private void testWriteAnnotations() {
@@ -68,6 +80,8 @@ public @Test class JVariableWriterTest {
 
     private void testWriteComplex() {
         JVariable variable = new JVariable();
+        variable.getModifiers().addLast(JModifier.PRIVATE);
+        variable.getModifiers().addLast(JModifier.FINAL);
         variable.getAnnotations().addLast(new JAnnotation("Required"));
         variable.getAnnotations().addLast(new JAnnotation("Value"));
         variable.setType(new JType("int"));
@@ -82,6 +96,6 @@ public @Test class JVariableWriterTest {
 
         String result = writer.write(variable);
 
-        Assert.assertEquals("@Required @Value int foo = 5 + 1", result);
+        Assert.assertEquals("private final @Required @Value int foo = 5 + 1", result);
     }
 }

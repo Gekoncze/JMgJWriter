@@ -18,6 +18,7 @@ public @Service class JVariableWriter {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new JVariableWriter();
+                    instance.modifierWriter = JModifierWriter.getInstance();
                     instance.annotationWriter = JAnnotationWriter.getInstance();
                     instance.typeWriter = JTypeWriter.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
@@ -27,6 +28,7 @@ public @Service class JVariableWriter {
         return instance;
     }
 
+    private @Service JModifierWriter modifierWriter;
     private @Service JAnnotationWriter annotationWriter;
     private @Service JTypeWriter typeWriter;
     private @Service ExpressionWriter expressionWriter;
@@ -35,22 +37,26 @@ public @Service class JVariableWriter {
     }
 
     public @Mandatory String write(@Mandatory JVariable variable) {
+        String modifiers = modifierWriter.write(variable.getModifiers());
         String annotations = writeAnnotations(variable.getAnnotations());
         String type = typeWriter.write(variable.getType());
         String name = variable.getName();
         String expression = writeExpression(variable.getExpression());
-        return annotations + type + " " + name + expression;
+
+        return new StringJoiner<>(modifiers, annotations, type, name, expression)
+            .withDelimiter(" ")
+            .withFilter(s -> !s.isBlank())
+            .join();
     }
 
     private @Mandatory String writeAnnotations(@Mandatory List<JAnnotation> annotations) {
-        String endingSpace = annotations.isEmpty() ? "" : " ";
         return new StringJoiner<>(annotations)
             .withDelimiter(" ")
             .withConverter(annotation -> annotationWriter.write(annotation))
-            .join() + endingSpace;
+            .join();
     }
 
     private @Mandatory String writeExpression(@Optional List<Token> expression) {
-        return expression == null ? "" : " = " + expressionWriter.write(expression);
+        return expression == null ? "" : "= " + expressionWriter.write(expression);
     }
 }
