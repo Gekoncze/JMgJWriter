@@ -154,11 +154,13 @@ public @Service class JMethodWriter {
 
     @Mandatory List<String> writeImplementation(@Optional List<Token> implementation) {
         if (implementation != null) {
-            return new List<>(
-                " {",
-                "    " + expressionWriter.write(implementation),
-                "}"
-            );
+            List<String> lines = new List<>();
+            lines.addLast(" {");
+            if (!implementation.isEmpty()) {
+                lines.addLast("    " + expressionWriter.write(implementation));
+            }
+            lines.addLast("}");
+            return lines;
         } else {
             return new List<>(";");
         }

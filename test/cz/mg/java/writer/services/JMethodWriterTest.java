@@ -30,6 +30,7 @@ public @Test class JMethodWriterTest {
         test.testMultipleInput();
         test.testParametersOnSingleLine();
         test.testParametersOnSeparateLines();
+        test.testEmptyImplementation();
         test.testImplementation();
         test.testComplex();
 
@@ -228,6 +229,20 @@ public @Test class JMethodWriterTest {
                 "    @Mandatory VeryLongClassName c,",
                 "    @Mandatory VeryLongClassName d",
                 ");"
+            ),
+            writer.writeLines(method)
+        );
+    }
+
+    private void testEmptyImplementation() {
+        JMethod method = new JMethod();
+        method.setName("fooBar");
+        method.setImplementation(new List<>());
+
+        compare(
+            new List<>(
+                "void fooBar() {",
+                "}"
             ),
             writer.writeLines(method)
         );
