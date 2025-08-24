@@ -10,3 +10,4 @@
     add support for multi-line token and expression writers
     add support for multi-line annotations
     add support for inner classes
+    add support for annotypes
