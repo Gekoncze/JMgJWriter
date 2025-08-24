@@ -58,7 +58,7 @@ public @Service class JClassWriter {
         return lines;
     }
 
-    private @Mandatory List<String> writeComment(@Optional String comment) {
+    @Mandatory List<String> writeComment(@Optional String comment) {
         if (comment != null) {
             return commentWriter.writeDocumentationComment(comment);
         } else {
@@ -66,7 +66,7 @@ public @Service class JClassWriter {
         }
     }
 
-    private @Mandatory List<String> writeAnnotations(@Mandatory List<JAnnotation> annotations) {
+    @Mandatory List<String> writeAnnotations(@Mandatory List<JAnnotation> annotations) {
         List<String> lines = new List<>();
         for (JAnnotation annotation : annotations) {
             lines.addLast(annotationWriter.write(annotation));
@@ -79,27 +79,27 @@ public @Service class JClassWriter {
         String name = writeName(jClass.getName());
         String bounds = writeBounds(jClass.getBounds());
         String base = writeBase(jClass.getBase());
-        String interfaces = writeInterfaces(jClass.getInterfaces());
+        String interfaces = writeInterfaces(jClass.getInterfaces(), "implements");
         String header = writeHeader(modifiers, "class", name + bounds, base, interfaces);
         return new List<>(header + " {");
     }
 
-    private @Mandatory String writeHeader(@Mandatory String... parts) {
+    @Mandatory String writeHeader(@Mandatory String... parts) {
         return new StringJoiner<>(parts)
             .withDelimiter(" ")
             .withFilter(s -> !s.isBlank())
             .join();
     }
 
-    private @Mandatory String writeModifiers(@Mandatory List<JModifier> modifiers) {
+    @Mandatory String writeModifiers(@Mandatory List<JModifier> modifiers) {
         return modifierWriter.write(modifiers);
     }
 
-    private @Mandatory String writeName(@Optional String name) {
+    @Mandatory String writeName(@Optional String name) {
         return name == null ? "" : name;
     }
 
-    private @Mandatory String writeBounds(@Mandatory List<JBound> bounds) {
+    @Mandatory String writeBounds(@Mandatory List<JBound> bounds) {
         return bounds.isEmpty() ? "" : boundsWriter.write(bounds);
     }
 
@@ -107,8 +107,8 @@ public @Service class JClassWriter {
         return base == null ? "" : "extends " + typeWriter.write(base);
     }
 
-    private @Mandatory String writeInterfaces(@Mandatory List<JType> interfaces) {
-        return interfaces.isEmpty() ? "" : "implements " +  new StringJoiner<>(interfaces)
+    @Mandatory String writeInterfaces(@Mandatory List<JType> interfaces, @Mandatory String keyword) {
+        return interfaces.isEmpty() ? "" : keyword + " " +  new StringJoiner<>(interfaces)
             .withDelimiter(", ")
             .withConverter(type -> typeWriter.write(type))
             .join();
@@ -122,7 +122,7 @@ public @Service class JClassWriter {
         return builder.build();
     }
 
-    private @Mandatory List<String> writeFields(@Required List<JVariable> fields) {
+    @Mandatory List<String> writeFields(@Required List<JVariable> fields) {
         List<String> lines = new List<>();
         for (JVariable field : fields) {
             lines.addLast(variableWriter.write(field) + ";");
@@ -138,7 +138,7 @@ public @Service class JClassWriter {
         return builder.build();
     }
 
-    private @Mandatory List<String> writeMethods(@Required List<JMethod> methods) {
+    @Mandatory List<String> writeMethods(@Required List<JMethod> methods) {
         BlockBuilder builder = new BlockBuilder();
         for (JMethod method : methods) {
             builder.addLines(methodWriter.writeLines(method));
@@ -146,7 +146,7 @@ public @Service class JClassWriter {
         return builder.build();
     }
 
-    private @Mandatory List<String> writeFooter() {
+    @Mandatory List<String> writeFooter() {
         return new List<>("}");
     }
 }
