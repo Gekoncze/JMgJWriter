@@ -3,9 +3,10 @@
 
 ### SOON ###
     add JEnum writer + test
+    add JRecord writer + test
     add JWriter + test
 
 ### LATER ###
     add support for multi-line token and expression writers
     add support for multi-line annotations
-    add support for records
+    add support for inner classes
