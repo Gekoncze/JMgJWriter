@@ -6,6 +6,10 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 
+/**
+ * Helper class that separate line blocks with empty line.
+ * Null lines and empty lists are ignored.
+ */
 public @Component class BlockBuilder {
     private final List<List<String>> blocks = new List<>();
 
