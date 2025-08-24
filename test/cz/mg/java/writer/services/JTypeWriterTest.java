@@ -23,6 +23,9 @@ public @Test class JTypeWriterTest {
         test.testWriteWithLowerBound();
         test.testWriteNested();
         test.testWriteWithMultipleBounds();
+        test.testWriteArrays();
+        test.testWriteVarargs();
+        test.testWriteComplex();
 
         System.out.println("OK");
     }
@@ -30,7 +33,8 @@ public @Test class JTypeWriterTest {
     private final @Service JTypeWriter writer = JTypeWriter.getInstance();
 
     private void testWriteWithNoBounds() {
-        JType type = new JType("AkiChan", null);
+        JType type = new JType();
+        type.setName("AkiChan");
 
         String result = writer.write(type);
 
@@ -38,7 +42,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithEmptyBounds() {
-        JType type = new JType("Diamond", new List<>());
+        JType type = new JType();
+        type.setName("Diamond");
+        type.setBounds(new List<>());
 
         String result = writer.write(type);
 
@@ -46,7 +52,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithUnBound() {
-        JType type = new JType("Shelter", new List<>(new JUnBound()));
+        JType type = new JType();
+        type.setName("Shelter");
+        type.setBounds(new List<>(new JUnBound()));
 
         String result = writer.write(type);
 
@@ -54,7 +62,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithTypeBound() {
-        JType type = new JType("Shelter", new List<>(new JTypeBound(new JType("Cat"))));
+        JType type = new JType();
+        type.setName("Shelter");
+        type.setBounds(new List<>(new JTypeBound(new JType("Cat"))));
 
         String result = writer.write(type);
 
@@ -62,7 +72,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithUpperBound() {
-        JType type = new JType("Shelter", new List<>(new JUpperBound(null, new List<>(
+        JType type = new JType();
+        type.setName("Shelter");
+        type.setBounds(new List<>(new JUpperBound(null, new List<>(
             new JType("Cat"),
             new JType("Wild")
         ))));
@@ -73,7 +85,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithLowerBound() {
-        JType type = new JType("Shelter", new List<>(new JLowerBound(new JType("Cat"))));
+        JType type = new JType();
+        type.setName("Shelter");
+        type.setBounds(new List<>(new JLowerBound(new JType("Cat"))));
 
         String result = writer.write(type);
 
@@ -81,10 +95,12 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteNested() {
-        JType type = new JType("List", new List<>(
+        JType type = new JType();
+        type.setName("List");
+        type.setBounds(new List<>(
             new JTypeBound(new JType("Array", new List<>(
                 new JTypeBound(new JType("Object"))
-            )))
+            ), 0, false))
         ));
 
         String result = writer.write(type);
@@ -93,7 +109,9 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteWithMultipleBounds() {
-        JType type = new JType("Map", new List<>(
+        JType type = new JType();
+        type.setName("Map");
+        type.setBounds(new List<>(
             new JTypeBound(new JType("Name")),
             new JTypeBound(new JType("Address"))
         ));
@@ -101,5 +119,52 @@ public @Test class JTypeWriterTest {
         String result = writer.write(type);
 
         Assert.assertEquals("Map<Name, Address>", result);
+    }
+
+    private void testWriteArrays() {
+        JType d1 = new JType();
+        d1.setName("Object");
+        d1.setDimensions(1);
+
+        JType d2 = new JType();
+        d2.setName("Object");
+        d2.setDimensions(2);
+
+        JType d3 = new JType();
+        d3.setName("Object");
+        d3.setDimensions(3);
+
+        String result1 = writer.write(d1);
+        String result2 = writer.write(d2);
+        String result3 = writer.write(d3);
+
+        Assert.assertEquals("Object[]", result1);
+        Assert.assertEquals("Object[][]", result2);
+        Assert.assertEquals("Object[][][]", result3);
+    }
+
+    private void testWriteVarargs() {
+        JType type = new JType();
+        type.setName("Object");
+        type.setVarargs(true);
+
+        String result = writer.write(type);
+
+        Assert.assertEquals("Object...", result);
+    }
+
+    private void testWriteComplex() {
+        JType type = new JType();
+        type.setName("World");
+        type.setBounds(new List<>(new JUpperBound("A", new List<>(
+            new JType("Tee"),
+            new JType("Hee")
+        ))));
+        type.setDimensions(2);
+        type.setVarargs(true);
+
+        String result = writer.write(type);
+
+        Assert.assertEquals("World<A extends Tee & Hee>[][]...", result);
     }
 }
