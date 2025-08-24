@@ -11,3 +11,4 @@
     add support for multi-line annotations
     add support for inner classes
     add support for annotypes
+    add support for static initializers
