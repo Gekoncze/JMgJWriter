@@ -17,6 +17,7 @@ public @Test class JUpperBoundWriterTest {
         test.testWriteOne();
         test.testWriteTwo();
         test.testWriteThree();
+        test.testWriteNamed();
 
         System.out.println("OK");
     }
@@ -60,5 +61,13 @@ public @Test class JUpperBoundWriterTest {
         String result = writer.write(bound);
 
         Assert.assertEquals("? extends Cute & Iron & Mouse", result);
+    }
+
+    private void testWriteNamed() {
+        JUpperBound bound = new JUpperBound("M", new List<>(new JType("Mouse")));
+
+        String result = writer.write(bound);
+
+        Assert.assertEquals("M extends Mouse", result);
     }
 }

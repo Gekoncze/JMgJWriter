@@ -2,6 +2,7 @@ package cz.mg.java.writer.services.bounds;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JType;
@@ -34,7 +35,14 @@ public @Service class JUpperBoundWriter {
             throw new WriterException("Missing upper bounds.");
         }
 
-        return "? extends " + writeTypes(bound.getTypes());
+        String name = writeName(bound.getName());
+        String types = writeTypes(bound.getTypes());
+
+        return name + " extends " + types;
+    }
+
+    private @Mandatory String writeName(@Optional String name) {
+        return name == null ? "?" : name;
     }
 
     private @Mandatory String writeTypes(@Mandatory List<JType> types) {
