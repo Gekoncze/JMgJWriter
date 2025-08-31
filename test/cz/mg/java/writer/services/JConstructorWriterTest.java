@@ -33,7 +33,6 @@ public @Test class JConstructorWriterTest {
         compare(
             new List<>(
                 "FooBar() {",
-                "    ",
                 "}"
             ),
             writer.writeLines(constructor)
