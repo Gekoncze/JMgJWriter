@@ -3,6 +3,7 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.WhitespaceToken;
 
 public @Service class WhitespaceTokenWriter {
@@ -31,6 +32,8 @@ public @Service class WhitespaceTokenWriter {
                 builder.append(" ");
             } else if (ch == '\s' || ch == '\t') {
                 builder.append(ch);
+            } else {
+                throw new WriterException("Unsupported whitespace with code " + (int)ch + ".");
             }
         }
         return builder.toString();
@@ -47,6 +50,8 @@ public @Service class WhitespaceTokenWriter {
                 builder = new StringBuilder();
             } else if (ch == '\s' || ch == '\t') {
                 builder.append(ch);
+            } else {
+                throw new WriterException("Unsupported whitespace with code " + (int)ch + ".");
             }
         }
         lines.addLast(builder.toString());

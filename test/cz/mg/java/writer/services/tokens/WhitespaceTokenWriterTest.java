@@ -4,10 +4,12 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 import cz.mg.token.test.TokenFactory;
 
 import static cz.mg.test.Assert.assertEquals;
+import static cz.mg.test.Assert.assertThatCode;
 
 public @Test class WhitespaceTokenWriterTest {
     public static void main(String[] args) {
@@ -49,14 +51,13 @@ public @Test class WhitespaceTokenWriterTest {
 
     private void testWriteNewLines() {
         assertEquals(" ", writer.write(t.whitespace("\n")));
-        assertEquals(" ", writer.write(t.whitespace("\r\n")));
-        assertEquals(" ", writer.write(t.whitespace("\n\r")));
         assertEquals("   ", writer.write(t.whitespace("\n\n\n")));
     }
 
     private void testWriteOther() {
-        assertEquals("", writer.write(t.whitespace("\r\bx")));
-        assertEquals(" ", writer.write(t.whitespace("\r \bx")));
+        assertThatCode(() -> writer.write(t.whitespace("\r"))).throwsException(WriterException.class);
+        assertThatCode(() -> writer.write(t.whitespace("\b"))).throwsException(WriterException.class);
+        assertThatCode(() -> writer.write(t.whitespace("x"))).throwsException(WriterException.class);
     }
 
     private void testWriteMixed() {
@@ -83,8 +84,9 @@ public @Test class WhitespaceTokenWriterTest {
     }
 
     private void testWriteOtherLines() {
-        compare(new List<>(""), writer.writeLines(t.whitespace("\r\bx")));
-        compare(new List<>(" "), writer.writeLines(t.whitespace("\r \bx")));
+        assertThatCode(() -> writer.writeLines(t.whitespace("\r"))).throwsException(WriterException.class);
+        assertThatCode(() -> writer.writeLines(t.whitespace("\b"))).throwsException(WriterException.class);
+        assertThatCode(() -> writer.writeLines(t.whitespace("x"))).throwsException(WriterException.class);
     }
 
     private void testWriteMixedLines() {
