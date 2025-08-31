@@ -61,6 +61,7 @@ public @Test class AllTests {
         JMethodWriterTest.main(args);
         JModifierWriterTest.main(args);
         JPackageLineWriterTest.main(args);
+        JStructureWritersTest.main(args);
         JTypeWriterTest.main(args);
         JVariableWriterTest.main(args);
     }
