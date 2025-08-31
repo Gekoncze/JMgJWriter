@@ -55,6 +55,7 @@ public @Test class AllTests {
         JClassWriterTest.main(args);
         JCommentWriterTest.main(args);
         JConstructorWriterTest.main(args);
+        JEnumWriterTest.main(args);
         JImportWriterTest.main(args);
         JInterfaceWriterTest.main(args);
         JMethodWriterTest.main(args);

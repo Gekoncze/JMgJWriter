@@ -130,7 +130,7 @@ public @Service class JClassWriter {
         return lines;
     }
 
-    private @Mandatory List<String> writeConstructors(@Required List<JConstructor> constructors) {
+    @Mandatory List<String> writeConstructors(@Required List<JConstructor> constructors) {
         BlockBuilder builder = new BlockBuilder();
         for (JConstructor constructor : constructors) {
             builder.addLines(constructorWriter.writeLines(constructor));
