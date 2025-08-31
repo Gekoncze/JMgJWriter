@@ -283,7 +283,11 @@ public @Test class JMethodWriterTest {
         method.getModifiers().addLast(JModifier.VOLATILE);
         method.getBounds().addLast(new JTypeBound(new JType("T")));
         method.getBounds().addLast(new JUpperBound(null, new List<>(new JType("Number"))));
-        method.setOutput(new JType("List", new List<>(new JTypeBound(new JType("T")))));
+        method.setOutput(new JType(
+            "List",
+            new List<>(new JTypeBound(new JType("T"))),
+            0, false
+        ));
         method.setName("complexity");
         method.getInput().addLast(new JVariable(
             new List<>(new JAnnotation("Mandatory")),

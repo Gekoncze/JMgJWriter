@@ -223,7 +223,11 @@ public @Test class JClassWriterTest {
         jClass.setModifiers(new List<>(JModifier.PUBLIC, JModifier.FINAL));
         jClass.setName("Ninu");
         jClass.setBounds(new List<>(new JTypeBound(new JType("V")), new JTypeBound(new JType("T"))));
-        jClass.setBase(new JType("VTuber", new List<>(new JTypeBound(new JType("V")))));
+        jClass.setBase(new JType(
+            "VTuber",
+            new List<>(new JTypeBound(new JType("V"))),
+            0, false
+        ));
         jClass.getInterfaces().addLast(new JType("Chaos"));
 
         JVariable staticField = new JVariable();
