@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JType;
 import cz.mg.java.entities.bounds.JBound;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
 
 public @Service class JTypeWriter {
@@ -39,6 +40,9 @@ public @Service class JTypeWriter {
     }
 
     private @Mandatory String writeArrays(int dimensions) {
+        if (dimensions < 0) {
+            throw new WriterException("Illegal array dimension " + dimensions + ".");
+        }
         return "[]".repeat(dimensions);
     }
 

@@ -8,6 +8,7 @@ import cz.mg.java.entities.bounds.JLowerBound;
 import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.java.entities.bounds.JUnBound;
 import cz.mg.java.entities.bounds.JUpperBound;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
 
 public @Test class JTypeWriterTest {
@@ -122,6 +123,10 @@ public @Test class JTypeWriterTest {
     }
 
     private void testWriteArrays() {
+        JType d0 = new JType();
+        d0.setName("Object");
+        d0.setDimensions(0);
+
         JType d1 = new JType();
         d1.setName("Object");
         d1.setDimensions(1);
@@ -134,13 +139,23 @@ public @Test class JTypeWriterTest {
         d3.setName("Object");
         d3.setDimensions(3);
 
+        JType illegal = new JType();
+        illegal.setName("Object");
+        illegal.setDimensions(-1);
+
+        String result0 = writer.write(d0);
         String result1 = writer.write(d1);
         String result2 = writer.write(d2);
         String result3 = writer.write(d3);
 
+        Assert.assertEquals("Object", result0);
         Assert.assertEquals("Object[]", result1);
         Assert.assertEquals("Object[][]", result2);
         Assert.assertEquals("Object[][][]", result3);
+
+        Assert.assertThatCode(() -> writer.write(illegal))
+            .withMessage("Writer exception should be thrown for illegal array dimension.")
+            .throwsException(WriterException.class);
     }
 
     private void testWriteVarargs() {
