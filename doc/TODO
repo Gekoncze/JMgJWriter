@@ -10,3 +10,5 @@
     add support for inner classes
     add support for static initializers
     add support for multi-line token, expression and implementation writers
+    add support for multi-line quote token
+

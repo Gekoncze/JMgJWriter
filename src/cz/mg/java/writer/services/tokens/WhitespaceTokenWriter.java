@@ -2,6 +2,7 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.collections.list.List;
 import cz.mg.token.tokens.WhitespaceToken;
 
 public @Service class WhitespaceTokenWriter {
@@ -22,14 +23,33 @@ public @Service class WhitespaceTokenWriter {
     }
 
     public @Mandatory String write(@Mandatory WhitespaceToken token) {
-        return removeNewLines(token.getText());
+        String text = token.getText();
+        StringBuilder builder = new StringBuilder(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch == '\n') {
+                builder.append(" ");
+            } else if (ch == '\s' || ch == '\t') {
+                builder.append(ch);
+            }
+        }
+        return builder.toString();
     }
 
-    private @Mandatory String removeNewLines(@Mandatory String text) {
-        return text
-            .replace("\r\n", " ")
-            .replace("\n\r", " ")
-            .replace("\n", " ")
-            .replace("\r", " ");
+    public @Mandatory List<String> writeLines(@Mandatory WhitespaceToken token) {
+        String text = token.getText();
+        List<String> lines = new List<>();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch == '\n') {
+                lines.addLast(builder.toString());
+                builder = new StringBuilder();
+            } else if (ch == '\s' || ch == '\t') {
+                builder.append(ch);
+            }
+        }
+        lines.addLast(builder.toString());
+        return lines;
     }
 }
