@@ -15,7 +15,8 @@ public @Test class JEnumWriterTest {
 
         JEnumWriterTest test = new JEnumWriterTest();
         test.testWriteSimple();
-        test.testWriteSimpleEntries();
+        test.testWriteSingleEntry();
+        test.testWriteMultipleEntries();
         test.testWriteComplex();
 
         System.out.println("OK");
@@ -38,7 +39,25 @@ public @Test class JEnumWriterTest {
         );
     }
 
-    private void testWriteSimpleEntries() {
+    private void testWriteSingleEntry() {
+        JEnum jEnum = new JEnum();
+        jEnum.setModifiers(new List<>(JModifier.PUBLIC));
+        jEnum.setName("Alone");
+        jEnum.setEntries(new List<>(
+            new JEnumEntry("ALONE", null)
+        ));
+
+        compare(
+            new List<>(
+                "public enum Alone {",
+                "    ALONE;",
+                "}"
+            ),
+            writer.write(jEnum)
+        );
+    }
+
+    private void testWriteMultipleEntries() {
         JEnum jEnum = new JEnum();
         jEnum.setModifiers(new List<>(JModifier.PUBLIC));
         jEnum.setName("DayOfWeek");
