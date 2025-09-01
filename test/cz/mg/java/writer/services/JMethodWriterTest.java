@@ -2,15 +2,15 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.array.Array;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.java.entities.bounds.JUpperBound;
-import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
+
+import static cz.mg.java.writer.test.QuickAssert.compare;
 
 public @Test class JMethodWriterTest {
     public static void main(String[] args) {
@@ -337,12 +337,5 @@ public @Test class JMethodWriterTest {
             ),
             writer.writeLines(method)
         );
-    }
-
-    private void compare(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withMessage("Incorrect method code generated.")
-            .withPrintFunction(s -> '"' + s + '"')
-            .areEqual();
     }
 }

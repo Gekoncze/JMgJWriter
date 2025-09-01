@@ -2,13 +2,12 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JTypeBound;
-import cz.mg.test.Assert;
-import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
+
+import static cz.mg.java.writer.test.QuickAssert.compare;
 
 public @Test class JInterfaceWriterTest {
     public static void main(String[] args) {
@@ -23,7 +22,6 @@ public @Test class JInterfaceWriterTest {
 
     private final @Service JInterfaceWriter writer = JInterfaceWriter.getInstance();
     private final @Service TokenFactory t = TokenFactory.getInstance();
-    private final @Service BracketFactory b = BracketFactory.getInstance();
 
     private void testWriteSimple() {
         JInterface jInterface = new JInterface();
@@ -83,12 +81,5 @@ public @Test class JInterfaceWriterTest {
             ),
             writer.write(jInterface)
         );
-    }
-
-    private void compare(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withMessage("Incorrect interface code generated.")
-            .withPrintFunction(s -> '"' + s + '"')
-            .areEqual();
     }
 }

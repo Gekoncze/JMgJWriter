@@ -2,12 +2,12 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JClass;
 import cz.mg.java.entities.JEnum;
 import cz.mg.java.entities.JInterface;
-import cz.mg.test.Assert;
+
+import static cz.mg.java.writer.test.QuickAssert.compare;
 
 public @Test class JStructureWritersTest {
     public static void main(String[] args) {
@@ -60,12 +60,5 @@ public @Test class JStructureWritersTest {
             ),
             writers.write(jEnum)
         );
-    }
-
-    private void compare(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withMessage("Incorrect code generated.")
-            .withPrintFunction(s -> '"' + s + '"')
-            .areEqual();
     }
 }

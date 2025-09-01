@@ -2,12 +2,12 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
-import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
+
+import static cz.mg.java.writer.test.QuickAssert.compare;
 
 public @Test class JEnumWriterTest {
     public static void main(String[] args) {
@@ -196,12 +196,5 @@ public @Test class JEnumWriterTest {
             ),
             writer.write(jEnum)
         );
-    }
-
-    private void compare(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withMessage("Incorrect enum code generated.")
-            .withPrintFunction(s -> '"' + s + '"')
-            .areEqual();
     }
 }
