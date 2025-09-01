@@ -2,13 +2,12 @@
     ...
 
 ### SOON ###
-    ...
+    add support for multi-line token writers
+        test all token and bracket writers for multi-line support
 
 ### LATER ###
     add JRecord writer + test
     add JAnnotype writer + test
     add support for inner classes
     add support for static initializers
-    add support for multi-line token, expression and implementation writers
-    add support for multi-line quote token
-
+    add support for multi-line string literals (text blocks)
