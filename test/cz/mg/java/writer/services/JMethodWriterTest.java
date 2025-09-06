@@ -10,7 +10,7 @@ import cz.mg.java.entities.bounds.JUpperBound;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JMethodWriterTest {
     public static void main(String[] args) {
@@ -45,7 +45,7 @@ public @Test class JMethodWriterTest {
         JMethod method = new JMethod();
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar();"
             ),
@@ -58,7 +58,7 @@ public @Test class JMethodWriterTest {
         method.setComment("My fancy test method.");
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * My fancy test method.",
@@ -74,7 +74,7 @@ public @Test class JMethodWriterTest {
         method.getAnnotations().addLast(new JAnnotation("Optional"));
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "@Optional",
                 "void fooBar();"
@@ -89,7 +89,7 @@ public @Test class JMethodWriterTest {
         method.getAnnotations().addLast(new JAnnotation("Part"));
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "@Optional",
                 "@Part",
@@ -104,7 +104,7 @@ public @Test class JMethodWriterTest {
         method.getModifiers().addLast(JModifier.PUBLIC);
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "public void fooBar();"
             ),
@@ -118,7 +118,7 @@ public @Test class JMethodWriterTest {
         method.getModifiers().addLast(JModifier.ABSTRACT);
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "public abstract void fooBar();"
             ),
@@ -131,7 +131,7 @@ public @Test class JMethodWriterTest {
         method.getBounds().addLast(new JTypeBound(new JType("T")));
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "<T> void fooBar();"
             ),
@@ -145,7 +145,7 @@ public @Test class JMethodWriterTest {
         method.getBounds().addLast(new JTypeBound(new JType("V")));
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "<U, V> void fooBar();"
             ),
@@ -158,7 +158,7 @@ public @Test class JMethodWriterTest {
         method.setOutput(new JType("int"));
         method.setName("fooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "int fooBar();"
             ),
@@ -171,7 +171,7 @@ public @Test class JMethodWriterTest {
         method.setName("fooBar");
         method.getInput().addLast(new JVariable(new List<>(), new List<>(), new JType("int"), "a"));
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar(int a);"
             ),
@@ -185,7 +185,7 @@ public @Test class JMethodWriterTest {
         method.getInput().addLast(new JVariable(new List<>(), new List<>(), new JType("int"), "a"));
         method.getInput().addLast(new JVariable(new List<>(), new List<>(), new JType("int"), "b"));
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar(int a, int b);"
             ),
@@ -203,7 +203,7 @@ public @Test class JMethodWriterTest {
             new JVariable(new List<>(new JAnnotation("Mandatory")), new List<>(), new JType("Integer"), "d")
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar(@Mandatory Integer a, @Mandatory Integer b, @Mandatory Integer c, @Mandatory Integer d);"
             ),
@@ -221,7 +221,7 @@ public @Test class JMethodWriterTest {
             new JVariable(new List<>(new JAnnotation("Mandatory")), new List<>(), new JType("VeryLongClassName"), "d")
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar(",
                 "    @Mandatory VeryLongClassName a,",
@@ -239,7 +239,7 @@ public @Test class JMethodWriterTest {
         method.setName("fooBar");
         method.setImplementation(new List<>());
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar() {",
                 "}"
@@ -253,7 +253,7 @@ public @Test class JMethodWriterTest {
         method.setName("fooBar");
         method.setImplementation(new List<>(t.word("return"), t.symbol(";")));
 
-        compare(
+        assertEquals(
             new List<>(
                 "void fooBar() {",
                 "    return;",
@@ -319,7 +319,7 @@ public @Test class JMethodWriterTest {
             t.symbol(";")
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * My complex test method.",

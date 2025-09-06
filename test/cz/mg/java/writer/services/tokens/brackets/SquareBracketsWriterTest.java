@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens.brackets;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -47,14 +47,14 @@ public @Test class SquareBracketsWriterTest {
     }
 
     private void testWriteLinesEmpty() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("[]"),
             writer.writeLines(b.squareBrackets())
         );
     }
 
     private void testWriteLines() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "[",
                 "i",
@@ -71,7 +71,7 @@ public @Test class SquareBracketsWriterTest {
     }
 
     private void testWriteLinesNested() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "[[1",
                 "]b]"

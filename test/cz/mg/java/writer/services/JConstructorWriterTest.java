@@ -8,7 +8,7 @@ import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JConstructorWriterTest {
     public static void main(String[] args) {
@@ -30,7 +30,7 @@ public @Test class JConstructorWriterTest {
         constructor.setName("FooBar");
         constructor.setImplementation(new List<>());
 
-        compare(
+        assertEquals(
             new List<>(
                 "FooBar() {",
                 "}"
@@ -91,7 +91,7 @@ public @Test class JConstructorWriterTest {
             t.symbol(";")
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * My complex test constructor.",

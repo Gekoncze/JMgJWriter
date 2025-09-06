@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -67,21 +67,21 @@ public @Test class ExpressionWriterTest {
     }
 
     private void testWriteLinesEmpty() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(),
             writer.writeLines(new List<>())
         );
     }
 
     private void testWriteLinesSingle() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("Hewwo"),
             writer.writeLines(new List<>(t.word("Hewwo")))
         );
     }
 
     private void testWriteLinesSimple() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "return",
                 "    foo;"
@@ -97,7 +97,7 @@ public @Test class ExpressionWriterTest {
     }
 
     private void testWriteLinesBrackets() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "foo(",
                 "    bar",

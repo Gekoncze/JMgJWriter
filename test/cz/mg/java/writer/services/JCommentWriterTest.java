@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assert;
 import cz.mg.test.Assertions;
 
@@ -48,12 +48,12 @@ public @Test class JCommentWriterTest {
     }
 
     private void testWriteMultiLineComment() {
-        QuickAssert.compare(new List<>("/**/"), writer.writeMultiLineComment(""));
-        QuickAssert.compare(new List<>("/* */"), writer.writeMultiLineComment(" "));
-        QuickAssert.compare(new List<>("/*", "*/"), writer.writeMultiLineComment("\n"));
-        QuickAssert.compare(new List<>("/* foo bar */"), writer.writeMultiLineComment("foo bar"));
-        QuickAssert.compare(new List<>("/* foo", "bar */"), writer.writeMultiLineComment("foo\nbar"));
-        QuickAssert.compare(new List<>("/*", "foo", "bar", "*/"), writer.writeMultiLineComment("\nfoo\nbar\n"));
+        LineAssert.assertEquals(new List<>("/**/"), writer.writeMultiLineComment(""));
+        LineAssert.assertEquals(new List<>("/* */"), writer.writeMultiLineComment(" "));
+        LineAssert.assertEquals(new List<>("/*", "*/"), writer.writeMultiLineComment("\n"));
+        LineAssert.assertEquals(new List<>("/* foo bar */"), writer.writeMultiLineComment("foo bar"));
+        LineAssert.assertEquals(new List<>("/* foo", "bar */"), writer.writeMultiLineComment("foo\nbar"));
+        LineAssert.assertEquals(new List<>("/*", "foo", "bar", "*/"), writer.writeMultiLineComment("\nfoo\nbar\n"));
 
         Assertions.assertThatCode(() -> writer.writeMultiLineComment("*/"))
             .withMessage("Missing comment validation.")
@@ -61,7 +61,7 @@ public @Test class JCommentWriterTest {
     }
 
     private void testWriteDocumentationComment() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *",
@@ -70,7 +70,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *",
@@ -80,7 +80,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("\n")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *",
@@ -91,7 +91,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("\n\n")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *  ",
@@ -100,7 +100,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment(" ")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " * \t",
@@ -109,7 +109,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("\t")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " * foo bar",
@@ -118,7 +118,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("foo bar")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *",
@@ -129,7 +129,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("\nfoo bar\n")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " * foo",
@@ -139,7 +139,7 @@ public @Test class JCommentWriterTest {
             writer.writeDocumentationComment("foo\nbar")
         );
 
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/**",
                 " *",

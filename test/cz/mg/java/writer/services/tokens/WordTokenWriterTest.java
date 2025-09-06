@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.token.tokens.WordToken;
 
 import static cz.mg.test.Assert.assertEquals;
@@ -33,7 +33,7 @@ public @Test class WordTokenWriterTest {
     }
 
     private void testWriteLines() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("foobar"),
             writer.writeLines(new WordToken("foobar", -1))
         );

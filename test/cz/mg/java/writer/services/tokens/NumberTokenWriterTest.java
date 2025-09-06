@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.token.tokens.NumberToken;
 
 import static cz.mg.test.Assert.assertEquals;
@@ -33,7 +33,7 @@ public @Test class NumberTokenWriterTest {
     }
 
     private void testWriteLines() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("3.14f"),
             writer.writeLines(new NumberToken("3.14f", -1))
         );

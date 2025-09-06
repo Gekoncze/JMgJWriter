@@ -7,7 +7,7 @@ import cz.mg.java.entities.*;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JEnumWriterTest {
     public static void main(String[] args) {
@@ -30,7 +30,7 @@ public @Test class JEnumWriterTest {
         JEnum jEnum = new JEnum();
         jEnum.setName("FooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "enum FooBar {",
                 "}"
@@ -47,7 +47,7 @@ public @Test class JEnumWriterTest {
             new JEnumEntry("ALONE", null)
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "public enum Alone {",
                 "    ALONE;",
@@ -71,7 +71,7 @@ public @Test class JEnumWriterTest {
             new JEnumEntry("SUNDAY", null)
         ));
 
-        compare(
+        assertEquals(
             new List<>(
                 "public enum DayOfWeek {",
                 "    MONDAY,",
@@ -164,7 +164,7 @@ public @Test class JEnumWriterTest {
 
         jEnum.getMethods().addLast(method);
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * List of medals.",

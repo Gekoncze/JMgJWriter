@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.TokenFactory;
 
@@ -62,22 +62,22 @@ public @Test class WhitespaceTokenWriterTest {
     }
 
     private void testWriteEmptyLines() {
-        QuickAssert.compare(new List<>(""), writer.writeLines(t.whitespace("")));
+        LineAssert.assertEquals(new List<>(""), writer.writeLines(t.whitespace("")));
     }
 
     private void testWriteSpaceLines() {
-        QuickAssert.compare(new List<>(" "), writer.writeLines(t.whitespace(" ")));
-        QuickAssert.compare(new List<>("    "), writer.writeLines(t.whitespace("    ")));
+        LineAssert.assertEquals(new List<>(" "), writer.writeLines(t.whitespace(" ")));
+        LineAssert.assertEquals(new List<>("    "), writer.writeLines(t.whitespace("    ")));
     }
 
     private void testWriteTabLines() {
-        QuickAssert.compare(new List<>("\t"), writer.writeLines(t.whitespace("\t")));
-        QuickAssert.compare(new List<>("\t\t"), writer.writeLines(t.whitespace("\t\t")));
+        LineAssert.assertEquals(new List<>("\t"), writer.writeLines(t.whitespace("\t")));
+        LineAssert.assertEquals(new List<>("\t\t"), writer.writeLines(t.whitespace("\t\t")));
     }
 
     private void testWriteNewLineLines() {
-        QuickAssert.compare(new List<>("", ""), writer.writeLines(t.whitespace("\n")));
-        QuickAssert.compare(new List<>("", "", ""), writer.writeLines(t.whitespace("\n\n")));
+        LineAssert.assertEquals(new List<>("", ""), writer.writeLines(t.whitespace("\n")));
+        LineAssert.assertEquals(new List<>("", "", ""), writer.writeLines(t.whitespace("\n\n")));
     }
 
     private void testWriteOtherLines() {
@@ -87,6 +87,6 @@ public @Test class WhitespaceTokenWriterTest {
     }
 
     private void testWriteMixedLines() {
-        QuickAssert.compare(new List<>("    ", "\t", "", " "), writer.writeLines(t.whitespace("    \n\t\n\n ")));
+        LineAssert.assertEquals(new List<>("    ", "\t", "", " "), writer.writeLines(t.whitespace("    \n\t\n\n ")));
     }
 }

@@ -7,7 +7,7 @@ import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JInterfaceWriterTest {
     public static void main(String[] args) {
@@ -27,7 +27,7 @@ public @Test class JInterfaceWriterTest {
         JInterface jInterface = new JInterface();
         jInterface.setName("FooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "interface FooBar {",
                 "}"
@@ -64,7 +64,7 @@ public @Test class JInterfaceWriterTest {
 
         jInterface.getMethods().addLast(method);
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * Test documentation comment.",

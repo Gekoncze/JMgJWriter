@@ -8,7 +8,7 @@ import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JClassWriterTest {
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public @Test class JClassWriterTest {
         JClass jClass = new JClass();
         jClass.setName("FooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar {",
                 "}"
@@ -51,7 +51,7 @@ public @Test class JClassWriterTest {
         jClass.setComment("Test class to foo and bar.");
         jClass.setName("FooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * Test class to foo and bar.",
@@ -68,7 +68,7 @@ public @Test class JClassWriterTest {
         jClass.getModifiers().addLast(JModifier.PUBLIC);
         jClass.setName("FooBar");
 
-        compare(
+        assertEquals(
             new List<>(
                 "public class FooBar {",
                 "}"
@@ -82,7 +82,7 @@ public @Test class JClassWriterTest {
         jClass.setName("FooBar");
         jClass.getBounds().addLast(new JTypeBound(new JType("T")));
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar<T> {",
                 "}"
@@ -96,7 +96,7 @@ public @Test class JClassWriterTest {
         jClass.setName("Cat");
         jClass.setBase(new JType("Animal"));
 
-        compare(
+        assertEquals(
             new List<>(
                 "class Cat extends Animal {",
                 "}"
@@ -111,7 +111,7 @@ public @Test class JClassWriterTest {
         jClass.getInterfaces().addLast(new JType("Foo"));
         jClass.getInterfaces().addLast(new JType("Bar"));
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar implements Foo, Bar {",
                 "}"
@@ -135,7 +135,7 @@ public @Test class JClassWriterTest {
         jClass.getFields().addLast(fooField);
         jClass.getFields().addLast(barField);
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar {",
                 "    Foo foo;",
@@ -166,7 +166,7 @@ public @Test class JClassWriterTest {
         jClass.getConstructors().addLast(first);
         jClass.getConstructors().addLast(second);
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar {",
                 "    FooBar() {",
@@ -202,7 +202,7 @@ public @Test class JClassWriterTest {
         jClass.getMethods().addLast(first);
         jClass.getMethods().addLast(second);
 
-        compare(
+        assertEquals(
             new List<>(
                 "class FooBar {",
                 "    void firstOne() {",
@@ -277,7 +277,7 @@ public @Test class JClassWriterTest {
 
         jClass.getMethods().addLast(method);
 
-        compare(
+        assertEquals(
             new List<>(
                 "/**",
                 " * I slammed my pp in the car door.",

@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens.brackets;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -56,14 +56,14 @@ public @Test class RoundBracketsWriterTest {
     }
 
     private void testWriteLinesEmpty() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("()"),
             writer.writeLines(b.roundBrackets())
         );
     }
 
     private void testWriteLines() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "(",
                 "a+2*3.14",
@@ -82,7 +82,7 @@ public @Test class RoundBracketsWriterTest {
     }
 
     private void testWriteLinesNested() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "(1*(",
                 "2+3",

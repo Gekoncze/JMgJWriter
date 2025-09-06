@@ -7,7 +7,7 @@ import cz.mg.java.entities.JClass;
 import cz.mg.java.entities.JEnum;
 import cz.mg.java.entities.JInterface;
 
-import static cz.mg.java.writer.test.QuickAssert.compare;
+import static cz.mg.java.writer.test.LineAssert.assertEquals;
 
 public @Test class JStructureWritersTest {
     public static void main(String[] args) {
@@ -27,7 +27,7 @@ public @Test class JStructureWritersTest {
         JClass jClass = new JClass();
         jClass.setName("MyClass");
 
-        compare(
+        assertEquals(
             new List<>(
                 "class MyClass {",
                 "}"
@@ -40,7 +40,7 @@ public @Test class JStructureWritersTest {
         JInterface jInterface = new JInterface();
         jInterface.setName("MyInterface");
 
-        compare(
+        assertEquals(
             new List<>(
                 "interface MyInterface {",
                 "}"
@@ -53,7 +53,7 @@ public @Test class JStructureWritersTest {
         JEnum jEnum = new JEnum();
         jEnum.setName("MyEnum");
 
-        compare(
+        assertEquals(
             new List<>(
                 "enum MyEnum {",
                 "}"

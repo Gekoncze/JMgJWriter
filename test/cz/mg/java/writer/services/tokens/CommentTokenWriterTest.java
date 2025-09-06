@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.java.writer.test.QuickAssert;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 
@@ -60,14 +60,14 @@ public @Test class CommentTokenWriterTest {
     }
 
     private void testWriteLinesEmpty() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>("/**/"),
             writer.writeLines(t.comment(""))
         );
     }
 
     private void testWriteLinesSimple() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/*foo",
                 "bar*/"
@@ -77,7 +77,7 @@ public @Test class CommentTokenWriterTest {
     }
 
     private void testWriteLinesMultiLine() {
-        QuickAssert.compare(
+        LineAssert.assertEquals(
             new List<>(
                 "/*foo",
                 "bar",
