@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.token.tokens.WordToken;
 
-public @Service class WordTokenWriter {
+public @Service class WordTokenWriter implements TokenWriter<WordToken> {
     private static volatile @Service WordTokenWriter instance;
 
     public static @Service WordTokenWriter getInstance() {
@@ -21,6 +21,7 @@ public @Service class WordTokenWriter {
     private WordTokenWriter() {
     }
 
+    @Override
     public @Mandatory String write(@Mandatory WordToken token) {
         return token.getText();
     }

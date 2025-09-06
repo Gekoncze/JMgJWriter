@@ -2,14 +2,11 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.TokenFactory;
-
-import static cz.mg.test.Assert.assertEquals;
-import static cz.mg.test.Assert.assertThatCode;
 
 public @Test class WhitespaceTokenWriterTest {
     public static void main(String[] args) {
@@ -36,67 +33,60 @@ public @Test class WhitespaceTokenWriterTest {
     private final @Service TokenFactory t = TokenFactory.getInstance();
 
     private void testWriteEmpty() {
-        assertEquals("", writer.write(t.whitespace("")));
+        Assert.assertEquals("", writer.write(t.whitespace("")));
     }
 
     private void testWriteSpaces() {
-        assertEquals(" ", writer.write(t.whitespace(" ")));
-        assertEquals("    ", writer.write(t.whitespace("    ")));
+        Assert.assertEquals(" ", writer.write(t.whitespace(" ")));
+        Assert.assertEquals("    ", writer.write(t.whitespace("    ")));
     }
 
     private void testWriteTabs() {
-        assertEquals("\t", writer.write(t.whitespace("\t")));
-        assertEquals("\t\t", writer.write(t.whitespace("\t\t")));
+        Assert.assertEquals("\t", writer.write(t.whitespace("\t")));
+        Assert.assertEquals("\t\t", writer.write(t.whitespace("\t\t")));
     }
 
     private void testWriteNewLines() {
-        assertEquals(" ", writer.write(t.whitespace("\n")));
-        assertEquals("   ", writer.write(t.whitespace("\n\n\n")));
+        Assert.assertEquals(" ", writer.write(t.whitespace("\n")));
+        Assert.assertEquals("   ", writer.write(t.whitespace("\n\n\n")));
     }
 
     private void testWriteOther() {
-        assertThatCode(() -> writer.write(t.whitespace("\r"))).throwsException(WriterException.class);
-        assertThatCode(() -> writer.write(t.whitespace("\b"))).throwsException(WriterException.class);
-        assertThatCode(() -> writer.write(t.whitespace("x"))).throwsException(WriterException.class);
+        Assert.assertException(() -> writer.write(t.whitespace("\r")), WriterException.class);
+        Assert.assertException(() -> writer.write(t.whitespace("\b")), WriterException.class);
+        Assert.assertException(() -> writer.write(t.whitespace("x")), WriterException.class);
     }
 
     private void testWriteMixed() {
-        assertEquals(" \t ", writer.write(t.whitespace("\s\t\n")));
+        Assert.assertEquals(" \t ", writer.write(t.whitespace("\s\t\n")));
     }
 
     private void testWriteEmptyLines() {
-        compare(new List<>(""), writer.writeLines(t.whitespace("")));
+        QuickAssert.compare(new List<>(""), writer.writeLines(t.whitespace("")));
     }
 
     private void testWriteSpaceLines() {
-        compare(new List<>(" "), writer.writeLines(t.whitespace(" ")));
-        compare(new List<>("    "), writer.writeLines(t.whitespace("    ")));
+        QuickAssert.compare(new List<>(" "), writer.writeLines(t.whitespace(" ")));
+        QuickAssert.compare(new List<>("    "), writer.writeLines(t.whitespace("    ")));
     }
 
     private void testWriteTabLines() {
-        compare(new List<>("\t"), writer.writeLines(t.whitespace("\t")));
-        compare(new List<>("\t\t"), writer.writeLines(t.whitespace("\t\t")));
+        QuickAssert.compare(new List<>("\t"), writer.writeLines(t.whitespace("\t")));
+        QuickAssert.compare(new List<>("\t\t"), writer.writeLines(t.whitespace("\t\t")));
     }
 
     private void testWriteNewLineLines() {
-        compare(new List<>("", ""), writer.writeLines(t.whitespace("\n")));
-        compare(new List<>("", "", ""), writer.writeLines(t.whitespace("\n\n")));
+        QuickAssert.compare(new List<>("", ""), writer.writeLines(t.whitespace("\n")));
+        QuickAssert.compare(new List<>("", "", ""), writer.writeLines(t.whitespace("\n\n")));
     }
 
     private void testWriteOtherLines() {
-        assertThatCode(() -> writer.writeLines(t.whitespace("\r"))).throwsException(WriterException.class);
-        assertThatCode(() -> writer.writeLines(t.whitespace("\b"))).throwsException(WriterException.class);
-        assertThatCode(() -> writer.writeLines(t.whitespace("x"))).throwsException(WriterException.class);
+        Assert.assertException(() -> writer.writeLines(t.whitespace("\r")), WriterException.class);
+        Assert.assertException(() -> writer.writeLines(t.whitespace("\b")), WriterException.class);
+        Assert.assertException(() -> writer.writeLines(t.whitespace("x")), WriterException.class);
     }
 
     private void testWriteMixedLines() {
-        compare(new List<>("    ", "\t", "", " "), writer.writeLines(t.whitespace("    \n\t\n\n ")));
-    }
-
-    private void compare(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withMessage("Incorrect code generated.")
-            .withPrintFunction(s -> '"' + s + '"')
-            .areEqual();
+        QuickAssert.compare(new List<>("    ", "\t", "", " "), writer.writeLines(t.whitespace("    \n\t\n\n ")));
     }
 }

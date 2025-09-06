@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.tokens.brackets;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.tokens.brackets.Brackets;
@@ -13,10 +13,10 @@ public @Test class BracketsWritersTest {
         System.out.print("Running " + BracketsWritersTest.class.getSimpleName() + " ... ");
 
         BracketsWritersTest test = new BracketsWritersTest();
-        test.testWriteUnsupported();
-        test.testWriteRound();
-        test.testWriteSquare();
-        test.testWriteCurly();
+        test.testGetUnsupported();
+        test.testGetRound();
+        test.testGetSquare();
+        test.testGetCurly();
 
         System.out.println("OK");
     }
@@ -25,21 +25,27 @@ public @Test class BracketsWritersTest {
     private final @Service TokenFactory t = TokenFactory.getInstance();
     private final @Service BracketFactory b = BracketFactory.getInstance();
 
-    private void testWriteUnsupported() {
-        Assert.assertThatCode(() -> writers.write(new Brackets()))
+    private void testGetUnsupported() {
+        Assertions.assertThatCode(() -> writers.get(new Brackets()))
             .withMessage("Writer exception should be thrown for unsupported brackets.")
             .throwsException(WriterException.class);
     }
 
-    private void testWriteRound() {
-        Assert.assertEquals("(1)", writers.write(b.roundBrackets(t.number("1"))));
+    private void testGetRound() {
+        Assertions.assertThat(writers.get(b.roundBrackets(t.number("1"))))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(RoundBracketsWriter.class);
     }
 
-    private void testWriteSquare() {
-        Assert.assertEquals("[1]", writers.write(b.squareBrackets(t.number("1"))));
+    private void testGetSquare() {
+        Assertions.assertThat(writers.get(b.squareBrackets(t.number("1"))))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(SquareBracketsWriter.class);
     }
 
-    private void testWriteCurly() {
-        Assert.assertEquals("{1}", writers.write(b.curlyBrackets(t.number("1"))));
+    private void testGetCurly() {
+        Assertions.assertThat(writers.get(b.curlyBrackets(t.number("1"))))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(CurlyBracketsWriter.class);
     }
 }

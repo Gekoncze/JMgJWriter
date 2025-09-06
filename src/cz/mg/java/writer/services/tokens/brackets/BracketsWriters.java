@@ -32,21 +32,15 @@ public @Service class BracketsWriters {
     private BracketsWriters() {
     }
 
-    public @Mandatory String write(@Mandatory Brackets brackets) {
-        if (brackets instanceof RoundBrackets roundBrackets) {
-            return roundBracketsWriter.write(roundBrackets);
-        }
-
-        if (brackets instanceof SquareBrackets squareBrackets) {
-            return squareBracketsWriter.write(squareBrackets);
-        }
-
-        if (brackets instanceof CurlyBrackets curlyBrackets) {
-            return curlyBracketsWriter.write(curlyBrackets);
-        }
-
-        throw new WriterException(
-            "Unsupported brackets of type " + brackets.getClass().getSimpleName() + "."
-        );
+    @SuppressWarnings("rawtypes")
+    public @Mandatory BracketsWriter<Brackets> get(@Mandatory Brackets brackets) {
+        return switch (brackets) {
+            case RoundBrackets ignored -> (BracketsWriter) roundBracketsWriter;
+            case SquareBrackets ignored -> (BracketsWriter) squareBracketsWriter;
+            case CurlyBrackets ignored -> (BracketsWriter) curlyBracketsWriter;
+            default -> throw new WriterException(
+                "Unsupported brackets of type " + brackets.getClass().getSimpleName() + "."
+            );
+        };
     }
 }

@@ -3,11 +3,13 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.test.Assert;
+import cz.mg.java.writer.services.tokens.brackets.CurlyBracketsWriter;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.tokens.*;
+import cz.mg.token.tokens.brackets.Brackets;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
@@ -16,15 +18,15 @@ public @Test class TokenWritersTest {
         System.out.print("Running " + TokenWritersTest.class.getSimpleName() + " ... ");
 
         TokenWritersTest test = new TokenWritersTest();
-        test.testWriteUnsupported();
-        test.testWriteWord();
-        test.testWriteNumber();
-        test.testWriteSymbol();
-        test.testWriteWhitespace();
-        test.testWriteDoubleQuote();
-        test.testWriteSingleQuote();
-        test.testWriteComment();
-        test.testWriteBrackets();
+        test.testGetUnsupported();
+        test.testGetWord();
+        test.testGetNumber();
+        test.testGetSymbol();
+        test.testGetWhitespace();
+        test.testGetDoubleQuote();
+        test.testGetSingleQuote();
+        test.testGetComment();
+        test.testGetBrackets();
 
         System.out.println("OK");
     }
@@ -33,49 +35,65 @@ public @Test class TokenWritersTest {
     private final @Service TokenFactory t = TokenFactory.getInstance();
     private final @Service BracketFactory b = BracketFactory.getInstance();
 
-    private void testWriteUnsupported() {
-        Assert.assertThatCode(() -> writers.write(new Token("Hewwo", 0)))
-            .withMessage("Unsupported token as input should throw writer exception.")
+    private void testGetUnsupported() {
+        Assertions.assertThatCode(() -> writers.get(new Token("Hewwo", 0)))
+            .withMessage("Writer exception should be thrown for unsupported token.")
             .throwsException(WriterException.class);
     }
 
-    private void testWriteWord() {
-        Assert.assertEquals("Hewwo", writers.write(new WordToken("Hewwo", 0)));
+    private void testGetWord() {
+        Assertions.assertThat(writers.get(new WordToken("Hewwo", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(WordTokenWriter.class);
     }
 
-    private void testWriteNumber() {
-        Assert.assertEquals("3.14f", writers.write(new NumberToken("3.14f", 0)));
+    private void testGetNumber() {
+        Assertions.assertThat(writers.get(new NumberToken("3.14f", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(NumberTokenWriter.class);
     }
 
-    private void testWriteSymbol() {
-        Assert.assertEquals("+=", writers.write(new SymbolToken("+=", 0)));
+    private void testGetSymbol() {
+        Assertions.assertThat(writers.get(new SymbolToken("+=", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(SymbolTokenWriter.class);
     }
 
-    private void testWriteWhitespace() {
-        Assert.assertEquals("    ", writers.write(new WhitespaceToken("    ", 0)));
+    private void testGetWhitespace() {
+        Assertions.assertThat(writers.get(new WhitespaceToken("    ", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(WhitespaceTokenWriter.class);
     }
 
-    private void testWriteDoubleQuote() {
-        Assert.assertEquals("\"foo\\\"bar\"", writers.write(new DoubleQuoteToken("foo\"bar", 0)));
+    private void testGetDoubleQuote() {
+        Assertions.assertThat(writers.get(new DoubleQuoteToken("foo\"bar", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(DoubleQuoteTokenWriter.class);
     }
 
-    private void testWriteSingleQuote() {
-        Assert.assertEquals("'foo\\'bar'", writers.write(new SingleQuoteToken("foo'bar", 0)));
+    private void testGetSingleQuote() {
+        Assertions.assertThat(writers.get(new SingleQuoteToken("foo'bar", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(SingleQuoteTokenWriter.class);
     }
 
-    private void testWriteComment() {
-        Assert.assertEquals("/*todo*/", writers.write(new CommentToken("todo", 0)));
+    private void testGetComment() {
+        Assertions.assertThat(writers.get(new CommentToken("todo", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(CommentTokenWriter.class);
     }
 
-    private void testWriteBrackets() {
-        Assert.assertEquals("{([hewwo])}", writers.write(
-            b.curlyBrackets(
-                b.roundBrackets(
-                    b.squareBrackets(
-                        t.word("hewwo")
-                    )
+    private void testGetBrackets() {
+        Brackets brackets = b.curlyBrackets(
+            b.roundBrackets(
+                b.squareBrackets(
+                    t.word("hewwo")
                 )
             )
-        ));
+        );
+
+        Assertions.assertThat(writers.get(brackets))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(CurlyBracketsWriter.class);
     }
 }

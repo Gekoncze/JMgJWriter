@@ -2,6 +2,8 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
 import static cz.mg.test.Assert.assertEquals;
@@ -14,6 +16,7 @@ public @Test class DoubleQuoteTokenWriterTest {
         test.testWriteEmpty();
         test.testWriteSimple();
         test.testWriteSpecialCharacters();
+        test.testWriteLines();
 
         System.out.println("OK");
     }
@@ -33,5 +36,12 @@ public @Test class DoubleQuoteTokenWriterTest {
     private void testWriteSpecialCharacters() {
         String result = writer.write(new DoubleQuoteToken("\\foo\nbar\rfoo\"bar\n\rbarfoo\r\n-\b-\t", -1));
         assertEquals("\"\\\\foo\\nbar\\rfoo\\\"bar\\n\\rbarfoo\\r\\n-\\b-\\t\"", result);
+    }
+
+    private void testWriteLines() {
+        QuickAssert.compare(
+            new List<>("\"foo\""),
+            writer.writeLines(new DoubleQuoteToken("foo", -1))
+        );
     }
 }

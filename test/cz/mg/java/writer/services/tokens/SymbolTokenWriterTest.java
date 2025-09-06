@@ -2,6 +2,8 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.token.tokens.SymbolToken;
 
 import static cz.mg.test.Assert.assertEquals;
@@ -13,6 +15,7 @@ public @Test class SymbolTokenWriterTest {
         SymbolTokenWriterTest test = new SymbolTokenWriterTest();
         test.testWriteEmpty();
         test.testWriteSymbols();
+        test.testWriteLines();
 
         System.out.println("OK");
     }
@@ -27,5 +30,12 @@ public @Test class SymbolTokenWriterTest {
     private void testWriteSymbols() {
         String result = writer.write(new SymbolToken("+=", -1));
         assertEquals("+=", result);
+    }
+
+    private void testWriteLines() {
+        QuickAssert.compare(
+            new List<>("+="),
+            writer.writeLines(new SymbolToken("+=", -1))
+        );
     }
 }

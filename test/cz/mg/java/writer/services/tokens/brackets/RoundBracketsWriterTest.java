@@ -2,6 +2,8 @@ package cz.mg.java.writer.services.tokens.brackets;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -14,6 +16,9 @@ public @Test class RoundBracketsWriterTest {
         test.testWriteEmpty();
         test.testWrite();
         test.testWriteNested();
+        test.testWriteLinesEmpty();
+        test.testWriteLines();
+        test.testWriteLinesNested();
 
         System.out.println("OK");
     }
@@ -48,5 +53,54 @@ public @Test class RoundBracketsWriterTest {
                 )
             )
         ));
+    }
+
+    private void testWriteLinesEmpty() {
+        QuickAssert.compare(
+            new List<>("()"),
+            writer.writeLines(b.roundBrackets())
+        );
+    }
+
+    private void testWriteLines() {
+        QuickAssert.compare(
+            new List<>(
+                "(",
+                "a+2*3.14",
+                ")"
+            ),
+            writer.writeLines(b.roundBrackets(
+                t.whitespace("\n"),
+                t.word("a"),
+                t.symbol("+"),
+                t.number("2"),
+                t.symbol("*"),
+                t.number("3.14"),
+                t.whitespace("\n")
+            ))
+        );
+    }
+
+    private void testWriteLinesNested() {
+        QuickAssert.compare(
+            new List<>(
+                "(1*(",
+                "2+3",
+                "))"
+            ),
+            writer.writeLines(
+                b.roundBrackets(
+                    t.number("1"),
+                    t.symbol("*"),
+                    b.roundBrackets(
+                        t.whitespace("\n"),
+                        t.number("2"),
+                        t.symbol("+"),
+                        t.number("3"),
+                        t.whitespace("\n")
+                    )
+                )
+            )
+        );
     }
 }

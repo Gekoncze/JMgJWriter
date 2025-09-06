@@ -2,6 +2,8 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.token.tokens.NumberToken;
 
 import static cz.mg.test.Assert.assertEquals;
@@ -13,6 +15,7 @@ public @Test class NumberTokenWriterTest {
         NumberTokenWriterTest test = new NumberTokenWriterTest();
         test.testWriteEmpty();
         test.testWriteNumber();
+        test.testWriteLines();
 
         System.out.println("OK");
     }
@@ -27,5 +30,12 @@ public @Test class NumberTokenWriterTest {
     private void testWriteNumber() {
         String result = writer.write(new NumberToken("3.14f", -1));
         assertEquals("3.14f", result);
+    }
+
+    private void testWriteLines() {
+        QuickAssert.compare(
+            new List<>("3.14f"),
+            writer.writeLines(new NumberToken("3.14f", -1))
+        );
     }
 }

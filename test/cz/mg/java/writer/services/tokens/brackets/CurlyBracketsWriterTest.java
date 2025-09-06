@@ -2,6 +2,8 @@ package cz.mg.java.writer.services.tokens.brackets;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -14,6 +16,9 @@ public @Test class CurlyBracketsWriterTest {
         test.testWriteEmpty();
         test.testWrite();
         test.testWriteNested();
+        test.testWriteLinesEmpty();
+        test.testWriteLines();
+        test.testWriteLinesNested();
 
         System.out.println("OK");
     }
@@ -46,5 +51,51 @@ public @Test class CurlyBracketsWriterTest {
                 b.curlyBrackets()
             )
         ));
+    }
+
+    private void testWriteLinesEmpty() {
+        QuickAssert.compare(
+            new List<>("{}"),
+            writer.writeLines(b.curlyBrackets())
+        );
+    }
+
+    private void testWriteLines() {
+        QuickAssert.compare(
+            new List<>(
+                "{",
+                "return 3;",
+                "}"
+            ),
+            writer.writeLines(
+                b.curlyBrackets(
+                    t.whitespace("\n"),
+                    t.word("return"),
+                    t.whitespace(" "),
+                    t.number("3"),
+                    t.symbol(";"),
+                    t.whitespace("\n")
+                )
+            )
+        );
+    }
+
+    private void testWriteLinesNested() {
+        QuickAssert.compare(
+            new List<>(
+                "{class Bar{",
+                "}}"
+            ),
+            writer.writeLines(
+                b.curlyBrackets(
+                    t.word("class"),
+                    t.whitespace(" "),
+                    t.word("Bar"),
+                    b.curlyBrackets(
+                        t.whitespace("\n")
+                    )
+                )
+            )
+        );
     }
 }

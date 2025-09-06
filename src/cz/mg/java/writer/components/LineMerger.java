@@ -3,7 +3,8 @@ package cz.mg.java.writer.components;
 import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
-import cz.mg.collections.list.ListItem;
+import cz.mg.collections.list.ReadableList;
+import cz.mg.collections.list.ReadableListItem;
 
 public @Component class LineMerger {
     private @Mandatory String delimiter = "";
@@ -17,7 +18,7 @@ public @Component class LineMerger {
         return this;
     }
 
-    public @Mandatory LineMerger merge(@Mandatory List<String> lines) {
+    public @Mandatory LineMerger merge(@Mandatory ReadableList<String> lines) {
         this.lines = merge(this.lines, delimiter, lines);
         return this;
     }
@@ -29,9 +30,9 @@ public @Component class LineMerger {
     }
 
     public static @Mandatory List<String> merge(
-        @Mandatory List<String> a,
+        @Mandatory ReadableList<String> a,
         @Mandatory String delimiter,
-        @Mandatory List<String> b
+        @Mandatory ReadableList<String> b
     ) {
         if (a.isEmpty()) {
             return new List<>(b);
@@ -43,7 +44,7 @@ public @Component class LineMerger {
 
         List<String> lines = new List<>();
 
-        for (ListItem<String> item = a.getFirstItem(); item != null; item = item.getNextItem()) {
+        for (ReadableListItem<String> item = a.getFirstItem(); item != null; item = item.getNextItem()) {
             if (item != a.getLastItem()) {
                 lines.addLast(item.get());
             }
@@ -53,7 +54,7 @@ public @Component class LineMerger {
         String firstLine = b.getFirst();
         lines.addLast(lastLine + delimiter + firstLine);
 
-        for (ListItem<String> item = b.getFirstItem(); item != null; item = item.getNextItem()) {
+        for (ReadableListItem<String> item = b.getFirstItem(); item != null; item = item.getNextItem()) {
             if (item != b.getFirstItem()) {
                 lines.addLast(item.get());
             }

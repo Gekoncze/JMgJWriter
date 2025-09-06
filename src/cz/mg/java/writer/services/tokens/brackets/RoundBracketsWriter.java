@@ -2,10 +2,12 @@ package cz.mg.java.writer.services.tokens.brackets;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.collections.list.List;
+import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.tokens.brackets.RoundBrackets;
 
-public @Service class RoundBracketsWriter {
+public @Service class RoundBracketsWriter implements BracketsWriter<RoundBrackets> {
     private static volatile @Service RoundBracketsWriter instance;
 
     public static @Service RoundBracketsWriter getInstance() {
@@ -25,7 +27,17 @@ public @Service class RoundBracketsWriter {
     private RoundBracketsWriter() {
     }
 
+    @Override
     public @Mandatory String write(@Mandatory RoundBrackets brackets) {
         return "(" + expressionWriter.write(brackets.getTokens()) + ")";
+    }
+
+    @Override
+    public @Mandatory List<String> writeLines(@Mandatory RoundBrackets brackets) {
+        return new LineMerger()
+            .merge(new List<>("("))
+            .merge(expressionWriter.writeLines(brackets.getTokens()))
+            .merge(new List<>(")"))
+            .get();
     }
 }

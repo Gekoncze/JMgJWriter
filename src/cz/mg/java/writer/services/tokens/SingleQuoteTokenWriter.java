@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
-public @Service class SingleQuoteTokenWriter {
+public @Service class SingleQuoteTokenWriter implements TokenWriter<SingleQuoteToken> {
     private static volatile @Service SingleQuoteTokenWriter instance;
 
     public static @Service SingleQuoteTokenWriter getInstance() {
@@ -21,6 +21,7 @@ public @Service class SingleQuoteTokenWriter {
     private SingleQuoteTokenWriter() {
     }
 
+    @Override
     public @Mandatory String write(@Mandatory SingleQuoteToken token) {
         return "'" + escapeSpecialCharacters(token.getText()) + "'";
     }

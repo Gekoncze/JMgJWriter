@@ -3,6 +3,7 @@ package cz.mg.java.writer.services.tokens;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.test.Assert;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
@@ -16,6 +17,10 @@ public @Test class ExpressionWriterTest {
         test.testWriteSingle();
         test.testWriteSimple();
         test.testWriteBrackets();
+        test.testWriteLinesEmpty();
+        test.testWriteLinesSingle();
+        test.testWriteLinesSimple();
+        test.testWriteLinesBrackets();
 
         System.out.println("OK");
     }
@@ -59,5 +64,54 @@ public @Test class ExpressionWriterTest {
             b.squareBrackets(),
             b.curlyBrackets()
         )));
+    }
+
+    private void testWriteLinesEmpty() {
+        QuickAssert.compare(
+            new List<>(),
+            writer.writeLines(new List<>())
+        );
+    }
+
+    private void testWriteLinesSingle() {
+        QuickAssert.compare(
+            new List<>("Hewwo"),
+            writer.writeLines(new List<>(t.word("Hewwo")))
+        );
+    }
+
+    private void testWriteLinesSimple() {
+        QuickAssert.compare(
+            new List<>(
+                "return",
+                "    foo;"
+            ),
+            writer.writeLines(new List<>(
+                t.word("return"),
+                t.whitespace("\n"),
+                t.whitespace("    "),
+                t.word("foo"),
+                t.symbol(";")
+            ))
+        );
+    }
+
+    private void testWriteLinesBrackets() {
+        QuickAssert.compare(
+            new List<>(
+                "foo(",
+                "    bar",
+                ")"
+            ),
+            writer.writeLines(new List<>(
+                t.word("foo"),
+                b.roundBrackets(
+                    t.whitespace("\n"),
+                    t.whitespace("    "),
+                    t.word("bar"),
+                    t.whitespace("\n")
+                )
+            ))
+        );
     }
 }

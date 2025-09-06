@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
-public @Service class DoubleQuoteTokenWriter {
+public @Service class DoubleQuoteTokenWriter implements TokenWriter<DoubleQuoteToken> {
     private static volatile @Service DoubleQuoteTokenWriter instance;
 
     public static @Service DoubleQuoteTokenWriter getInstance() {
@@ -21,6 +21,7 @@ public @Service class DoubleQuoteTokenWriter {
     private DoubleQuoteTokenWriter() {
     }
 
+    @Override
     public @Mandatory String write(@Mandatory DoubleQuoteToken token) {
         return '"' + escapeSpecialCharacters(token.getText()) + '"';
     }

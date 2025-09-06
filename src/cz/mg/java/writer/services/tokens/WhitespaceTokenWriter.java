@@ -6,7 +6,7 @@ import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.WhitespaceToken;
 
-public @Service class WhitespaceTokenWriter {
+public @Service class WhitespaceTokenWriter implements TokenWriter<WhitespaceToken> {
     private static volatile @Service WhitespaceTokenWriter instance;
 
     public static @Service WhitespaceTokenWriter getInstance() {
@@ -23,6 +23,7 @@ public @Service class WhitespaceTokenWriter {
     private WhitespaceTokenWriter() {
     }
 
+    @Override
     public @Mandatory String write(@Mandatory WhitespaceToken token) {
         String text = token.getText();
         StringBuilder builder = new StringBuilder(text.length());
@@ -39,6 +40,7 @@ public @Service class WhitespaceTokenWriter {
         return builder.toString();
     }
 
+    @Override
     public @Mandatory List<String> writeLines(@Mandatory WhitespaceToken token) {
         String text = token.getText();
         List<String> lines = new List<>();

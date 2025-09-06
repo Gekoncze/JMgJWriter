@@ -44,41 +44,20 @@ public @Service class TokenWriters {
     private TokenWriters() {
     }
 
-    public @Mandatory String write(@Mandatory Token token) {
-        if (token instanceof WordToken wordToken) {
-            return wordTokenWriter.write(wordToken);
-        }
-
-        if (token instanceof NumberToken numberToken) {
-            return numberTokenWriter.write(numberToken);
-        }
-
-        if (token instanceof SymbolToken symbolToken) {
-            return symbolTokenWriter.write(symbolToken);
-        }
-
-        if (token instanceof WhitespaceToken whitespaceToken) {
-            return whitespaceTokenWriter.write(whitespaceToken);
-        }
-
-        if (token instanceof DoubleQuoteToken doubleQuoteToken) {
-            return doubleQuoteTokenWriter.write(doubleQuoteToken);
-        }
-
-        if (token instanceof SingleQuoteToken singleQuoteToken) {
-            return singleQuoteTokenWriter.write(singleQuoteToken);
-        }
-
-        if (token instanceof CommentToken commentToken) {
-            return commentTokenWriter.write(commentToken);
-        }
-
-        if (token instanceof Brackets brackets) {
-            return bracketsWriters.write(brackets);
-        }
-
-        throw new WriterException(
-            "Unsupported token of type " + token.getClass().getSimpleName() + "."
-        );
+    @SuppressWarnings("rawtypes")
+    public @Mandatory TokenWriter<Token> get(@Mandatory Token token) {
+        return switch (token) {
+            case WordToken ignored -> (TokenWriter) wordTokenWriter;
+            case NumberToken ignored -> (TokenWriter) numberTokenWriter;
+            case SymbolToken ignored -> (TokenWriter) symbolTokenWriter;
+            case WhitespaceToken ignored -> (TokenWriter) whitespaceTokenWriter;
+            case DoubleQuoteToken ignored -> (TokenWriter) doubleQuoteTokenWriter;
+            case SingleQuoteToken ignored -> (TokenWriter) singleQuoteTokenWriter;
+            case CommentToken ignored -> (TokenWriter) commentTokenWriter;
+            case Brackets brackets -> (TokenWriter) bracketsWriters.get(brackets);
+            default -> throw new WriterException(
+                "Unsupported token of type " + token.getClass().getSimpleName() + "."
+            );
+        };
     }
 }
