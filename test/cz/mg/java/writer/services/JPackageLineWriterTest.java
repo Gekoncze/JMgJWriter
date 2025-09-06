@@ -6,6 +6,7 @@ import cz.mg.collections.list.List;
 import cz.mg.java.entities.JPackageLine;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class JPackageLineWriterTest {
     public static void main(String[] args) {
@@ -50,7 +51,7 @@ public @Test class JPackageLineWriterTest {
     }
 
     private void testMultiLineComment() {
-        Assert.assertThatCode(() -> writer.write(new JPackageLine(new List<>("foo"), "not\ntemporary")))
+        Assertions.assertThatCode(() -> writer.write(new JPackageLine(new List<>("foo"), "not\ntemporary")))
             .withMessage("Multi-line comments are not supported for package lines.")
             .throwsException(WriterException.class);
     }

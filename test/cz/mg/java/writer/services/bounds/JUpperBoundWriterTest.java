@@ -7,6 +7,7 @@ import cz.mg.java.entities.JType;
 import cz.mg.java.entities.bounds.JUpperBound;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class JUpperBoundWriterTest {
     public static void main(String[] args) {
@@ -27,7 +28,7 @@ public @Test class JUpperBoundWriterTest {
     private void testWriteZero() {
         JUpperBound bound = new JUpperBound(null, new List<>());
 
-        Assert.assertThatCode(() -> writer.write(bound))
+        Assertions.assertThatCode(() -> writer.write(bound))
             .withMessage("Writer exception should be thrown when upper bounds are missing.")
             .throwsException(WriterException.class);
     }

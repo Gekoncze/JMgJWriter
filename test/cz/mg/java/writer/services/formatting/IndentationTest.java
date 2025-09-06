@@ -3,7 +3,7 @@ package cz.mg.java.writer.services.formatting;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class IndentationTest {
     public static void main(String[] args) {
@@ -28,9 +28,9 @@ public @Test class IndentationTest {
 
         List<String> reality = indentation.add(input);
 
-        Assert.assertThatCollections(expectations, reality)
+        Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testSingle() {
@@ -40,9 +40,9 @@ public @Test class IndentationTest {
 
         List<String> reality = indentation.add(input);
 
-        Assert.assertThatCollections(expectations, reality)
+        Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testMultiple() {
@@ -60,9 +60,9 @@ public @Test class IndentationTest {
 
         List<String> reality = indentation.add(input);
 
-        Assert.assertThatCollections(expectations, reality)
+        Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testSingleBlank() {
@@ -72,9 +72,9 @@ public @Test class IndentationTest {
 
         List<String> reality = indentation.add(input);
 
-        Assert.assertThatCollections(expectations, reality)
+        Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testMultipleWithBlank() {
@@ -92,8 +92,8 @@ public @Test class IndentationTest {
 
         List<String> reality = indentation.add(input);
 
-        Assert.assertThatCollections(expectations, reality)
+        Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 }

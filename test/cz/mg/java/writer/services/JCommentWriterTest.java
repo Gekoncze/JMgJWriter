@@ -4,7 +4,9 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
+import cz.mg.java.writer.test.QuickAssert;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class JCommentWriterTest {
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ public @Test class JCommentWriterTest {
         Assert.assertEquals("// ", writer.writeSingleLineComment(" "));
         Assert.assertEquals("// foo bar", writer.writeSingleLineComment("foo bar"));
 
-        Assert.assertThatCode(() -> writer.writeSingleLineComment("\n"))
+        Assertions.assertThatCode(() -> writer.writeSingleLineComment("\n"))
             .withMessage("Missing comment validation.")
             .throwsException(WriterException.class);
     }
@@ -36,39 +38,39 @@ public @Test class JCommentWriterTest {
         Assert.assertEquals("/* */", writer.writeSingleLineStarComment(" "));
         Assert.assertEquals("/* foo bar */", writer.writeSingleLineStarComment("foo bar"));
 
-        Assert.assertThatCode(() -> writer.writeSingleLineStarComment("\n"))
+        Assertions.assertThatCode(() -> writer.writeSingleLineStarComment("\n"))
             .withMessage("Missing comment validation.")
             .throwsException(WriterException.class);
 
-        Assert.assertThatCode(() -> writer.writeSingleLineStarComment("*/"))
+        Assertions.assertThatCode(() -> writer.writeSingleLineStarComment("*/"))
             .withMessage("Missing comment validation.")
             .throwsException(WriterException.class);
     }
 
     private void testWriteMultiLineComment() {
-        Assert.assertThatCollections(new List<>("/**/"), writer.writeMultiLineComment("")).areEqual();
-        Assert.assertThatCollections(new List<>("/* */"), writer.writeMultiLineComment(" ")).areEqual();
-        Assert.assertThatCollections(new List<>("/*", "*/"), writer.writeMultiLineComment("\n")).areEqual();
-        Assert.assertThatCollections(new List<>("/* foo bar */"), writer.writeMultiLineComment("foo bar")).areEqual();
-        Assert.assertThatCollections(new List<>("/* foo", "bar */"), writer.writeMultiLineComment("foo\nbar")).areEqual();
-        Assert.assertThatCollections(new List<>("/*", "foo", "bar", "*/"), writer.writeMultiLineComment("\nfoo\nbar\n")).areEqual();
+        QuickAssert.compare(new List<>("/**/"), writer.writeMultiLineComment(""));
+        QuickAssert.compare(new List<>("/* */"), writer.writeMultiLineComment(" "));
+        QuickAssert.compare(new List<>("/*", "*/"), writer.writeMultiLineComment("\n"));
+        QuickAssert.compare(new List<>("/* foo bar */"), writer.writeMultiLineComment("foo bar"));
+        QuickAssert.compare(new List<>("/* foo", "bar */"), writer.writeMultiLineComment("foo\nbar"));
+        QuickAssert.compare(new List<>("/*", "foo", "bar", "*/"), writer.writeMultiLineComment("\nfoo\nbar\n"));
 
-        Assert.assertThatCode(() -> writer.writeMultiLineComment("*/"))
+        Assertions.assertThatCode(() -> writer.writeMultiLineComment("*/"))
             .withMessage("Missing comment validation.")
             .throwsException(WriterException.class);
     }
 
     private void testWriteDocumentationComment() {
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *",
                 " */"
             ),
             writer.writeDocumentationComment("")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *",
@@ -76,9 +78,9 @@ public @Test class JCommentWriterTest {
                 " */"
             ),
             writer.writeDocumentationComment("\n")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *",
@@ -87,36 +89,36 @@ public @Test class JCommentWriterTest {
                 " */"
             ),
             writer.writeDocumentationComment("\n\n")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *  ",
                 " */"
             ),
             writer.writeDocumentationComment(" ")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " * \t",
                 " */"
             ),
             writer.writeDocumentationComment("\t")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " * foo bar",
                 " */"
             ),
             writer.writeDocumentationComment("foo bar")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *",
@@ -125,9 +127,9 @@ public @Test class JCommentWriterTest {
                 " */"
             ),
             writer.writeDocumentationComment("\nfoo bar\n")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " * foo",
@@ -135,9 +137,9 @@ public @Test class JCommentWriterTest {
                 " */"
             ),
             writer.writeDocumentationComment("foo\nbar")
-        ).areEqual();
+        );
 
-        Assert.assertThatCollections(
+        QuickAssert.compare(
             new List<>(
                 "/**",
                 " *",
@@ -147,9 +149,9 @@ public @Test class JCommentWriterTest {
                 " */"
             ),
             writer.writeDocumentationComment("\nfoo\nbar\n")
-        ).areEqual();
+        );
 
-        Assert.assertThatCode(() -> writer.writeDocumentationComment("*/"))
+        Assertions.assertThatCode(() -> writer.writeDocumentationComment("*/"))
             .withMessage("Missing comment validation.")
             .throwsException(WriterException.class);
     }

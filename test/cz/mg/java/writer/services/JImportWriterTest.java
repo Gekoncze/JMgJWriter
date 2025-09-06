@@ -6,6 +6,7 @@ import cz.mg.collections.list.List;
 import cz.mg.java.entities.JImport;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class JImportWriterTest {
     public static void main(String[] args) {
@@ -50,7 +51,7 @@ public @Test class JImportWriterTest {
     }
 
     private void testMultiLineComment() {
-        Assert.assertThatCode(() -> writer.write(new JImport(new List<>("foo"), "leave\nlater")))
+        Assertions.assertThatCode(() -> writer.write(new JImport(new List<>("foo"), "leave\nlater")))
             .withMessage("Multi-line comments are not supported for imports.")
             .throwsException(WriterException.class);
     }

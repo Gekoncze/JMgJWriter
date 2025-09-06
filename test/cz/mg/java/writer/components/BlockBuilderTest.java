@@ -2,7 +2,7 @@ package cz.mg.java.writer.components;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class BlockBuilderTest {
     public static void main(String[] args) {
@@ -34,9 +34,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>();
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Result should be empty for no input.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testNoGroupedLines() {
@@ -46,9 +46,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>();
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Result should be empty for empty input.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testOneStandaloneLine() {
@@ -58,9 +58,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("foo.bar.foobar");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Result should contain given line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testTwoStandaloneLines() {
@@ -75,9 +75,9 @@ public @Test class BlockBuilderTest {
             "cz.mg.java"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Two standalone lines should be separated by an empty line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testThreeStandaloneLines() {
@@ -95,9 +95,9 @@ public @Test class BlockBuilderTest {
             "terra.incognita"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Three standalone lines should be separated by empty lines.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testOneEmptyStandaloneLine() {
@@ -107,9 +107,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testTwoEmptyStandaloneLines() {
@@ -120,9 +120,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("", "", "");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testThreeEmptyStandaloneLines() {
@@ -134,9 +134,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("", "", "", "", "");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testOneGroupedLine() {
@@ -146,9 +146,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("foo.bar.foobar");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Result should contain given line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testTwoGroupedLines() {
@@ -164,9 +164,9 @@ public @Test class BlockBuilderTest {
             "cz.mg.java"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Two grouped lines should not be separated.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testThreeGroupedLines() {
@@ -184,9 +184,9 @@ public @Test class BlockBuilderTest {
             "terra.incognita"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Three grouped lines should not be separated.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testOneEmptyGroupedLine() {
@@ -196,9 +196,9 @@ public @Test class BlockBuilderTest {
 
         List<String> expectations = new List<>("");
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other lines.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testTwoEmptyGroupedLines() {
@@ -214,9 +214,9 @@ public @Test class BlockBuilderTest {
             ""
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other lines.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testThreeEmptyGroupedLines() {
@@ -234,9 +234,9 @@ public @Test class BlockBuilderTest {
             ""
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other lines.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testThreeGroupedLinesWithEmptyLine() {
@@ -256,9 +256,9 @@ public @Test class BlockBuilderTest {
             "terra.incognita"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Given empty lines should be treated like any other line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 
     private void testCombined() {
@@ -277,8 +277,8 @@ public @Test class BlockBuilderTest {
             "terra.incognita"
         );
 
-        Assert.assertThatCollections(expectations, result)
+        Assertions.assertThatCollection(result)
             .withMessage("Standalone line should be separated from grouped lines with an empty line.")
-            .areEqual();
+            .isEqualTo(expectations);
     }
 }

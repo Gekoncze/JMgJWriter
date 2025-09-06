@@ -1,9 +1,8 @@
 package cz.mg.java.writer.components;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
+import cz.mg.java.writer.test.QuickAssert;
 
 public @Test class LineMergerTest {
     public static void main(String[] args) {
@@ -22,21 +21,21 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeNone() {
-        verify(
+        QuickAssert.compare(
             new List<>(),
             new LineMerger().get()
         );
     }
 
     private void testMergeEmpty() {
-        verify(
+        QuickAssert.compare(
             new List<>(),
             new LineMerger()
                 .merge(new List<>())
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>(),
             new LineMerger()
                 .merge(new List<>())
@@ -44,7 +43,7 @@ public @Test class LineMergerTest {
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>(),
             new LineMerger()
                 .delimiter(" ")
@@ -56,7 +55,7 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeSingleLines() {
-        verify(
+        QuickAssert.compare(
             new List<>("foo"),
             new LineMerger()
                 .delimiter(" ")
@@ -64,7 +63,7 @@ public @Test class LineMergerTest {
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>("foobar"),
             new LineMerger()
                 .merge(new List<>("foo"))
@@ -72,7 +71,7 @@ public @Test class LineMergerTest {
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>("a b-c"),
             new LineMerger()
                 .merge(new List<>("a"))
@@ -85,7 +84,7 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeMultipleLines() {
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "a",
                 "foo",
@@ -100,7 +99,7 @@ public @Test class LineMergerTest {
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "a",
                 "foobar",
@@ -118,7 +117,7 @@ public @Test class LineMergerTest {
                 .get()
         );
 
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "a",
                 "bc",
@@ -143,7 +142,7 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeMixedLines() {
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "a",
                 "b c d",
@@ -169,7 +168,7 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeFirstEmpty() {
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "foo",
                 "bar"
@@ -186,7 +185,7 @@ public @Test class LineMergerTest {
     }
 
     private void testMergeLastEmpty() {
-        verify(
+        QuickAssert.compare(
             new List<>(
                 "foo",
                 "bar"
@@ -200,12 +199,5 @@ public @Test class LineMergerTest {
                 .merge(new List<>())
                 .get()
         );
-    }
-
-    private void verify(@Mandatory List<String> expectations, @Mandatory List<String> reality) {
-        Assert.assertThatCollections(expectations, reality)
-            .withPrintFunction(s -> '"' + s + '"')
-            .withMessage("Did not get expected lines.")
-            .areEqual();
     }
 }

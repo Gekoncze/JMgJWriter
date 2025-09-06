@@ -10,6 +10,7 @@ import cz.mg.java.entities.bounds.JUnBound;
 import cz.mg.java.entities.bounds.JUpperBound;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 
 public @Test class JTypeWriterTest {
     public static void main(String[] args) {
@@ -153,7 +154,7 @@ public @Test class JTypeWriterTest {
         Assert.assertEquals("Object[][]", result2);
         Assert.assertEquals("Object[][][]", result3);
 
-        Assert.assertThatCode(() -> writer.write(illegal))
+        Assertions.assertThatCode(() -> writer.write(illegal))
             .withMessage("Writer exception should be thrown for illegal array dimension.")
             .throwsException(WriterException.class);
     }

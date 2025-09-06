@@ -7,7 +7,7 @@ import cz.mg.collections.list.List;
 import cz.mg.file.page.Page;
 import cz.mg.java.entities.*;
 import cz.mg.java.writer.test.QuickAssert;
-import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 
 import java.nio.file.Path;
@@ -207,9 +207,9 @@ public @Test class JFileWriterTest {
         @Mandatory List<String> expectedLines,
         @Mandatory Page reality
     ) {
-        Assert.assertThat(expectedPath, reality.getPath())
+        Assertions.assertThat(reality.getPath())
                 .withMessage("Incorrect file path.")
-                .areEqual();
+                .isEqualTo(expectedPath);
 
         QuickAssert.compare(expectedLines, reality.getLines());
     }
