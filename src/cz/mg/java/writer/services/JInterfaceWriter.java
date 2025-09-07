@@ -7,7 +7,7 @@ import cz.mg.java.entities.JInterface;
 import cz.mg.java.writer.components.BlockBuilder;
 import cz.mg.java.writer.services.formatting.Indentation;
 
-public @Service class JInterfaceWriter {
+public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
     private static volatile @Service JInterfaceWriter instance;
 
     public static @Service JInterfaceWriter getInstance() {
@@ -29,6 +29,7 @@ public @Service class JInterfaceWriter {
     private JInterfaceWriter() {
     }
 
+    @Override
     public @Mandatory List<String> write(@Mandatory JInterface jInterface) {
         List<String> lines = new List<>();
         lines.addCollectionLast(classWriter.writeComment(jInterface.getComment()));

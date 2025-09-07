@@ -12,7 +12,7 @@ import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
 
-public @Service class JEnumWriter {
+public @Service class JEnumWriter implements JStructureWriter<JEnum> {
     private static volatile @Service JEnumWriter instance;
 
     public static @Service JEnumWriter getInstance() {
@@ -36,6 +36,7 @@ public @Service class JEnumWriter {
     private JEnumWriter() {
     }
 
+    @Override
     public @Mandatory List<String> write(@Mandatory JEnum jEnum) {
         List<String> lines = new List<>();
         lines.addCollectionLast(classWriter.writeComment(jEnum.getComment()));

@@ -12,7 +12,7 @@ import cz.mg.java.writer.components.BlockBuilder;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
 import cz.mg.java.writer.services.formatting.Indentation;
 
-public @Service class JClassWriter {
+public @Service class JClassWriter implements JStructureWriter<JClass> {
     private static volatile @Service JClassWriter instance;
 
     public static @Service JClassWriter getInstance() {
@@ -48,6 +48,7 @@ public @Service class JClassWriter {
     private JClassWriter() {
     }
 
+    @Override
     public @Mandatory List<String> write(@Mandatory JClass jClass) {
         List<String> lines = new List<>();
         lines.addCollectionLast(writeComment(jClass.getComment()));

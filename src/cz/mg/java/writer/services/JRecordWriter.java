@@ -11,7 +11,7 @@ import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.formatting.ListExpander;
 
-public @Service class JRecordWriter {
+public @Service class JRecordWriter implements JStructureWriter<JRecord> {
     private static volatile @Service JRecordWriter instance;
 
     public static @Service JRecordWriter getInstance() {
@@ -37,6 +37,7 @@ public @Service class JRecordWriter {
     private JRecordWriter() {
     }
 
+    @Override
     public @Mandatory List<String> write(@Mandatory JRecord jRecord) {
         List<String> lines = new List<>();
         lines.addCollectionLast(classWriter.writeComment(jRecord.getComment()));

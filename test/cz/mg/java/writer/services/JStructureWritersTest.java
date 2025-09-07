@@ -2,12 +2,11 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.collections.list.List;
 import cz.mg.java.entities.JClass;
 import cz.mg.java.entities.JEnum;
 import cz.mg.java.entities.JInterface;
-
-import static cz.mg.java.writer.test.LineAssert.assertEquals;
+import cz.mg.java.entities.JRecord;
+import cz.mg.test.Assertions;
 
 public @Test class JStructureWritersTest {
     public static void main(String[] args) {
@@ -17,6 +16,7 @@ public @Test class JStructureWritersTest {
         test.testWriteClass();
         test.testWriteInterface();
         test.testWriteEnum();
+        test.testWriteRecord();
 
         System.out.println("OK");
     }
@@ -24,41 +24,26 @@ public @Test class JStructureWritersTest {
     private final @Service JStructureWriters writers = JStructureWriters.getInstance();
 
     private void testWriteClass() {
-        JClass jClass = new JClass();
-        jClass.setName("MyClass");
-
-        assertEquals(
-            new List<>(
-                "class MyClass {",
-                "}"
-            ),
-            writers.write(jClass)
-        );
+        Assertions.assertThat(writers.get(new JClass()))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(JClassWriter.class);
     }
 
     private void testWriteInterface() {
-        JInterface jInterface = new JInterface();
-        jInterface.setName("MyInterface");
-
-        assertEquals(
-            new List<>(
-                "interface MyInterface {",
-                "}"
-            ),
-            writers.write(jInterface)
-        );
+        Assertions.assertThat(writers.get(new JInterface()))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(JInterfaceWriter.class);
     }
 
     private void testWriteEnum() {
-        JEnum jEnum = new JEnum();
-        jEnum.setName("MyEnum");
+        Assertions.assertThat(writers.get(new JEnum()))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(JEnumWriter.class);
+    }
 
-        assertEquals(
-            new List<>(
-                "enum MyEnum {",
-                "}"
-            ),
-            writers.write(jEnum)
-        );
+    private void testWriteRecord() {
+        Assertions.assertThat(writers.get(new JRecord()))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(JRecordWriter.class);
     }
 }

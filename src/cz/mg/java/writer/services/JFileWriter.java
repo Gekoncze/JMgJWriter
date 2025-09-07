@@ -70,6 +70,6 @@ public @Service class JFileWriter {
     }
 
     private @Mandatory List<String> writeStructure(@Mandatory JStructure structure) {
-        return structureWriters.write(structure);
+        return structureWriters.get(structure).write(structure);
     }
 }
