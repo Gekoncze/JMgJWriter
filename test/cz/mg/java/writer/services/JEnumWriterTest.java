@@ -125,6 +125,7 @@ public @Test class JEnumWriterTest {
         JConstructor constructor = new JConstructor();
         constructor.setModifiers(new List<>(JModifier.PUBLIC));
         constructor.setName("Medal");
+        constructor.setInput(new List<>());
         constructor.setImplementation(new List<>(
             t.word("this"),
             b.roundBrackets(
@@ -137,6 +138,7 @@ public @Test class JEnumWriterTest {
         JConstructor parametricConstructor = new JConstructor();
         parametricConstructor.setModifiers(new List<>(JModifier.PUBLIC));
         parametricConstructor.setName("Medal");
+        parametricConstructor.setInput(new List<>(constructorParameter));
         parametricConstructor.setImplementation(new List<>(
             t.word("this"),
             t.symbol("."),
@@ -147,7 +149,6 @@ public @Test class JEnumWriterTest {
             t.word("rank"),
             t.symbol(";")
         ));
-        parametricConstructor.getInput().addLast(constructorParameter);
         jEnum.getConstructors().addLast(parametricConstructor);
 
         JMethod method = new JMethod();
