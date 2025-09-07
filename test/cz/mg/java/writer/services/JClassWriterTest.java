@@ -152,6 +152,7 @@ public @Test class JClassWriterTest {
 
         JConstructor first = new JConstructor();
         first.setName("FooBar");
+        first.setInput(new List<>());
         first.setImplementation(new List<>());
 
         JVariable parameter = new JVariable();
@@ -160,8 +161,8 @@ public @Test class JClassWriterTest {
 
         JConstructor second = new JConstructor();
         second.setName("FooBar");
+        second.setInput(new List<>(parameter));
         second.setImplementation(new List<>());
-        second.getInput().addLast(parameter);
 
         jClass.getConstructors().addLast(first);
         jClass.getConstructors().addLast(second);
@@ -247,6 +248,7 @@ public @Test class JClassWriterTest {
         JConstructor constructor = new JConstructor();
         constructor.setModifiers(new List<>(JModifier.PUBLIC));
         constructor.setName("Ninu");
+        constructor.setInput(new List<>());
         constructor.setImplementation(new List<>());
         jClass.getConstructors().addLast(constructor);
 
