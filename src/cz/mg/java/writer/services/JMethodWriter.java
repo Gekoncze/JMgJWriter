@@ -7,15 +7,15 @@ import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JBound;
+import cz.mg.java.writer.components.LineMeasure;
 import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
-import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
 
-public @Service class JMethodWriter {
-    private static final int LIMIT = 110;
+import static cz.mg.java.writer.components.LineMeasure.LIMIT;
 
+public @Service class JMethodWriter {
     private static volatile @Service JMethodWriter instance;
 
     public static @Service JMethodWriter getInstance() {
@@ -143,13 +143,12 @@ public @Service class JMethodWriter {
     }
 
     private int estimateLineLength(@Mandatory String header, @Mandatory List<String> parameters) {
-        int estimatedHeaderLength = Indentation.LENGTH + header.length();
-        for (String parameter : parameters) {
-            estimatedHeaderLength += parameter.length();
-        }
-        estimatedHeaderLength += Math.max(0, 2 * (parameters.count() - 1)); // delimiters
-        estimatedHeaderLength += 2 + 2; // brackets with space
-        return estimatedHeaderLength;
+        return new LineMeasure()
+            .addIndentation(1)
+            .addBrackets()
+            .addPart(header)
+            .addList(parameters)
+            .length();
     }
 
     @Mandatory List<String> writeImplementation(@Optional List<Token> implementation) {
