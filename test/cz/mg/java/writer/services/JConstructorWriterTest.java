@@ -16,6 +16,7 @@ public @Test class JConstructorWriterTest {
 
         JConstructorWriterTest test = new JConstructorWriterTest();
         test.testSimple();
+        test.testCompact();
         test.testComplex();
 
         System.out.println("OK");
@@ -28,11 +29,26 @@ public @Test class JConstructorWriterTest {
     private void testSimple() {
         JConstructor constructor = new JConstructor();
         constructor.setName("FooBar");
+        constructor.setInput(new List<>());
         constructor.setImplementation(new List<>());
 
         assertEquals(
             new List<>(
                 "FooBar() {",
+                "}"
+            ),
+            writer.writeLines(constructor)
+        );
+    }
+
+    private void testCompact() {
+        JConstructor constructor = new JConstructor();
+        constructor.setName("FooBar");
+        constructor.setImplementation(new List<>());
+
+        assertEquals(
+            new List<>(
+                "FooBar {",
                 "}"
             ),
             writer.writeLines(constructor)
@@ -56,26 +72,27 @@ public @Test class JConstructorWriterTest {
             )
         );
         constructor.getModifiers().addLast(JModifier.PROTECTED);
-        constructor.getBounds().addLast(new JTypeBound(new JType("SHOULD_BE_IGNORED")));
-        constructor.setOutput(new JType("SHOULD_BE_ALSO_IGNORED"));
+        constructor.getBounds().addLast(new JTypeBound(new JType("T")));
         constructor.setName("Complexity");
-        constructor.getInput().addLast(new JVariable(
-            new List<>(new JAnnotation("Mandatory")),
-            new List<>(),
-            new JType("Object"),
-            "first"
-        ));
-        constructor.getInput().addLast(new JVariable(
-            new List<>(new JAnnotation("Mandatory")),
-            new List<>(),
-            new JType("Object"),
-            "second"
-        ));
-        constructor.getInput().addLast(new JVariable(
-            new List<>(new JAnnotation("Mandatory")),
-            new List<>(),
-            new JType("Object"),
-            "third"
+        constructor.setInput(new List<>(
+            new JVariable(
+                new List<>(new JAnnotation("Mandatory")),
+                new List<>(),
+                new JType("Object"),
+                "first"
+            ),
+            new JVariable(
+                new List<>(new JAnnotation("Mandatory")),
+                new List<>(),
+                new JType("Object"),
+                "second"
+            ),
+            new JVariable(
+                new List<>(new JAnnotation("Mandatory")),
+                new List<>(),
+                new JType("Object"),
+                "third"
+            )
         ));
         constructor.setImplementation(new List<>(
             t.word("super"),
@@ -99,7 +116,7 @@ public @Test class JConstructorWriterTest {
                 " */",
                 "@Optional",
                 "@Field(id = 7)",
-                "protected Complexity(@Mandatory Object first, @Mandatory Object second, @Mandatory Object third) {",
+                "protected <T> Complexity(@Mandatory Object first, @Mandatory Object second, @Mandatory Object third) {",
                 "    super(first, second, third);",
                 "}"
             ),

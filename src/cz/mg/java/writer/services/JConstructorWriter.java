@@ -2,8 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JConstructor;
+import cz.mg.java.entities.JVariable;
 import cz.mg.java.writer.components.LineMerger;
 
 public @Service class JConstructorWriter {
@@ -36,14 +38,21 @@ public @Service class JConstructorWriter {
 
     private @Mandatory List<String> writeCode(@Mandatory JConstructor constructor) {
         String modifiers = methodWriter.writeModifiers(constructor.getModifiers());
+        String bounds = methodWriter.writeBounds(constructor.getBounds());
         String name = constructor.getName();
-        String header = methodWriter.writeHeader(modifiers, name);
-        List<String> parameters = methodWriter.writeParameters(header, constructor.getInput());
+        String header = methodWriter.writeHeader(modifiers, bounds, name);
+        List<String> parameters = writeParameters(header, constructor.getInput());
         List<String> implementation = methodWriter.writeImplementation(constructor.getImplementation());
         return new LineMerger()
             .merge(header)
             .merge(parameters)
             .merge(implementation)
             .get();
+    }
+
+    private @Mandatory List<String> writeParameters(@Mandatory String header, @Optional List<JVariable> input) {
+        return input != null
+            ? methodWriter.writeParameters(header, input)
+            : new List<>("");
     }
 }

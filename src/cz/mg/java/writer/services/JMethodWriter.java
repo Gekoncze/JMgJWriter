@@ -91,7 +91,7 @@ public @Service class JMethodWriter {
         return modifierWriter.write(modifiers);
     }
 
-    private @Mandatory String writeBounds(@Mandatory List<JBound> bounds) {
+    @Mandatory String writeBounds(@Mandatory List<JBound> bounds) {
         return bounds.isEmpty() ? "" : boundsWriter.write(bounds);
     }
 
