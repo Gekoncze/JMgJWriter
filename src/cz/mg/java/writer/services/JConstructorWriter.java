@@ -41,7 +41,7 @@ public @Service class JConstructorWriter {
         List<String> parameters = methodWriter.writeParameters(header, constructor.getInput());
         List<String> implementation = methodWriter.writeImplementation(constructor.getImplementation());
         return new LineMerger()
-            .merge(new List<>(header))
+            .merge(header)
             .merge(parameters)
             .merge(implementation)
             .get();

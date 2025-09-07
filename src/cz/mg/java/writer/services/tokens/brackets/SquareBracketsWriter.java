@@ -35,9 +35,9 @@ public @Service class SquareBracketsWriter implements BracketsWriter<SquareBrack
     @Override
     public @Mandatory List<String> writeLines(@Mandatory SquareBrackets brackets) {
         return new LineMerger()
-            .merge(new List<>("["))
+            .merge("[")
             .merge(expressionWriter.writeLines(brackets.getTokens()))
-            .merge(new List<>("]"))
+            .merge("]")
             .get();
     }
 }

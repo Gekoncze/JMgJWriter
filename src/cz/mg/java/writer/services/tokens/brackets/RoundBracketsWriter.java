@@ -35,9 +35,9 @@ public @Service class RoundBracketsWriter implements BracketsWriter<RoundBracket
     @Override
     public @Mandatory List<String> writeLines(@Mandatory RoundBrackets brackets) {
         return new LineMerger()
-            .merge(new List<>("("))
+            .merge("(")
             .merge(expressionWriter.writeLines(brackets.getTokens()))
-            .merge(new List<>(")"))
+            .merge(")")
             .get();
     }
 }

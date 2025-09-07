@@ -81,7 +81,7 @@ public @Service class JMethodWriter {
         List<String> parameters = writeParameters(header, method.getInput());
         List<String> implementation = writeImplementation(method.getImplementation());
         return new LineMerger()
-            .merge(new List<>(header))
+            .merge(header)
             .merge(parameters)
             .merge(implementation)
             .get();

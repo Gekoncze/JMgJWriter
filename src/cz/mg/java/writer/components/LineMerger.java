@@ -18,6 +18,10 @@ public @Component class LineMerger {
         return this;
     }
 
+    public @Mandatory LineMerger merge(@Mandatory String line) {
+        return merge(new List<>(line));
+    }
+
     public @Mandatory LineMerger merge(@Mandatory ReadableList<String> lines) {
         this.lines = merge(this.lines, delimiter, lines);
         return this;

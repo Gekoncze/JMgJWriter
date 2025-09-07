@@ -76,7 +76,7 @@ public @Test class LineMergerTest {
             new LineMerger()
                 .merge(new List<>("a"))
                 .delimiter(" ")
-                .merge(new List<>("b"))
+                .merge("b")
                 .delimiter("-")
                 .merge(new List<>("c"))
                 .get()
