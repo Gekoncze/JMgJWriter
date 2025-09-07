@@ -6,7 +6,6 @@ import cz.mg.collections.list.List;
 import cz.mg.java.writer.services.formatting.Indentation;
 
 public @Component class LineMeasure {
-    public static final int LIMIT = 110;
     private static final int DELIMITER = 2;
 
     private int length;

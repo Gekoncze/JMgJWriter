@@ -2,7 +2,8 @@
     ...
 
 ### SOON ###
-    ...
+    add test for line measure and list expander
+        consider moving some tests from method writer
 
 ### LATER ###
     add JRecord writer + test

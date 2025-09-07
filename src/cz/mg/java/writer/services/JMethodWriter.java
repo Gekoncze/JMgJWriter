@@ -10,10 +10,9 @@ import cz.mg.java.entities.bounds.JBound;
 import cz.mg.java.writer.components.LineMeasure;
 import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
+import cz.mg.java.writer.services.formatting.ListExpander;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
-
-import static cz.mg.java.writer.components.LineMeasure.LIMIT;
 
 public @Service class JMethodWriter {
     private static volatile @Service JMethodWriter instance;
@@ -30,6 +29,7 @@ public @Service class JMethodWriter {
                     instance.typeWriter = JTypeWriter.getInstance();
                     instance.variableWriter = JVariableWriter.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
+                    instance.listExpander = ListExpander.getInstance();
                 }
             }
         }
@@ -43,6 +43,7 @@ public @Service class JMethodWriter {
     private @Service JTypeWriter typeWriter;
     private @Service JVariableWriter variableWriter;
     private @Service ExpressionWriter expressionWriter;
+    private @Service ListExpander listExpander;
 
     private JMethodWriter() {
     }
@@ -107,31 +108,8 @@ public @Service class JMethodWriter {
 
     @Mandatory List<String> writeParameters(@Mandatory String header, @Mandatory List<JVariable> input) {
         List<String> parameters = writeInput(input);
-        if (parameters.isEmpty() || estimateLineLength(header, parameters) < LIMIT) {
-            return writeParametersOnSingleLine(parameters);
-        } else {
-            return writeParametersOnSeparateLines(parameters);
-        }
-    }
-
-    private @Mandatory List<String> writeParametersOnSingleLine(@Mandatory List<String> parameters) {
-        String joinedInput = new StringJoiner<>(parameters)
-            .withDelimiter(", ")
-            .join();
-
-        return new List<>("(" + joinedInput + ")");
-    }
-
-    private @Mandatory List<String> writeParametersOnSeparateLines(@Mandatory List<String> parameters) {
-        List<String> lines = new List<>("(");
-        int i = 0;
-        for (String parameter : parameters) {
-            String delimiter = i < parameters.count() - 1 ? "," : "";
-            lines.addLast("    " + parameter + delimiter);
-            i++;
-        }
-        lines.addLast(")");
-        return lines;
+        int estimatedLineLength = estimateLineLength(header, parameters);
+        return listExpander.expand(parameters, estimatedLineLength);
     }
 
     private @Mandatory List<String> writeInput(@Mandatory List<JVariable> input) {
