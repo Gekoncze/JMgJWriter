@@ -5,7 +5,6 @@
     ...
 
 ### LATER ###
-    add JRecord writer + test
     add JAnnotype writer + test
     add support for inner classes
     add support for static initializers
