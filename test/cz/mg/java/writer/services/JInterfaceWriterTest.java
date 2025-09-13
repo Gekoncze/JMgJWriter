@@ -44,6 +44,7 @@ public @Test class JInterfaceWriterTest {
         jInterface.setBounds(new List<>(new JTypeBound(new JType("F")), new JTypeBound(new JType("B"))));
         jInterface.getInterfaces().addLast(new JType("Few"));
         jInterface.getInterfaces().addLast(new JType("Bars"));
+        jInterface.getPermits().addLast(new JType("IronBar"));
 
         JVariable staticField = new JVariable();
         staticField.setModifiers(new List<>(JModifier.PUBLIC, JModifier.STATIC, JModifier.FINAL));
@@ -70,7 +71,7 @@ public @Test class JInterfaceWriterTest {
                 " * Test documentation comment.",
                 " * More documentation...",
                 " */",
-                "public interface FooBar<F, B> extends Few, Bars {",
+                "public interface FooBar<F, B> extends Few, Bars permits IronBar {",
                 "    public static final String[] BARS = null;",
                 "",
                 "    /**",

@@ -83,7 +83,8 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         String bounds = writeBounds(jClass.getBounds());
         String base = writeBase(jClass.getBase());
         String interfaces = writeInterfaces(jClass.getInterfaces(), "implements");
-        String header = writeHeader(modifiers, "class", name + bounds, base, interfaces);
+        String permits = writePermits(jClass.getPermits());
+        String header = writeHeader(modifiers, "class", name + bounds, base, interfaces, permits);
         return new List<>(header + " {");
     }
 
@@ -114,6 +115,13 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         return interfaces.isEmpty() ? "" : keyword + " " +  new StringJoiner<>(interfaces)
             .withDelimiter(", ")
             .withConverter(type -> typeWriter.write(type))
+            .join();
+    }
+
+    @Mandatory String writePermits(@Mandatory List<JType> permits) {
+        return permits.isEmpty() ? "" : "permits" + " " + new StringJoiner<>(permits)
+            .withDelimiter(", ")
+            .withConverter(permit -> typeWriter.write(permit))
             .join();
     }
 

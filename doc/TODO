@@ -8,4 +8,4 @@
     add JAnnotype writer + test
     add support for inner classes
     add support for multi-line string literals (text blocks)
-    add support for sealed types
+

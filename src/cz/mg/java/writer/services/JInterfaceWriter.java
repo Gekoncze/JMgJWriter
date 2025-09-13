@@ -45,7 +45,8 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
         String name = classWriter.writeName(jInterface.getName());
         String bounds = classWriter.writeBounds(jInterface.getBounds());
         String interfaces = classWriter.writeInterfaces(jInterface.getInterfaces(), "extends");
-        String header = classWriter.writeHeader(modifiers, "interface", name + bounds, interfaces);
+        String permits = classWriter.writePermits(jInterface.getPermits());
+        String header = classWriter.writeHeader(modifiers, "interface", name + bounds, interfaces, permits);
         return new List<>(header + " {");
     }
 

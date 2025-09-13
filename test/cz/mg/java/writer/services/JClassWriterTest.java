@@ -21,6 +21,7 @@ public @Test class JClassWriterTest {
         test.testWriteBounds();
         test.testWriteBase();
         test.testWriteInterfaces();
+        test.testWritePermits();
         test.testWriteFields();
         test.testWriteInitialiters();
         test.testWriteConstructors();
@@ -115,6 +116,24 @@ public @Test class JClassWriterTest {
         assertEquals(
             new List<>(
                 "class FooBar implements Foo, Bar {",
+                "}"
+            ),
+            writer.write(jClass)
+        );
+    }
+
+    private void testWritePermits() {
+        JClass jClass = new JClass();
+        jClass.setName("Collection");
+        jClass.getModifiers().addLast(JModifier.SEALED);
+
+        jClass.getPermits().addLast(new JType("List"));
+        jClass.getPermits().addLast(new JType("Array"));
+        jClass.getPermits().addLast(new JType("Set"));
+
+        assertEquals(
+            new List<>(
+                "sealed class Collection permits List, Array, Set {",
                 "}"
             ),
             writer.write(jClass)
@@ -264,7 +283,7 @@ public @Test class JClassWriterTest {
     private void testWriteComplex() {
         JClass jClass = new JClass();
         jClass.setComment("I slammed my pp in the car door.\nMaow!");
-        jClass.setModifiers(new List<>(JModifier.PUBLIC, JModifier.FINAL));
+        jClass.setModifiers(new List<>(JModifier.PUBLIC, JModifier.SEALED));
         jClass.setName("Ninu");
         jClass.setBounds(new List<>(new JTypeBound(new JType("V")), new JTypeBound(new JType("T"))));
         jClass.setBase(new JType(
@@ -273,6 +292,7 @@ public @Test class JClassWriterTest {
             0, false
         ));
         jClass.getInterfaces().addLast(new JType("Chaos"));
+        jClass.getPermits().addLast(new JType("Violence"));
 
         JVariable staticField = new JVariable();
         staticField.setModifiers(new List<>(JModifier.PUBLIC, JModifier.STATIC, JModifier.FINAL));
@@ -334,7 +354,7 @@ public @Test class JClassWriterTest {
                 " * I slammed my pp in the car door.",
                 " * Maow!",
                 " */",
-                "public final class Ninu<V, T> extends VTuber<V> implements Chaos {",
+                "public sealed class Ninu<V, T> extends VTuber<V> implements Chaos permits Violence {",
                 "    public static final String HEHE = \"Hehehehehe!\";",
                 "    private int hp = 9;",
                 "",
