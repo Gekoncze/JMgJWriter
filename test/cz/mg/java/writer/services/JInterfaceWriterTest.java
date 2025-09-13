@@ -65,6 +65,10 @@ public @Test class JInterfaceWriterTest {
 
         jInterface.getMethods().addLast(method);
 
+        JInterface nest = new JInterface();
+        nest.setName("Nest");
+        jInterface.getStructures().addLast(nest);
+
         assertEquals(
             new List<>(
                 "/**",
@@ -78,6 +82,9 @@ public @Test class JInterfaceWriterTest {
                 "     * Drops given bars.",
                 "     */",
                 "    public void dropBars(Bar... bars);",
+                "",
+                "    interface Nest {",
+                "    }",
                 "}"
             ),
             writer.write(jInterface)

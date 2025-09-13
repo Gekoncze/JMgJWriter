@@ -62,13 +62,13 @@ public @Test class JEnumWriterTest {
         jEnum.setModifiers(new List<>(JModifier.PUBLIC));
         jEnum.setName("DayOfWeek");
         jEnum.setEntries(new List<>(
-            new JEnumEntry("MONDAY", null),
-            new JEnumEntry("TUESDAY", null),
-            new JEnumEntry("WEDNESDAY", null),
-            new JEnumEntry("THURSDAY", null),
-            new JEnumEntry("FRIDAY", null),
-            new JEnumEntry("SATURDAY", null),
-            new JEnumEntry("SUNDAY", null)
+            new JEnumEntry("MONDAY"),
+            new JEnumEntry("TUESDAY"),
+            new JEnumEntry("WEDNESDAY"),
+            new JEnumEntry("THURSDAY"),
+            new JEnumEntry("FRIDAY"),
+            new JEnumEntry("SATURDAY"),
+            new JEnumEntry("SUNDAY")
         ));
 
         assertEquals(
@@ -94,7 +94,7 @@ public @Test class JEnumWriterTest {
         jEnum.setName("Medal");
         jEnum.getInterfaces().addLast(new JType("Rank"));
 
-        jEnum.getEntries().addLast(new JEnumEntry("GOLD", null));
+        jEnum.getEntries().addLast(new JEnumEntry("GOLD"));
         jEnum.getEntries().addLast(new JEnumEntry("SILVER", new List<>(t.number("2"))));
         jEnum.getEntries().addLast(new JEnumEntry("BRONZE", new List<>(t.number("3"))));
 
@@ -178,6 +178,13 @@ public @Test class JEnumWriterTest {
 
         jEnum.getMethods().addLast(method);
 
+        JEnum size = new JEnum();
+        size.getModifiers().addLast(JModifier.PUBLIC);
+        size.setName("Size");
+        size.getEntries().addLast(new JEnumEntry("SMALL"));
+        size.getEntries().addLast(new JEnumEntry("BIG"));
+        jEnum.getStructures().addLast(size);
+
         assertEquals(
             new List<>(
                 "/**",
@@ -209,6 +216,11 @@ public @Test class JEnumWriterTest {
                 "     */",
                 "    public int getRank() {",
                 "        return rank;",
+                "    }",
+                "",
+                "    public enum Size {",
+                "        SMALL,",
+                "        BIG;",
                 "    }",
                 "}"
             ),

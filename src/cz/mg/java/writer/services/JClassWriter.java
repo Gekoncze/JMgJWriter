@@ -29,6 +29,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
                     instance.initializerWriter = JInitializerWriter.getInstance();
                     instance.constructorWriter = JConstructorWriter.getInstance();
                     instance.methodWriter = JMethodWriter.getInstance();
+                    instance.structureWriters = JStructureWriters.getInstance();
                     instance.indentation = Indentation.getInstance();
                 }
             }
@@ -45,6 +46,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
     private @Service JInitializerWriter initializerWriter;
     private @Service JConstructorWriter constructorWriter;
     private @Service JMethodWriter methodWriter;
+    private @Service JStructureWriters structureWriters;
     private @Service Indentation indentation;
 
     private JClassWriter() {
@@ -131,6 +133,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         builder.addLines(writeInitializers(jClass.getInitializers()));
         builder.addLines(writeConstructors(jClass.getConstructors()));
         builder.addLines(writeMethods(jClass.getMethods()));
+        builder.addLines(writeInnerStructures(jClass.getStructures()));
         return builder.build();
     }
 
@@ -162,6 +165,14 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         BlockBuilder builder = new BlockBuilder();
         for (JMethod method : methods) {
             builder.addLines(methodWriter.writeLines(method));
+        }
+        return builder.build();
+    }
+
+    @Mandatory List<String> writeInnerStructures(@Mandatory List<JStructure> structures) {
+        BlockBuilder builder = new BlockBuilder();
+        for (JStructure structure : structures) {
+            builder.addLines(structureWriters.get(structure).write(structure));
         }
         return builder.build();
     }

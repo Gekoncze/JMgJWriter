@@ -54,6 +54,7 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
         BlockBuilder builder = new BlockBuilder();
         builder.addLines(classWriter.writeFields(jInterface.getFields()));
         builder.addLines(classWriter.writeMethods(jInterface.getMethods()));
+        builder.addLines(classWriter.writeInnerStructures(jInterface.getStructures()));
         return builder.build();
     }
 }

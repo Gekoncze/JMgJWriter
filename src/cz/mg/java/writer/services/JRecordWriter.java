@@ -69,6 +69,7 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
         builder.addLines(classWriter.writeInitializers(jRecord.getInitializers()));
         builder.addLines(classWriter.writeConstructors(jRecord.getConstructors()));
         builder.addLines(classWriter.writeMethods(jRecord.getMethods()));
+        builder.addLines(classWriter.writeInnerStructures(jRecord.getStructures()));
         return builder.build();
     }
 

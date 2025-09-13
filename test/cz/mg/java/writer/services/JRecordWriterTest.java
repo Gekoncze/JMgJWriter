@@ -183,6 +183,11 @@ public @Test class JRecordWriterTest {
 
         jRecord.getMethods().addLast(method);
 
+        JRecord person = new JRecord();
+        person.getModifiers().addLast(JModifier.PUBLIC);
+        person.setName("Person");
+        jRecord.getStructures().addLast(person);
+
         assertEquals(
             new List<>(
                 "/**",
@@ -205,6 +210,9 @@ public @Test class JRecordWriterTest {
                 "     */",
                 "    @Override",
                 "    public int getRank() {",
+                "    }",
+                "",
+                "    public record Person() {",
                 "    }",
                 "}"
             ),

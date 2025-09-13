@@ -26,6 +26,7 @@ public @Test class JClassWriterTest {
         test.testWriteInitialiters();
         test.testWriteConstructors();
         test.testWriteMethods();
+        test.testWriteStructures();
         test.testWriteComplex();
 
         System.out.println("OK");
@@ -280,6 +281,38 @@ public @Test class JClassWriterTest {
         );
     }
 
+    private void testWriteStructures() {
+        JClass outerClass = new JClass();
+        outerClass.setName("OuterClass");
+
+        JClass innerClass = new JClass();
+        innerClass.setName("InnerClass");
+        outerClass.getStructures().addLast(innerClass);
+
+        JEnum nest = new JEnum();
+        nest.setName("Nest");
+        innerClass.getStructures().addLast(nest);
+
+        JInterface innerInterface = new JInterface();
+        innerInterface.setName("InnerInterface");
+        outerClass.getStructures().addLast(innerInterface);
+
+        assertEquals(
+            new List<>(
+                "class OuterClass {",
+                "    class InnerClass {",
+                "        enum Nest {",
+                "        }",
+                "    }",
+                "",
+                "    interface InnerInterface {",
+                "    }",
+                "}"
+            ),
+            writer.write(outerClass)
+        );
+    }
+
     private void testWriteComplex() {
         JClass jClass = new JClass();
         jClass.setComment("I slammed my pp in the car door.\nMaow!");
@@ -348,6 +381,17 @@ public @Test class JClassWriterTest {
 
         jClass.getMethods().addLast(method);
 
+        JClass innerThoughts = new JClass();
+        innerThoughts.getModifiers().addLast(JModifier.PRIVATE);
+        innerThoughts.getModifiers().addLast(JModifier.ABSTRACT);
+        innerThoughts.setName("InnerThoughts");
+        JMethod meow = new JMethod();
+        meow.getModifiers().addLast(JModifier.PRIVATE);
+        meow.getModifiers().addLast(JModifier.ABSTRACT);
+        meow.setName("meow");
+        innerThoughts.getMethods().addLast(meow);
+        jClass.getStructures().addLast(innerThoughts);
+
         assertEquals(
             new List<>(
                 "/**",
@@ -370,6 +414,10 @@ public @Test class JClassWriterTest {
                 "     */",
                 "    public void moida(Weapon weapon, Person target) {",
                 "        weapon.hit(target);",
+                "    }",
+                "",
+                "    private abstract class InnerThoughts {",
+                "        private abstract void meow();",
                 "    }",
                 "}"
             ),
