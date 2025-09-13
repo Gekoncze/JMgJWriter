@@ -22,6 +22,7 @@ public @Test class JClassWriterTest {
         test.testWriteBase();
         test.testWriteInterfaces();
         test.testWriteFields();
+        test.testWriteInitialiters();
         test.testWriteConstructors();
         test.testWriteMethods();
         test.testWriteComplex();
@@ -146,6 +147,48 @@ public @Test class JClassWriterTest {
         );
     }
 
+    private void testWriteInitialiters() {
+        JClass jClass = new JClass();
+        jClass.setName("FooBar");
+
+        jClass.getInitializers().addLast(new JInitializer(new List<>(
+            t.word("FOOBAR"),
+            t.whitespace(" "),
+            t.symbol("="),
+            t.whitespace(" "),
+            t.number("1"),
+            t.symbol(";"),
+            t.whitespace("\n"),
+            t.word("return"),
+            t.symbol(";")
+        )));
+
+        jClass.getInitializers().addLast(new JInitializer(new List<>(
+            t.word("return"), t.symbol(";")
+        )));
+
+        jClass.getInitializers().addLast(new JInitializer(new List<>()));
+
+        assertEquals(
+            new List<>(
+                "class FooBar {",
+                "    static {",
+                "        FOOBAR = 1;",
+                "        return;",
+                "    }",
+                "",
+                "    static {",
+                "        return;",
+                "    }",
+                "",
+                "    static {",
+                "    }",
+                "}"
+            ),
+            writer.write(jClass)
+        );
+    }
+
     private void testWriteConstructors() {
         JClass jClass = new JClass();
         jClass.setName("FooBar");
@@ -245,6 +288,12 @@ public @Test class JClassWriterTest {
         regularField.setExpression(new List<>(t.number("9")));
         jClass.getFields().addLast(regularField);
 
+        JInitializer initializer = new JInitializer();
+        initializer.setImplementation(new List<>(
+            t.word("HEHE"), t.symbol("."), t.word("length"), b.roundBrackets(), t.symbol(";")
+        ));
+        jClass.getInitializers().addLast(initializer);
+
         JConstructor constructor = new JConstructor();
         constructor.setModifiers(new List<>(JModifier.PUBLIC));
         constructor.setName("Ninu");
@@ -288,6 +337,10 @@ public @Test class JClassWriterTest {
                 "public final class Ninu<V, T> extends VTuber<V> implements Chaos {",
                 "    public static final String HEHE = \"Hehehehehe!\";",
                 "    private int hp = 9;",
+                "",
+                "    static {",
+                "        HEHE.length();",
+                "    }",
                 "",
                 "    public Ninu() {",
                 "    }",

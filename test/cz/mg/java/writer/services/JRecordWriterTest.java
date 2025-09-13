@@ -142,6 +142,14 @@ public @Test class JRecordWriterTest {
         staticField.setExpression(new List<>(t.word("null")));
         jRecord.getFields().addLast(staticField);
 
+        JInitializer initializer = new JInitializer();
+        initializer.setImplementation(new List<>(
+            t.word("eat"),
+            b.roundBrackets(t.word("CAKE")),
+            t.symbol(";")
+        ));
+        jRecord.getInitializers().addLast(initializer);
+
         JConstructor constructor = new JConstructor();
         constructor.setModifiers(new List<>(JModifier.PUBLIC));
         constructor.setName("WorldRecord");
@@ -183,6 +191,10 @@ public @Test class JRecordWriterTest {
                 " */",
                 "public record WorldRecord<R>(@Mandatory String discipline, @Optional Date date) implements Rank {",
                 "    private static final String CAKE = null;",
+                "",
+                "    static {",
+                "        eat(CAKE);",
+                "    }",
                 "",
                 "    public WorldRecord {",
                 "        if (discipline.isBlank()) throw new IllegalArgumentException();",

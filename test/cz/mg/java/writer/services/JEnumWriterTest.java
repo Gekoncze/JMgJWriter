@@ -135,6 +135,19 @@ public @Test class JEnumWriterTest {
         ));
         jEnum.getConstructors().addLast(constructor);
 
+        JInitializer initializer = new JInitializer();
+        initializer.setImplementation(new List<>(
+            t.word("assert"),
+            t.whitespace(" "),
+            t.word("MIN"),
+            t.whitespace(" "),
+            t.symbol("<"),
+            t.symbol(" "),
+            t.word("MAX"),
+            t.symbol(";")
+        ));
+        jEnum.getInitializers().addLast(initializer);
+
         JConstructor parametricConstructor = new JConstructor();
         parametricConstructor.setModifiers(new List<>(JModifier.PUBLIC));
         parametricConstructor.setName("Medal");
@@ -178,6 +191,10 @@ public @Test class JEnumWriterTest {
                 "    public static final int MIN = 1;",
                 "    public static final int MAX = 3;",
                 "    private int rank;",
+                "",
+                "    static {",
+                "        assert MIN < MAX;",
+                "    }",
                 "",
                 "    public Medal() {",
                 "        this(MIN);",

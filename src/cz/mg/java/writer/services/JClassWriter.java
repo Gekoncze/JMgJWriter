@@ -26,6 +26,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
                     instance.boundsWriter = JBoundsWriter.getInstance();
                     instance.typeWriter = JTypeWriter.getInstance();
                     instance.variableWriter = JVariableWriter.getInstance();
+                    instance.initializerWriter = JInitializerWriter.getInstance();
                     instance.constructorWriter = JConstructorWriter.getInstance();
                     instance.methodWriter = JMethodWriter.getInstance();
                     instance.indentation = Indentation.getInstance();
@@ -41,6 +42,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
     private @Service JBoundsWriter boundsWriter;
     private @Service JTypeWriter typeWriter;
     private @Service JVariableWriter variableWriter;
+    private @Service JInitializerWriter initializerWriter;
     private @Service JConstructorWriter constructorWriter;
     private @Service JMethodWriter methodWriter;
     private @Service Indentation indentation;
@@ -118,6 +120,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
     private @Mandatory List<String> writeBody(@Mandatory JClass jClass) {
         BlockBuilder builder = new BlockBuilder();
         builder.addLines(writeFields(jClass.getFields()));
+        builder.addLines(writeInitializers(jClass.getInitializers()));
         builder.addLines(writeConstructors(jClass.getConstructors()));
         builder.addLines(writeMethods(jClass.getMethods()));
         return builder.build();
@@ -129,6 +132,14 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
             lines.addLast(variableWriter.write(field) + ";");
         }
         return lines;
+    }
+
+    @Mandatory List<String> writeInitializers(@Mandatory List<JInitializer> initializers) {
+        BlockBuilder builder = new BlockBuilder();
+        for (JInitializer initializer : initializers) {
+            builder.addLines(initializerWriter.write(initializer));
+        }
+        return builder.build();
     }
 
     @Mandatory List<String> writeConstructors(@Required List<JConstructor> constructors) {

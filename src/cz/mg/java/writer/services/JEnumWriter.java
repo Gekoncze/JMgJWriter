@@ -59,6 +59,7 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
         BlockBuilder builder = new BlockBuilder();
         builder.addLines(writeEnumEntries(jEnum.getEntries()));
         builder.addLines(classWriter.writeFields(jEnum.getFields()));
+        builder.addLines(classWriter.writeInitializers(jEnum.getInitializers()));
         builder.addLines(classWriter.writeConstructors(jEnum.getConstructors()));
         builder.addLines(classWriter.writeMethods(jEnum.getMethods()));
         return builder.build();

@@ -66,6 +66,7 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
     private @Mandatory List<String> writeBody(@Mandatory JRecord jRecord) {
         BlockBuilder builder = new BlockBuilder();
         builder.addLines(classWriter.writeFields(jRecord.getFields()));
+        builder.addLines(classWriter.writeInitializers(jRecord.getInitializers()));
         builder.addLines(classWriter.writeConstructors(jRecord.getConstructors()));
         builder.addLines(classWriter.writeMethods(jRecord.getMethods()));
         return builder.build();
