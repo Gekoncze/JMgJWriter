@@ -43,7 +43,7 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
         lines.addCollectionLast(classWriter.writeComment(jRecord.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jRecord.getAnnotations()));
         lines.addCollectionLast(writeHeader(jRecord));
-        lines.addCollectionLast(indentation.add(writeBody(jRecord)));
+        lines.addCollectionLast(indentation.indent(writeBody(jRecord)));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }

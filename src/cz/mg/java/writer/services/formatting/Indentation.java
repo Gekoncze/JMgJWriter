@@ -24,14 +24,18 @@ public class Indentation {
     private Indentation() {
     }
 
-    public @Mandatory List<String> add(@Mandatory List<String> lines) {
+    public @Mandatory String indent(@Mandatory String line) {
+        if (line.isBlank()) {
+            return "";
+        } else {
+            return INDENTATION + line;
+        }
+    }
+
+    public @Mandatory List<String> indent(@Mandatory List<String> lines) {
         List<String> result = new List<>();
         for (String line : lines) {
-            if (line.isBlank()) {
-                result.addLast("");
-            } else {
-                result.addLast(INDENTATION + line);
-            }
+            result.addLast(indent(line));
         }
         return result;
     }

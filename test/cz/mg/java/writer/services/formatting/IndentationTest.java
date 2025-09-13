@@ -10,42 +10,56 @@ public @Test class IndentationTest {
         System.out.print("Running " + IndentationTest.class.getSimpleName() + " ... ");
 
         IndentationTest test = new IndentationTest();
-        test.testEmpty();
-        test.testSingle();
-        test.testMultiple();
-        test.testSingleBlank();
-        test.testMultipleWithBlank();
+        test.testIndentEmptyLine();
+        test.testIndentLine();
+        test.testIndentLinesEmpty();
+        test.testIndentLinesSingle();
+        test.testIndentLinesMultiple();
+        test.testIndentLinesSingleBlank();
+        test.testIndentLinesMultipleWithBlank();
 
         System.out.println("OK");
     }
 
     private final @Service Indentation indentation = Indentation.getInstance();
 
-    private void testEmpty() {
+    private void testIndentEmptyLine() {
+        Assertions.assertThat(indentation.indent(""))
+            .withMessage("Unexpected result of indentation.")
+            .isEqualTo("");
+    }
+
+    private void testIndentLine() {
+        Assertions.assertThat(indentation.indent("foo"))
+            .withMessage("Unexpected result of indentation.")
+            .isEqualTo("    foo");
+    }
+
+    private void testIndentLinesEmpty() {
         List<String> input = new List<>();
 
         List<String> expectations = new List<>();
 
-        List<String> reality = indentation.add(input);
+        List<String> reality = indentation.indent(input);
 
         Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
             .isEqualTo(expectations);
     }
 
-    private void testSingle() {
+    private void testIndentLinesSingle() {
         List<String> input = new List<>("foo bar");
 
         List<String> expectations = new List<>("    foo bar");
 
-        List<String> reality = indentation.add(input);
+        List<String> reality = indentation.indent(input);
 
         Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
             .isEqualTo(expectations);
     }
 
-    private void testMultiple() {
+    private void testIndentLinesMultiple() {
         List<String> input = new List<>(
             "foo bar",
             "moo",
@@ -58,26 +72,26 @@ public @Test class IndentationTest {
             "    bark"
         );
 
-        List<String> reality = indentation.add(input);
+        List<String> reality = indentation.indent(input);
 
         Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
             .isEqualTo(expectations);
     }
 
-    private void testSingleBlank() {
+    private void testIndentLinesSingleBlank() {
         List<String> input = new List<>("  \t");
 
         List<String> expectations = new List<>("");
 
-        List<String> reality = indentation.add(input);
+        List<String> reality = indentation.indent(input);
 
         Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")
             .isEqualTo(expectations);
     }
 
-    private void testMultipleWithBlank() {
+    private void testIndentLinesMultipleWithBlank() {
         List<String> input = new List<>(
             "foo bar",
             "moo",
@@ -90,7 +104,7 @@ public @Test class IndentationTest {
             ""
         );
 
-        List<String> reality = indentation.add(input);
+        List<String> reality = indentation.indent(input);
 
         Assertions.assertThatCollection(reality)
             .withMessage("Unexpected result of indentation.")

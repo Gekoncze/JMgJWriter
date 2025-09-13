@@ -35,7 +35,7 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
         lines.addCollectionLast(classWriter.writeComment(jInterface.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jInterface.getAnnotations()));
         lines.addCollectionLast(writeHeader(jInterface));
-        lines.addCollectionLast(indentation.add(writeBody(jInterface)));
+        lines.addCollectionLast(indentation.indent(writeBody(jInterface)));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }

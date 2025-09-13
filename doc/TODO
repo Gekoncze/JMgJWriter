@@ -2,7 +2,7 @@
     ...
 
 ### SOON ###
-    ...
+    use multi-line expression writer for methods and constructors
 
 ### LATER ###
     add JAnnotype writer + test

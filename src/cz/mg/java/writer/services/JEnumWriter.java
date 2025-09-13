@@ -42,7 +42,7 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
         lines.addCollectionLast(classWriter.writeComment(jEnum.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jEnum.getAnnotations()));
         lines.addCollectionLast(writeHeader(jEnum));
-        lines.addCollectionLast(indentation.add(writeBody(jEnum)));
+        lines.addCollectionLast(indentation.indent(writeBody(jEnum)));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }

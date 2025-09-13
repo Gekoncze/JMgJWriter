@@ -54,7 +54,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         lines.addCollectionLast(writeComment(jClass.getComment()));
         lines.addCollectionLast(writeAnnotations(jClass.getAnnotations()));
         lines.addCollectionLast(writeHeader(jClass));
-        lines.addCollectionLast(indentation.add(writeBody(jClass)));
+        lines.addCollectionLast(indentation.indent(writeBody(jClass)));
         lines.addCollectionLast(writeFooter());
         return lines;
     }
