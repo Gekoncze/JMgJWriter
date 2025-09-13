@@ -10,6 +10,7 @@ import cz.mg.java.entities.bounds.JBound;
 import cz.mg.java.writer.components.LineMeasure;
 import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
+import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.formatting.ListExpander;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
@@ -30,6 +31,7 @@ public @Service class JMethodWriter {
                     instance.variableWriter = JVariableWriter.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
                     instance.listExpander = ListExpander.getInstance();
+                    instance.indentation = Indentation.getInstance();
                 }
             }
         }
@@ -44,6 +46,7 @@ public @Service class JMethodWriter {
     private @Service JVariableWriter variableWriter;
     private @Service ExpressionWriter expressionWriter;
     private @Service ListExpander listExpander;
+    private @Service Indentation indentation;
 
     private JMethodWriter() {
     }
@@ -134,7 +137,7 @@ public @Service class JMethodWriter {
             List<String> lines = new List<>();
             lines.addLast(" {");
             if (!implementation.isEmpty()) {
-                lines.addLast("    " + expressionWriter.write(implementation));
+                lines.addLast(indentation.indent(expressionWriter.write(implementation)));
             }
             lines.addLast("}");
             return lines;
