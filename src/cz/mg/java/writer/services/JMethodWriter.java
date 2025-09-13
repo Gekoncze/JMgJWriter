@@ -137,7 +137,11 @@ public @Service class JMethodWriter {
             List<String> lines = new List<>();
             lines.addLast(" {");
             if (!implementation.isEmpty()) {
-                lines.addLast(indentation.indent(expressionWriter.write(implementation)));
+                lines.addCollectionLast(
+                    indentation.indent(
+                        expressionWriter.writeLines(implementation)
+                    )
+                );
             }
             lines.addLast("}");
             return lines;

@@ -31,7 +31,8 @@ public @Test class JMethodWriterTest {
         test.testParametersOnSingleLine();
         test.testParametersOnSeparateLines();
         test.testEmptyImplementation();
-        test.testImplementation();
+        test.testSingleLineImplementation();
+        test.testMultiLineImplementation();
         test.testComplex();
 
         System.out.println("OK");
@@ -248,15 +249,35 @@ public @Test class JMethodWriterTest {
         );
     }
 
-    private void testImplementation() {
+    private void testSingleLineImplementation() {
         JMethod method = new JMethod();
-        method.setName("fooBar");
+        method.setName("singleLine");
         method.setImplementation(new List<>(t.word("return"), t.symbol(";")));
 
         assertEquals(
             new List<>(
-                "void fooBar() {",
+                "void singleLine() {",
                 "    return;",
+                "}"
+            ),
+            writer.writeLines(method)
+        );
+    }
+
+    private void testMultiLineImplementation() {
+        JMethod method = new JMethod();
+        method.setOutput(new JType("int"));
+        method.setName("multiLine");
+        method.setImplementation(new List<>(
+            t.word("int"), t.whitespace(" "), t.word("a"), t.symbol(";"), t.whitespace("\n"),
+            t.word("return"), t.whitespace(" "), t.word("a"), t.symbol(";")
+        ));
+
+        assertEquals(
+            new List<>(
+                "int multiLine() {",
+                "    int a;",
+                "    return a;",
                 "}"
             ),
             writer.writeLines(method)
