@@ -237,12 +237,12 @@ public @Test class JMethodWriterTest {
 
     private void testEmptyImplementation() {
         JMethod method = new JMethod();
-        method.setName("fooBar");
+        method.setName("empty");
         method.setImplementation(new List<>());
 
         assertEquals(
             new List<>(
-                "void fooBar() {",
+                "void empty() {",
                 "}"
             ),
             writer.writeLines(method)

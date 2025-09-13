@@ -1,5 +1,5 @@
 ### NOW ###
-    ...
+    add support for static initializers
 
 ### SOON ###
     ...
@@ -7,6 +7,5 @@
 ### LATER ###
     add JAnnotype writer + test
     add support for inner classes
-    add support for static initializers
     add support for multi-line string literals (text blocks)
     add support for sealed types
