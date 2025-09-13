@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JInitializer;
-import cz.mg.test.Assertions;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.token.test.TokenFactory;
 
 public @Test class JInitializerWriterTest {
@@ -25,12 +25,13 @@ public @Test class JInitializerWriterTest {
     private void testWriteEmpty() {
         JInitializer initializer = new JInitializer();
 
-        Assertions.assertThatCollection(writer.write(initializer))
-            .withMessage("Incorrect initializer code.")
-            .isEqualTo(new List<>(
+        LineAssert.assertEquals(
+            new List<>(
                 "static {",
                 "}"
-            ));
+            ),
+            writer.write(initializer)
+        );
     }
 
     private void testWriteSingleLine() {
@@ -46,13 +47,14 @@ public @Test class JInitializerWriterTest {
             t.symbol(";")
         ));
 
-        Assertions.assertThatCollection(writer.write(initializer))
-            .withMessage("Incorrect initializer code.")
-            .isEqualTo(new List<>(
+        LineAssert.assertEquals(
+            new List<>(
                 "static {",
                 "    FooBar.i = 5;",
                 "}"
-            ));
+            ),
+            writer.write(initializer)
+        );
     }
 
     private void testWriteMultipleLines() {
@@ -70,13 +72,14 @@ public @Test class JInitializerWriterTest {
             t.symbol(";")
         ));
 
-        Assertions.assertThatCollection(writer.write(initializer))
-            .withMessage("Incorrect initializer code.")
-            .isEqualTo(new List<>(
+        LineAssert.assertEquals(
+            new List<>(
                 "static {",
                 "    /* must be set early */",
                 "    FooBar.i = 5;",
                 "}"
-            ));
+            ),
+            writer.write(initializer)
+        );
     }
 }

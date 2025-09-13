@@ -3,6 +3,7 @@ package cz.mg.java.writer.services.formatting;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
+import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assertions;
 
 public @Test class IndentationTest {
@@ -36,27 +37,17 @@ public @Test class IndentationTest {
     }
 
     private void testIndentLinesEmpty() {
-        List<String> input = new List<>();
-
-        List<String> expectations = new List<>();
-
-        List<String> reality = indentation.indent(input);
-
-        Assertions.assertThatCollection(reality)
-            .withMessage("Unexpected result of indentation.")
-            .isEqualTo(expectations);
+        LineAssert.assertEquals(
+            new List<>(),
+            indentation.indent(new List<>())
+        );
     }
 
     private void testIndentLinesSingle() {
-        List<String> input = new List<>("foo bar");
-
-        List<String> expectations = new List<>("    foo bar");
-
-        List<String> reality = indentation.indent(input);
-
-        Assertions.assertThatCollection(reality)
-            .withMessage("Unexpected result of indentation.")
-            .isEqualTo(expectations);
+        LineAssert.assertEquals(
+            new List<>("    foo bar"),
+            indentation.indent(new List<>("foo bar"))
+        );
     }
 
     private void testIndentLinesMultiple() {
@@ -66,29 +57,23 @@ public @Test class IndentationTest {
             "bark"
         );
 
-        List<String> expectations = new List<>(
-            "    foo bar",
-            "    moo",
-            "    bark"
+        LineAssert.assertEquals(
+            new List<>(
+                "    foo bar",
+                "    moo",
+                "    bark"
+            ),
+            indentation.indent(input)
         );
-
-        List<String> reality = indentation.indent(input);
-
-        Assertions.assertThatCollection(reality)
-            .withMessage("Unexpected result of indentation.")
-            .isEqualTo(expectations);
     }
 
     private void testIndentLinesSingleBlank() {
         List<String> input = new List<>("  \t");
 
-        List<String> expectations = new List<>("");
-
-        List<String> reality = indentation.indent(input);
-
-        Assertions.assertThatCollection(reality)
-            .withMessage("Unexpected result of indentation.")
-            .isEqualTo(expectations);
+        LineAssert.assertEquals(
+            new List<>(""),
+            indentation.indent(input)
+        );
     }
 
     private void testIndentLinesMultipleWithBlank() {
@@ -98,16 +83,13 @@ public @Test class IndentationTest {
             "    "
         );
 
-        List<String> expectations = new List<>(
-            "    foo bar",
-            "    moo",
-            ""
+        LineAssert.assertEquals(
+            new List<>(
+                "    foo bar",
+                "    moo",
+                ""
+            ),
+            indentation.indent(input)
         );
-
-        List<String> reality = indentation.indent(input);
-
-        Assertions.assertThatCollection(reality)
-            .withMessage("Unexpected result of indentation.")
-            .isEqualTo(expectations);
     }
 }
