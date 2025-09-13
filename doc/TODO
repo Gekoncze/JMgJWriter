@@ -7,4 +7,4 @@
 ### LATER ###
     add JAnnotype writer + test
     add support for multi-line string literals (text blocks)
-
+    consider splitting comment token writer to single line and multi line
