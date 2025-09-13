@@ -39,7 +39,7 @@ public @Test class ExpressionWriterTest {
 
     private void testWriteSimple() {
         Assert.assertEquals(
-            "return 1 + 2 + 'a' /* testing */",
+            "return 1 + 2 + 'a' // testing",
             writer.write(new List<>(
                 t.word("return"),
                 t.whitespace(" "),
@@ -53,7 +53,7 @@ public @Test class ExpressionWriterTest {
                 t.whitespace(" "),
                 t.singleQuote("a"),
                 t.whitespace(" "),
-                t.comment(" testing ")
+                t.singleLineComment(" testing")
             ))
         );
     }

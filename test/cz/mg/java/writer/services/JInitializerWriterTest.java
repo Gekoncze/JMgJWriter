@@ -60,7 +60,7 @@ public @Test class JInitializerWriterTest {
     private void testWriteMultipleLines() {
         JInitializer initializer = new JInitializer();
         initializer.setImplementation(new List<>(
-            t.comment(" must be set early "),
+            t.singleLineComment(" must be set early"),
             t.whitespace("\n"),
             t.word("FooBar"),
             t.symbol("."),
@@ -75,7 +75,7 @@ public @Test class JInitializerWriterTest {
         LineAssert.assertEquals(
             new List<>(
                 "static {",
-                "    /* must be set early */",
+                "    // must be set early",
                 "    FooBar.i = 5;",
                 "}"
             ),

@@ -35,10 +35,11 @@ public @Test class AllTests {
         ListExpanderTest.main(args);
 
         // cz.mg.java.writer.services.tokens
-        CommentTokenWriterTest.main(args);
         DoubleQuoteTokenWriterTest.main(args);
         ExpressionWriterTest.main(args);
+        MultiLineCommentTokenWriterTest.main(args);
         NumberTokenWriterTest.main(args);
+        SingleLineCommentTokenWriterTest.main(args);
         SingleQuoteTokenWriterTest.main(args);
         SymbolTokenWriterTest.main(args);
         TokenWritersTest.main(args);

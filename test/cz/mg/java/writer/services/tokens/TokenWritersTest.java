@@ -8,8 +8,13 @@ import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
-import cz.mg.token.tokens.*;
+import cz.mg.token.tokens.NumberToken;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WhitespaceToken;
+import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.brackets.Brackets;
+import cz.mg.token.tokens.comments.MultiLineCommentToken;
+import cz.mg.token.tokens.comments.SingleLineCommentToken;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
@@ -25,7 +30,8 @@ public @Test class TokenWritersTest {
         test.testGetWhitespace();
         test.testGetDoubleQuote();
         test.testGetSingleQuote();
-        test.testGetComment();
+        test.testGetSingleLineComment();
+        test.testGetMultiLineComment();
         test.testGetBrackets();
 
         System.out.println("OK");
@@ -77,10 +83,16 @@ public @Test class TokenWritersTest {
             .isInstanceOf(SingleQuoteTokenWriter.class);
     }
 
-    private void testGetComment() {
-        Assertions.assertThat(writers.get(new CommentToken("todo", 0)))
+    private void testGetSingleLineComment() {
+        Assertions.assertThat(writers.get(new SingleLineCommentToken("todo", 0)))
             .withMessage("Wrong writer returned.")
-            .isInstanceOf(CommentTokenWriter.class);
+            .isInstanceOf(SingleLineCommentTokenWriter.class);
+    }
+
+    private void testGetMultiLineComment() {
+        Assertions.assertThat(writers.get(new MultiLineCommentToken("todo", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(MultiLineCommentTokenWriter.class);
     }
 
     private void testGetBrackets() {

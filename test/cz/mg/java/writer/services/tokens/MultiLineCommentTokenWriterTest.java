@@ -10,11 +10,11 @@ import cz.mg.token.test.TokenFactory;
 
 import static cz.mg.test.Assert.assertEquals;
 
-public @Test class CommentTokenWriterTest {
+public @Test class MultiLineCommentTokenWriterTest {
     public static void main(String[] args) {
-        System.out.print("Running " + CommentTokenWriterTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + MultiLineCommentTokenWriterTest.class.getSimpleName() + " ... ");
 
-        CommentTokenWriterTest test = new CommentTokenWriterTest();
+        MultiLineCommentTokenWriterTest test = new MultiLineCommentTokenWriterTest();
         test.testWriteEmpty();
         test.testWriteSimple();
         test.testWriteMultiLine();
@@ -27,34 +27,34 @@ public @Test class CommentTokenWriterTest {
         System.out.println("OK");
     }
 
-    private final @Service CommentTokenWriter writer = CommentTokenWriter.getInstance();
+    private final @Service MultiLineCommentTokenWriter writer = MultiLineCommentTokenWriter.getInstance();
     private final @Service TokenFactory t = TokenFactory.getInstance();
 
     private void testWriteEmpty() {
-        String result = writer.write(t.comment(""));
+        String result = writer.write(t.multiLineComment(""));
         assertEquals("/**/", result);
     }
 
     private void testWriteSimple() {
-        String result = writer.write(t.comment("foobar"));
+        String result = writer.write(t.multiLineComment("foobar"));
         assertEquals("/*foobar*/", result);
     }
 
     private void testWriteMultiLine() {
-        String result = writer.write(t.comment("foo\nbar\nfoobar\nbarfoo\n"));
+        String result = writer.write(t.multiLineComment("foo\nbar\nfoobar\nbarfoo\n"));
         assertEquals("/*foo bar foobar barfoo */", result);
     }
 
     private void testWriteTerminatingSequence() {
-        Assertions.assertThatCode(() -> writer.write(t.comment("*/")))
+        Assertions.assertThatCode(() -> writer.write(t.multiLineComment("*/")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
 
-        Assertions.assertThatCode(() -> writer.write(t.comment("test*/")))
+        Assertions.assertThatCode(() -> writer.write(t.multiLineComment("test*/")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
 
-        Assertions.assertThatCode(() -> writer.write(t.comment("*/test")))
+        Assertions.assertThatCode(() -> writer.write(t.multiLineComment("*/test")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
     }
@@ -62,7 +62,7 @@ public @Test class CommentTokenWriterTest {
     private void testWriteLinesEmpty() {
         LineAssert.assertEquals(
             new List<>("/**/"),
-            writer.writeLines(t.comment(""))
+            writer.writeLines(t.multiLineComment(""))
         );
     }
 
@@ -72,7 +72,7 @@ public @Test class CommentTokenWriterTest {
                 "/*foo",
                 "bar*/"
             ),
-            writer.writeLines(t.comment("foo\nbar"))
+            writer.writeLines(t.multiLineComment("foo\nbar"))
         );
     }
 
@@ -85,20 +85,20 @@ public @Test class CommentTokenWriterTest {
                 "barfoo",
                 "*/"
             ),
-            writer.writeLines(t.comment("foo\nbar\nfoobar\nbarfoo\n"))
+            writer.writeLines(t.multiLineComment("foo\nbar\nfoobar\nbarfoo\n"))
         );
     }
 
     private void testWriteLinesTerminatingSequence() {
-        Assertions.assertThatCode(() -> writer.writeLines(t.comment("*/")))
+        Assertions.assertThatCode(() -> writer.writeLines(t.multiLineComment("*/")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
 
-        Assertions.assertThatCode(() -> writer.writeLines(t.comment("test*/")))
+        Assertions.assertThatCode(() -> writer.writeLines(t.multiLineComment("test*/")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
 
-        Assertions.assertThatCode(() -> writer.writeLines(t.comment("*/test")))
+        Assertions.assertThatCode(() -> writer.writeLines(t.multiLineComment("*/test")))
             .withMessage("Terminating sequence should not be written.")
             .throwsException(WriterException.class);
     }

@@ -4,33 +4,33 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.exceptions.WriterException;
-import cz.mg.token.tokens.CommentToken;
+import cz.mg.token.tokens.comments.MultiLineCommentToken;
 
-public @Service class CommentTokenWriter implements TokenWriter<CommentToken> {
-    private static volatile @Service CommentTokenWriter instance;
+public @Service class MultiLineCommentTokenWriter implements TokenWriter<MultiLineCommentToken> {
+    private static volatile @Service MultiLineCommentTokenWriter instance;
 
-    public static @Service CommentTokenWriter getInstance() {
+    public static @Service MultiLineCommentTokenWriter getInstance() {
         if (instance == null) {
             synchronized (Service.class) {
                 if (instance == null) {
-                    instance = new CommentTokenWriter();
+                    instance = new MultiLineCommentTokenWriter();
                 }
             }
         }
         return instance;
     }
 
-    private CommentTokenWriter() {
+    private MultiLineCommentTokenWriter() {
     }
 
     @Override
-    public @Mandatory String write(@Mandatory CommentToken token) {
+    public @Mandatory String write(@Mandatory MultiLineCommentToken token) {
         validate(token);
         return "/*" + removeNewLines(token.getText()) + "*/";
     }
 
     @Override
-    public @Mandatory List<String> writeLines(@Mandatory CommentToken token) {
+    public @Mandatory List<String> writeLines(@Mandatory MultiLineCommentToken token) {
         validate(token);
         String text = token.getText();
         List<String> lines = new List<>();
@@ -49,7 +49,7 @@ public @Service class CommentTokenWriter implements TokenWriter<CommentToken> {
         return lines;
     }
 
-    private void validate(@Mandatory CommentToken token) {
+    private void validate(@Mandatory MultiLineCommentToken token) {
         if (token.getText().contains("*/")) {
             throw new WriterException(
                 "Could not write comment token because it contains comment terminating sequence:\n"
