@@ -37,6 +37,7 @@ public @Test class AllTests {
         // cz.mg.java.writer.services.tokens
         DoubleQuoteTokenWriterTest.main(args);
         ExpressionWriterTest.main(args);
+        LineSeparatorTest.main(args);
         MultiLineCommentTokenWriterTest.main(args);
         NumberTokenWriterTest.main(args);
         SingleLineCommentTokenWriterTest.main(args);
