@@ -15,6 +15,7 @@ import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.brackets.Brackets;
 import cz.mg.token.tokens.comments.MultiLineCommentToken;
 import cz.mg.token.tokens.comments.SingleLineCommentToken;
+import cz.mg.token.tokens.quotes.BlockQuoteToken;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 import cz.mg.token.tokens.quotes.SingleQuoteToken;
 
@@ -28,6 +29,7 @@ public @Test class TokenWritersTest {
         test.testGetNumber();
         test.testGetSymbol();
         test.testGetWhitespace();
+        test.testGetBlockQuote();
         test.testGetDoubleQuote();
         test.testGetSingleQuote();
         test.testGetSingleLineComment();
@@ -69,6 +71,12 @@ public @Test class TokenWritersTest {
         Assertions.assertThat(writers.get(new WhitespaceToken("    ", 0)))
             .withMessage("Wrong writer returned.")
             .isInstanceOf(WhitespaceTokenWriter.class);
+    }
+
+    private void testGetBlockQuote() {
+        Assertions.assertThat(writers.get(new BlockQuoteToken("block", 0)))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(BlockQuoteTokenWriter.class);
     }
 
     private void testGetDoubleQuote() {

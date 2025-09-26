@@ -37,6 +37,7 @@ public @Test class AllTests {
         ListExpanderTest.main(args);
 
         // cz.mg.java.writer.services.tokens
+        BlockQuoteTokenWriterTest.main(args);
         DoubleQuoteTokenWriterTest.main(args);
         ExpressionWriterTest.main(args);
         LineSeparatorTest.main(args);
