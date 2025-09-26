@@ -2,7 +2,10 @@
     ...
 
 ### SOON ###
-    ...
+    add JAnnotype writer + test
 
 ### LATER ###
-    add JAnnotype writer + test
+    consider adding more validations to token writers
+        for example words with alphanumeric characters only
+        or only a specific list of special characters
+        we could also consider making the validations optional (configurable)
