@@ -2,8 +2,7 @@
     ...
 
 ### SOON ###
-    ...
+    add support for multi-line string literals (text blocks) + test
 
 ### LATER ###
     add JAnnotype writer + test
-    add support for multi-line string literals (text blocks)
