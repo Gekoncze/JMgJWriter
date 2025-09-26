@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.components.Escape;
 import cz.mg.java.writer.components.LineMerger;
+import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.quotes.BlockQuoteToken;
 
 public @Service class BlockQuoteTokenWriter implements TokenWriter<BlockQuoteToken> {
@@ -31,7 +32,7 @@ public @Service class BlockQuoteTokenWriter implements TokenWriter<BlockQuoteTok
 
     @Override
     public @Mandatory String write(@Mandatory BlockQuoteToken token) {
-        throw new UnsupportedOperationException("Single line block quote tokens are not supported.");
+        throw new WriterException("Single line block quote tokens are not supported.");
     }
 
     @Override

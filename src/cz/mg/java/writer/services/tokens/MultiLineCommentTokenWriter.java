@@ -30,7 +30,8 @@ public @Service class MultiLineCommentTokenWriter implements TokenWriter<MultiLi
     @Override
     public @Mandatory String write(@Mandatory MultiLineCommentToken token) {
         validate(token);
-        return "/*" + removeNewLines(token.getText()) + "*/";
+        validateNoLines(token);
+        return "/*" + token.getText() + "*/";
     }
 
     @Override
@@ -46,13 +47,16 @@ public @Service class MultiLineCommentTokenWriter implements TokenWriter<MultiLi
     private void validate(@Mandatory MultiLineCommentToken token) {
         if (token.getText().contains("*/")) {
             throw new WriterException(
-                "Could not write comment token because it contains comment terminating sequence:\n"
-                + token.getText()
+                "Could not write multi line comment token because it contains terminating sequence."
             );
         }
     }
 
-    private @Mandatory String removeNewLines(@Mandatory String text) {
-        return text.replace("\n", " ");
+    private void validateNoLines(@Mandatory MultiLineCommentToken token) {
+        if (token.getText().contains("\n")) {
+            throw new WriterException(
+                "Could not write multi line comment token on single line."
+            );
+        }
     }
 }

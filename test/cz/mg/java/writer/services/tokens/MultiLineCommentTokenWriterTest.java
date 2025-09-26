@@ -41,8 +41,9 @@ public @Test class MultiLineCommentTokenWriterTest {
     }
 
     private void testWriteMultiLine() {
-        String result = writer.write(t.multiLineComment("foo\nbar\nfoobar\nbarfoo\n"));
-        assertEquals("/*foo bar foobar barfoo */", result);
+        Assertions.assertThatCode(() -> writer.write(t.multiLineComment("foo\nbar\nfoobar\nbarfoo\n")))
+            .withMessage("Attempting to write multi line comment on a single line should throw an exception.")
+            .throwsException(WriterException.class);
     }
 
     private void testWriteTerminatingSequence() {
