@@ -2,6 +2,7 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.java.writer.components.Escape;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
 public @Service class DoubleQuoteTokenWriter implements TokenWriter<DoubleQuoteToken> {
@@ -23,15 +24,17 @@ public @Service class DoubleQuoteTokenWriter implements TokenWriter<DoubleQuoteT
 
     @Override
     public @Mandatory String write(@Mandatory DoubleQuoteToken token) {
-        return '"' + escapeSpecialCharacters(token.getText()) + '"';
+        return '"' + escape(token.getText()) + '"';
     }
 
-    private @Mandatory String escapeSpecialCharacters(@Mandatory String text) {
-        return text.replace("\\", "\\\\")
-            .replace("\t", "\\t")
-            .replace("\b", "\\b")
-            .replace("\n", "\\n")
-            .replace("\r", "\\r")
-            .replace("\"", "\\\"");
+    private @Mandatory String escape(@Mandatory String text) {
+        return new Escape(text)
+            .backslash()
+            .backspace()
+            .doubleQuote()
+            .newline()
+            .carriageReturn()
+            .tab()
+            .get();
     }
 }
