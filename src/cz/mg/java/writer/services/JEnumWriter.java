@@ -56,14 +56,14 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
     }
 
     private @Mandatory List<String> writeBody(@Mandatory JEnum jEnum) {
-        BlockBuilder builder = new BlockBuilder();
-        builder.addLines(writeEnumEntries(jEnum.getEntries()));
-        builder.addLines(classWriter.writeFields(jEnum.getFields()));
-        builder.addLines(classWriter.writeInitializers(jEnum.getInitializers()));
-        builder.addLines(classWriter.writeConstructors(jEnum.getConstructors()));
-        builder.addLines(classWriter.writeMethods(jEnum.getMethods()));
-        builder.addLines(classWriter.writeInnerStructures(jEnum.getStructures()));
-        return builder.build();
+        return new BlockBuilder()
+            .addLines(writeEnumEntries(jEnum.getEntries()))
+            .addLines(classWriter.writeFields(jEnum.getFields()))
+            .addLines(classWriter.writeInitializers(jEnum.getInitializers()))
+            .addLines(classWriter.writeConstructors(jEnum.getConstructors()))
+            .addLines(classWriter.writeMethods(jEnum.getMethods()))
+            .addLines(classWriter.writeInnerStructures(jEnum.getStructures()))
+            .build();
     }
 
     private @Mandatory List<String> writeEnumEntries(@Required @Parts List<JEnumEntry> entries) {

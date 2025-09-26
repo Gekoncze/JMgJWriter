@@ -128,13 +128,13 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
     }
 
     private @Mandatory List<String> writeBody(@Mandatory JClass jClass) {
-        BlockBuilder builder = new BlockBuilder();
-        builder.addLines(writeFields(jClass.getFields()));
-        builder.addLines(writeInitializers(jClass.getInitializers()));
-        builder.addLines(writeConstructors(jClass.getConstructors()));
-        builder.addLines(writeMethods(jClass.getMethods()));
-        builder.addLines(writeInnerStructures(jClass.getStructures()));
-        return builder.build();
+        return new BlockBuilder()
+            .addLines(writeFields(jClass.getFields()))
+            .addLines(writeInitializers(jClass.getInitializers()))
+            .addLines(writeConstructors(jClass.getConstructors()))
+            .addLines(writeMethods(jClass.getMethods()))
+            .addLines(writeInnerStructures(jClass.getStructures()))
+            .build();
     }
 
     @Mandatory List<String> writeFields(@Required List<JVariable> fields) {

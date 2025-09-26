@@ -2,7 +2,7 @@
     ...
 
 ### SOON ###
-    ...
+    rewrite list expander into list builder
 
 ### LATER ###
     consider adding more validations to token writers

@@ -64,13 +64,13 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
     }
 
     private @Mandatory List<String> writeBody(@Mandatory JRecord jRecord) {
-        BlockBuilder builder = new BlockBuilder();
-        builder.addLines(classWriter.writeFields(jRecord.getFields()));
-        builder.addLines(classWriter.writeInitializers(jRecord.getInitializers()));
-        builder.addLines(classWriter.writeConstructors(jRecord.getConstructors()));
-        builder.addLines(classWriter.writeMethods(jRecord.getMethods()));
-        builder.addLines(classWriter.writeInnerStructures(jRecord.getStructures()));
-        return builder.build();
+        return new BlockBuilder()
+            .addLines(classWriter.writeFields(jRecord.getFields()))
+            .addLines(classWriter.writeInitializers(jRecord.getInitializers()))
+            .addLines(classWriter.writeConstructors(jRecord.getConstructors()))
+            .addLines(classWriter.writeMethods(jRecord.getMethods()))
+            .addLines(classWriter.writeInnerStructures(jRecord.getStructures()))
+            .build();
     }
 
     private @Mandatory List<String> writeProperties(

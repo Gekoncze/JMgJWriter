@@ -51,10 +51,10 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
     }
 
     private @Mandatory List<String> writeBody(@Mandatory JInterface jInterface) {
-        BlockBuilder builder = new BlockBuilder();
-        builder.addLines(classWriter.writeFields(jInterface.getFields()));
-        builder.addLines(classWriter.writeMethods(jInterface.getMethods()));
-        builder.addLines(classWriter.writeInnerStructures(jInterface.getStructures()));
-        return builder.build();
+        return new BlockBuilder()
+            .addLines(classWriter.writeFields(jInterface.getFields()))
+            .addLines(classWriter.writeMethods(jInterface.getMethods()))
+            .addLines(classWriter.writeInnerStructures(jInterface.getStructures()))
+            .build();
     }
 }
