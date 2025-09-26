@@ -16,6 +16,7 @@ public @Service class JStructureWriters {
                     instance.interfaceWriter = JInterfaceWriter.getInstance();
                     instance.enumWriter = JEnumWriter.getInstance();
                     instance.recordWriter = JRecordWriter.getInstance();
+                    instance.annotypeWriter = JAnnotypeWriter.getInstance();
                 }
             }
         }
@@ -26,6 +27,7 @@ public @Service class JStructureWriters {
     private @Service JInterfaceWriter interfaceWriter;
     private @Service JEnumWriter enumWriter;
     private @Service JRecordWriter recordWriter;
+    private @Service JAnnotypeWriter annotypeWriter;
 
     private JStructureWriters() {
     }
@@ -37,6 +39,7 @@ public @Service class JStructureWriters {
             case JInterface ignored -> (JStructureWriter) interfaceWriter;
             case JEnum ignored -> (JStructureWriter) enumWriter;
             case JRecord ignored -> (JStructureWriter) recordWriter;
+            case JAnnotype ignored -> (JStructureWriter) annotypeWriter;
             default -> throw new UnsupportedOperationException(
                 "Unsupported structure of type " + structure.getClass().getSimpleName() + "."
             );

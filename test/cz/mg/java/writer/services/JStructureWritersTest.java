@@ -2,10 +2,7 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.java.entities.JClass;
-import cz.mg.java.entities.JEnum;
-import cz.mg.java.entities.JInterface;
-import cz.mg.java.entities.JRecord;
+import cz.mg.java.entities.*;
 import cz.mg.test.Assertions;
 
 public @Test class JStructureWritersTest {
@@ -17,6 +14,7 @@ public @Test class JStructureWritersTest {
         test.testWriteInterface();
         test.testWriteEnum();
         test.testWriteRecord();
+        test.testWriteAnnotype();
 
         System.out.println("OK");
     }
@@ -45,5 +43,11 @@ public @Test class JStructureWritersTest {
         Assertions.assertThat(writers.get(new JRecord()))
             .withMessage("Wrong writer returned.")
             .isInstanceOf(JRecordWriter.class);
+    }
+
+    private void testWriteAnnotype() {
+        Assertions.assertThat(writers.get(new JAnnotype()))
+            .withMessage("Wrong writer returned.")
+            .isInstanceOf(JAnnotypeWriter.class);
     }
 }
