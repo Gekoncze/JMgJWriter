@@ -31,7 +31,6 @@ public @Service class JMethodWriter {
                     instance.variableWriter = JVariableWriter.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
                     instance.listExpander = ListExpander.getInstance();
-                    instance.indentation = Indentation.getInstance();
                 }
             }
         }
@@ -46,7 +45,6 @@ public @Service class JMethodWriter {
     private @Service JVariableWriter variableWriter;
     private @Service ExpressionWriter expressionWriter;
     private @Service ListExpander listExpander;
-    private @Service Indentation indentation;
 
     private JMethodWriter() {
     }
@@ -138,7 +136,7 @@ public @Service class JMethodWriter {
             lines.addLast(" {");
             if (!implementation.isEmpty()) {
                 lines.addCollectionLast(
-                    indentation.indent(
+                    Indentation.indent(
                         expressionWriter.writeLines(implementation)
                     )
                 );

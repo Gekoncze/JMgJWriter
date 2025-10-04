@@ -5,7 +5,6 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.code.formatter.BlockBuilder;
-import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
@@ -30,7 +29,6 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
                     instance.constructorWriter = JConstructorWriter.getInstance();
                     instance.methodWriter = JMethodWriter.getInstance();
                     instance.structureWriters = JStructureWriters.getInstance();
-                    instance.indentation = Indentation.getInstance();
                 }
             }
         }
@@ -47,7 +45,6 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
     private @Service JConstructorWriter constructorWriter;
     private @Service JMethodWriter methodWriter;
     private @Service JStructureWriters structureWriters;
-    private @Service Indentation indentation;
 
     private JClassWriter() {
     }
@@ -58,7 +55,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
         lines.addCollectionLast(writeComment(jClass.getComment()));
         lines.addCollectionLast(writeAnnotations(jClass.getAnnotations()));
         lines.addCollectionLast(writeHeader(jClass));
-        lines.addCollectionLast(indentation.indent(writeBody(jClass)));
+        lines.addCollectionLast(writeBody(jClass));
         lines.addCollectionLast(writeFooter());
         return lines;
     }
@@ -134,6 +131,7 @@ public @Service class JClassWriter implements JStructureWriter<JClass> {
             .addLines(writeConstructors(jClass.getConstructors()))
             .addLines(writeMethods(jClass.getMethods()))
             .addLines(writeInnerStructures(jClass.getStructures()))
+            .addIndentation()
             .build();
     }
 

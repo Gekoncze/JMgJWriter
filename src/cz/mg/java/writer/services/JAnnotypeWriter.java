@@ -3,7 +3,7 @@ package cz.mg.java.writer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.code.formatter.)));
+import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JAnnotype;
@@ -22,7 +22,6 @@ public @Service class JAnnotypeWriter implements JStructureWriter<JAnnotype> {
                     instance.classWriter = JClassWriter.getInstance();
                     instance.modifierWriter = JModifierWriter.getInstance();
                     instance.typeWriter = JTypeWriter.getInstance();
-                    instance.indentation = Indentation.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
                 }
             }
@@ -33,7 +32,6 @@ public @Service class JAnnotypeWriter implements JStructureWriter<JAnnotype> {
     private @Service JClassWriter classWriter;
     private @Service JModifierWriter modifierWriter;
     private @Service JTypeWriter typeWriter;
-    private @Service Indentation indentation;
     private @Service ExpressionWriter expressionWriter;
 
     private JAnnotypeWriter() {
@@ -45,7 +43,7 @@ public @Service class JAnnotypeWriter implements JStructureWriter<JAnnotype> {
         lines.addCollectionLast(classWriter.writeComment(annotype.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(annotype.getAnnotations()));
         lines.addCollectionLast(writeHeader(annotype));
-        lines.addCollectionLast(indentation.indent(writeBody(annotype)));
+        lines.addCollectionLast(writeBody(annotype));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }
@@ -62,7 +60,7 @@ public @Service class JAnnotypeWriter implements JStructureWriter<JAnnotype> {
         for (JVariable element : annotype.getElements()) {
             lines.addLast(writeElement(element));
         }
-        return lines;
+        return Indentation.indent(lines);
     }
 
     private @Mandatory String writeElement(@Mandatory JVariable element) {

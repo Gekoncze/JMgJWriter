@@ -16,7 +16,6 @@ public @Service class JInitializerWriter {
                 if (instance == null) {
                     instance = new JInitializerWriter();
                     instance.expressionWriter = ExpressionWriter.getInstance();
-                    instance.indentation = Indentation.getInstance();
                 }
             }
         }
@@ -24,7 +23,6 @@ public @Service class JInitializerWriter {
     }
 
     private @Service ExpressionWriter expressionWriter;
-    private @Service Indentation indentation;
 
     private JInitializerWriter() {
     }
@@ -33,7 +31,7 @@ public @Service class JInitializerWriter {
         List<String> lines = new List<>();
         lines.addLast("static {");
         lines.addCollectionLast(
-            indentation.indent(
+            Indentation.indent(
                 expressionWriter.writeLines(
                     initializer.getImplementation()
                 )

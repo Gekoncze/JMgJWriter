@@ -3,7 +3,6 @@ package cz.mg.java.writer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.code.formatter.BlockBuilder;
-import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JInterface;
 
@@ -16,7 +15,6 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
                 if (instance == null) {
                     instance = new JInterfaceWriter();
                     instance.classWriter = JClassWriter.getInstance();
-                    instance.indentation = Indentation.getInstance();
                 }
             }
         }
@@ -24,7 +22,6 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
     }
 
     private @Service JClassWriter classWriter;
-    private @Service Indentation indentation;
 
     private JInterfaceWriter() {
     }
@@ -35,7 +32,7 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
         lines.addCollectionLast(classWriter.writeComment(jInterface.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jInterface.getAnnotations()));
         lines.addCollectionLast(writeHeader(jInterface));
-        lines.addCollectionLast(indentation.indent(writeBody(jInterface)));
+        lines.addCollectionLast(writeBody(jInterface));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }
@@ -55,6 +52,7 @@ public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
             .addLines(classWriter.writeFields(jInterface.getFields()))
             .addLines(classWriter.writeMethods(jInterface.getMethods()))
             .addLines(classWriter.writeInnerStructures(jInterface.getStructures()))
+            .addIndentation()
             .build();
     }
 }

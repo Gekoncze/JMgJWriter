@@ -2,7 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.code.formatter.*;
+import cz.mg.code.formatter.BlockBuilder;
+import cz.mg.code.formatter.LineMeasure;
+import cz.mg.code.formatter.LineMerger;
+import cz.mg.code.formatter.ListExpander;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JRecord;
 import cz.mg.java.entities.JVariable;
@@ -17,7 +20,6 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
                     instance = new JRecordWriter();
                     instance.classWriter = JClassWriter.getInstance();
                     instance.variableWriter = JVariableWriter.getInstance();
-                    instance.indentation = Indentation.getInstance();
                     instance.listExpander = ListExpander.getInstance();
                 }
             }
@@ -27,7 +29,6 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
 
     private @Service JClassWriter classWriter;
     private @Service JVariableWriter variableWriter;
-    private @Service Indentation indentation;
     private @Service ListExpander listExpander;
 
     private JRecordWriter() {
@@ -39,7 +40,7 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
         lines.addCollectionLast(classWriter.writeComment(jRecord.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jRecord.getAnnotations()));
         lines.addCollectionLast(writeHeader(jRecord));
-        lines.addCollectionLast(indentation.indent(writeBody(jRecord)));
+        lines.addCollectionLast(writeBody(jRecord));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }
@@ -66,6 +67,7 @@ public @Service class JRecordWriter implements JStructureWriter<JRecord> {
             .addLines(classWriter.writeConstructors(jRecord.getConstructors()))
             .addLines(classWriter.writeMethods(jRecord.getMethods()))
             .addLines(classWriter.writeInnerStructures(jRecord.getStructures()))
+            .addIndentation()
             .build();
     }
 

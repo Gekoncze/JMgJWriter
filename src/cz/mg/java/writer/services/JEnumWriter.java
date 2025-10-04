@@ -21,7 +21,6 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
                 if (instance == null) {
                     instance = new JEnumWriter();
                     instance.classWriter = JClassWriter.getInstance();
-                    instance.indentation = Indentation.getInstance();
                     instance.expressionWriter = ExpressionWriter.getInstance();
                 }
             }
@@ -42,7 +41,7 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
         lines.addCollectionLast(classWriter.writeComment(jEnum.getComment()));
         lines.addCollectionLast(classWriter.writeAnnotations(jEnum.getAnnotations()));
         lines.addCollectionLast(writeHeader(jEnum));
-        lines.addCollectionLast(indentation.indent(writeBody(jEnum)));
+        lines.addCollectionLast(writeBody(jEnum));
         lines.addCollectionLast(classWriter.writeFooter());
         return lines;
     }
@@ -63,6 +62,7 @@ public @Service class JEnumWriter implements JStructureWriter<JEnum> {
             .addLines(classWriter.writeConstructors(jEnum.getConstructors()))
             .addLines(classWriter.writeMethods(jEnum.getMethods()))
             .addLines(classWriter.writeInnerStructures(jEnum.getStructures()))
+            .addIndentation()
             .build();
     }
 
