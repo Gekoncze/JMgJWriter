@@ -5,11 +5,11 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assertions;
 
-public @Test class CommentValidatorTest {
+public @Test class JCommentValidatorTest {
     public static void main(String[] args) {
-        System.out.print("Running " + CommentValidatorTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + JCommentValidatorTest.class.getSimpleName() + " ... ");
 
-        CommentValidatorTest test = new CommentValidatorTest();
+        JCommentValidatorTest test = new JCommentValidatorTest();
         test.testValidateSingleLinePass();
         test.testValidateSingleLineFail();
         test.testValidateMultiLinePass();
@@ -18,7 +18,7 @@ public @Test class CommentValidatorTest {
         System.out.println("OK");
     }
 
-    private final @Service CommentValidator validator = CommentValidator.getInstance();
+    private final @Service JCommentValidator validator = JCommentValidator.getInstance();
 
     private void testValidateSingleLinePass() {
         Assertions.assertThatCode(() -> validator.validateSingleLine(""))

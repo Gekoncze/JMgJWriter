@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
-import cz.mg.java.writer.services.validators.CommentValidator;
+import cz.mg.java.writer.services.validators.JCommentValidator;
 
 public @Service class JCommentWriter {
     private static volatile @Service JCommentWriter instance;
@@ -15,14 +15,14 @@ public @Service class JCommentWriter {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new JCommentWriter();
-                    instance.commentValidator = CommentValidator.getInstance();
+                    instance.commentValidator = JCommentValidator.getInstance();
                 }
             }
         }
         return instance;
     }
 
-    private @Service CommentValidator commentValidator;
+    private @Service JCommentValidator commentValidator;
 
     private JCommentWriter() {
     }

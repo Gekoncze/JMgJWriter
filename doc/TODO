@@ -5,7 +5,8 @@
     ...
 
 ### LATER ###
-    consider adding more validations to token writers
+    consider adding more validations
+        for both token writers and java entity writers
         for example words with alphanumeric characters only
         or only a specific list of special characters
         we could also consider making the validations optional (configurable)
