@@ -2,10 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.code.formatter.BlockBuilder;
+import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JInterface;
-import cz.mg.java.writer.components.BlockBuilder;
-import cz.mg.java.writer.services.formatting.Indentation;
 
 public @Service class JInterfaceWriter implements JStructureWriter<JInterface> {
     private static volatile @Service JInterfaceWriter instance;

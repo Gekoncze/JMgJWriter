@@ -2,8 +2,8 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.code.formatter.test.LineAssert;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.test.LineAssert;
 
 public @Test class LineSeparatorTest {
     public static void main(String[] args) {

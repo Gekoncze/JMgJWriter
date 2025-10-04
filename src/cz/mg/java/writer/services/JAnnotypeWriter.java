@@ -3,11 +3,11 @@ package cz.mg.java.writer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
+import cz.mg.code.formatter.)));
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JAnnotype;
 import cz.mg.java.entities.JVariable;
-import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
 

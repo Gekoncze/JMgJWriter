@@ -7,7 +7,7 @@ import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JTypeBound;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.LineAssert.assertEquals;
+import static cz.mg.code.formatter.test.LineAssert.assertEquals;
 
 public @Test class JInterfaceWriterTest {
     public static void main(String[] args) {

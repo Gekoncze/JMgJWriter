@@ -2,8 +2,8 @@ package cz.mg.java.writer.services.tokens.brackets;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.code.formatter.LineMerger;
 import cz.mg.collections.list.List;
-import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.tokens.brackets.CurlyBrackets;
 

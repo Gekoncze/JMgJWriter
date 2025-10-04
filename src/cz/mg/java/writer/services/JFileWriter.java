@@ -3,13 +3,13 @@ package cz.mg.java.writer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
+import cz.mg.code.formatter.BlockBuilder;
 import cz.mg.collections.list.List;
 import cz.mg.file.page.Page;
 import cz.mg.java.entities.JFile;
 import cz.mg.java.entities.JImport;
 import cz.mg.java.entities.JPackageLine;
 import cz.mg.java.entities.JStructure;
-import cz.mg.java.writer.components.BlockBuilder;
 
 public @Service class JFileWriter {
     private static volatile @Service JFileWriter instance;

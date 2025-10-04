@@ -3,10 +3,10 @@ package cz.mg.java.writer.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.code.formatter.test.LineAssert;
 import cz.mg.collections.list.List;
 import cz.mg.file.page.Page;
 import cz.mg.java.entities.*;
-import cz.mg.java.writer.test.LineAssert;
 import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 

@@ -10,7 +10,7 @@ import cz.mg.java.entities.bounds.JUpperBound;
 import cz.mg.token.test.BracketFactory;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.LineAssert.assertEquals;
+import static cz.mg.code.formatter.test.LineAssert.assertEquals;
 
 public @Test class JMethodWriterTest {
     public static void main(String[] args) {

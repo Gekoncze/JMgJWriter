@@ -2,14 +2,10 @@ package cz.mg.java.writer.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.code.formatter.*;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JRecord;
 import cz.mg.java.entities.JVariable;
-import cz.mg.java.writer.components.BlockBuilder;
-import cz.mg.java.writer.components.LineMeasure;
-import cz.mg.java.writer.components.LineMerger;
-import cz.mg.java.writer.services.formatting.Indentation;
-import cz.mg.java.writer.services.formatting.ListExpander;
 
 public @Service class JRecordWriter implements JStructureWriter<JRecord> {
     private static volatile @Service JRecordWriter instance;

@@ -7,7 +7,7 @@ import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 
-import static cz.mg.java.writer.test.LineAssert.assertEquals;
+import static cz.mg.code.formatter.test.LineAssert.assertEquals;
 
 public @Test class BlockQuoteTokenWriterTest {
     public static void main(String[] args) {

@@ -2,9 +2,9 @@ package cz.mg.java.writer.services.tokens;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.code.formatter.LineMerger;
 import cz.mg.collections.list.List;
 import cz.mg.java.writer.components.Escape;
-import cz.mg.java.writer.components.LineMerger;
 import cz.mg.java.writer.exceptions.WriterException;
 import cz.mg.token.tokens.quotes.BlockQuoteToken;
 

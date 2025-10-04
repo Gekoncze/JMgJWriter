@@ -4,11 +4,11 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Parts;
+import cz.mg.code.formatter.BlockBuilder;
+import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.JEnum;
 import cz.mg.java.entities.JEnumEntry;
-import cz.mg.java.writer.components.BlockBuilder;
-import cz.mg.java.writer.services.formatting.Indentation;
 import cz.mg.java.writer.services.tokens.ExpressionWriter;
 import cz.mg.token.Token;
 

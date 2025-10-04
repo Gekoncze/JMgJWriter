@@ -4,13 +4,13 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.annotations.requirement.Required;
+import cz.mg.code.formatter.BlockBuilder;
+import cz.mg.code.formatter.Indentation;
 import cz.mg.collections.components.StringJoiner;
 import cz.mg.collections.list.List;
 import cz.mg.java.entities.*;
 import cz.mg.java.entities.bounds.JBound;
-import cz.mg.java.writer.components.BlockBuilder;
 import cz.mg.java.writer.services.bounds.JBoundsWriter;
-import cz.mg.java.writer.services.formatting.Indentation;
 
 public @Service class JClassWriter implements JStructureWriter<JClass> {
     private static volatile @Service JClassWriter instance;
